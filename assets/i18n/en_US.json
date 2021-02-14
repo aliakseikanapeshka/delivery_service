@@ -1,0 +1,14 @@
+{
+  "shell": {
+    "home": "Home",
+    "account": "Account"
+  },
+  "home": {
+    "title": "Home",
+    "content": "Home page"
+  },
+  "account": {
+    "title": "Account",
+    "content": "Account page"
+  }
+}

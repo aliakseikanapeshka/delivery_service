@@ -1,7 +1,6 @@
 import 'package:delivery_service/localization/localization_keys.dart';
 import 'package:delivery_service/pages/shell/shell_bloc.dart';
 import 'package:delivery_service/services/navigation_service.dart';
-import 'package:delivery_service/services/shell_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_translate/localization_delegate.dart';
 import 'package:flutter_translate/localized_app.dart';
@@ -25,7 +24,6 @@ Future<Widget> bootstrapApp() async {
 
 void _registerServices(GetIt getIt) {
   getIt.registerLazySingleton(() => NavigationService());
-  getIt.registerLazySingleton(() => ShellService());
 }
 
 void _registerBlocs(GetIt getIt) {

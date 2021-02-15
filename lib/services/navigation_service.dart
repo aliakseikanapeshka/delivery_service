@@ -1,5 +1,4 @@
 import 'package:delivery_service/pages/shell/shell_page.dart';
-import 'package:delivery_service/services/registry_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,16 +22,6 @@ class NavigationService {
     final route = _generateRoute(page, arguments);
     return navigatorKey.currentState.pushReplacement(route);
   }
-
-  void goBackToShell({Pages page = Pages.home}) {
-    navigatorKey.currentState.popUntil((Route<dynamic> route) {
-      return route.isFirst;
-    });
-
-    changeShellTab(page);
-  }
-
-  void changeShellTab(Pages page) => shellService.changeShellTab(page);
 
   void goBack<T extends Object>({T result}) {
     navigatorKey.currentState.pop<T>(result);

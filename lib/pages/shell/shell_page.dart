@@ -1,7 +1,10 @@
 import 'package:delivery_service/pages/account/account_page.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
 import 'package:delivery_service/pages/base/base_page_state.dart';
+import 'package:delivery_service/pages/cart/cart_page.dart';
+import 'package:delivery_service/pages/favorites/favorites_page.dart';
 import 'package:delivery_service/pages/home/home_page.dart';
+import 'package:delivery_service/pages/promo/promo_page.dart';
 import 'package:delivery_service/services/navigation_service.dart';
 import 'package:delivery_service/theme/branding_colors.dart';
 import 'package:delivery_service/widgets/bottom_navigation/bottom_navigation_widget.dart';
@@ -32,6 +35,9 @@ class _ShellPageState extends BasePageState<ShellBloc, ShellPage> {
               index: bloc.selectedItemIndex,
               children: [
                 HomePage(),
+                PromoPage(),
+                CartPage(),
+                FavoritesPage(),
                 AccountPage(),
               ],
             ),

@@ -1,11 +1,26 @@
 {
   "shell": {
     "home": "Home",
+    "promo": "Promo",
+    "cart": "Cart",
+    "favorites": "Favorites",
     "account": "Account"
   },
   "home": {
     "title": "Home",
     "content": "Home page"
+  },
+  "promo": {
+    "title": "Promo",
+    "content": "Promo page"
+  },
+  "cart": {
+    "title": "Cart",
+    "content": "Cart page"
+  },
+  "favorites": {
+    "title": "Favorites",
+    "content": "Favorites page"
   },
   "account": {
     "title": "Account",

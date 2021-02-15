@@ -18,6 +18,9 @@ class _SelectPageEvent extends ShellEvent {
 class ShellBloc extends BaseBloc {
   final List<Pages> pages = [
     Pages.home,
+    Pages.promo,
+    Pages.cart,
+    Pages.favorite,
     Pages.account,
   ];
 

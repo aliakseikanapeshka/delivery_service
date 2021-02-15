@@ -7,6 +7,9 @@ final GlobalKey mainGlobalKey = GlobalKey();
 
 enum Pages {
   home,
+  promo,
+  cart,
+  favorite,
   account,
 }
 

@@ -1,3 +1,11 @@
+import 'package:delivery_service/data/models/favorite_model.dart';
+import 'package:delivery_service/data/models/promo_model.dart';
+import 'package:delivery_service/data/models/restaurant_model.dart';
+
 abstract class HomeRepository {
-  Future<void> fetchSomeData();
+  Future<List<PromoModel>> getPromoList();
+
+  Future<List<FavoriteModel>> getFavoriteList();
+
+  Future<List<RestaurantModel>> getRestaurantList();
 }

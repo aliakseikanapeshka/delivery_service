@@ -105,18 +105,16 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
       child: HorizontalSwipeLane<PromoModel>(
         items: bloc.promosList,
         childWidgetBuilder: (context, model) {
-          return Center(
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                CachedNetworkImage(imageUrl: model.imageUrl),
-                Positioned(
-                  top: Insets.x2,
-                  left: Insets.x2,
-                  child: Text(model.title),
-                ),
-              ],
-            ),
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              CachedNetworkImage(imageUrl: model.imageUrl),
+              Positioned(
+                top: Insets.x2,
+                left: Insets.x2,
+                child: Text(model.title),
+              ),
+            ],
           );
         },
       ),
@@ -128,18 +126,16 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
       child: HorizontalSwipeLane<FavoriteModel>(
         items: bloc.favoritesList,
         childWidgetBuilder: (context, model) {
-          return Center(
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                CachedNetworkImage(imageUrl: model.imageUrl),
-                Positioned(
-                  top: Insets.x2,
-                  left: Insets.x2,
-                  child: Text(model.restaurantName),
-                ),
-              ],
-            ),
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              CachedNetworkImage(imageUrl: model.imageUrl),
+              Positioned(
+                top: Insets.x2,
+                left: Insets.x2,
+                child: Text(model.restaurantName),
+              ),
+            ],
           );
         },
       ),
@@ -164,25 +160,23 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(Radiuses.big_1x),
                     ),
-                    child: Center(
-                      child: Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          CachedNetworkImage(imageUrl: model.imageUrl),
-                          Positioned(
-                            top: Insets.x2,
-                            left: Insets.x2,
-                            child: Column(
-                              children: [
-                                Text(model.name),
-                                Text("from ${model.minOrderPrice} rub"),
-                                Text(
-                                    "${model.minDeliveryTime} - ${model.maxDeliveryTime} min"),
-                              ],
-                            ),
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        CachedNetworkImage(imageUrl: model.imageUrl),
+                        Positioned(
+                          top: Insets.x2,
+                          left: Insets.x2,
+                          child: Column(
+                            children: [
+                              Text(model.name),
+                              Text("from ${model.minOrderPrice} rub"),
+                              Text(
+                                  "${model.minDeliveryTime} - ${model.maxDeliveryTime} min"),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

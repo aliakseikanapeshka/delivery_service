@@ -56,12 +56,14 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
         _buildShimmerLaneWithTitle(),
         _buildShimmerLaneWithTitle(),
         _buildShimmerList(),
+        _buildBottomSpacingSliver(),
       ];
     } else {
       return [
         if (bloc.promosList.isNotEmpty) _buildPromoLane(),
         if (bloc.favoritesList.isNotEmpty) _buildFavoritesLane(),
         if (bloc.restaurantsList.isNotEmpty) _buildRestaurantsList(),
+        _buildBottomSpacingSliver(),
       ];
     }
   }
@@ -208,6 +210,14 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
           );
         },
         childCount: 3,
+      ),
+    );
+  }
+
+  Widget _buildBottomSpacingSliver() {
+    return SliverToBoxAdapter(
+      child: SizedBox(
+        height: kBottomNavigationBarHeight + Insets.x2,
       ),
     );
   }

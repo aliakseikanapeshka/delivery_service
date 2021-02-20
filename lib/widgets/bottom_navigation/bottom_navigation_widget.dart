@@ -25,7 +25,6 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      backgroundColor: BrandingColors.background,
       items: _createBottomNavigationBarItems(),
       unselectedItemColor: BrandingColors.primaryText,
       selectedItemColor: BrandingColors.primary,
@@ -43,11 +42,11 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
     return widget.pages
         .map(
           (page) => BottomNavigationBarItem(
+            label: bottomNavigationItems[page].title,
             icon: BottomBarItemIcon(
               iconData: bottomNavigationItems[page].icon,
               assetsIconPath: bottomNavigationItems[page].assetsIconPath,
             ),
-            title: Text(bottomNavigationItems[page].title),
           ),
         )
         .toList();

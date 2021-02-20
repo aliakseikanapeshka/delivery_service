@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:delivery_service/pages/account/account_page.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
 import 'package:delivery_service/pages/base/base_page_state.dart';
@@ -31,23 +33,47 @@ class _ShellPageState extends BasePageState<ShellBloc, ShellPage> {
         builder: (_, state) {
           return Scaffold(
             backgroundColor: BrandingColors.background,
-            body: IndexedStack(
-              index: bloc.selectedItemIndex,
+            body: Stack(
               children: [
-                HomePage(),
-                PromoPage(),
-                CartPage(),
-                FavoritesPage(),
-                AccountPage(),
+                IndexedStack(
+                  index: bloc.selectedItemIndex,
+                  children: [
+                    HomePage(),
+                    PromoPage(),
+                    CartPage(),
+                    FavoritesPage(),
+                    AccountPage(),
+                  ],
+                ),
+                _buildBottomNavigation(),
               ],
-            ),
-            bottomNavigationBar: BottomNavigationWidget(
-              selectedIndex: bloc.selectedItemIndex,
-              pages: bloc.pages,
-              onTappedFunction: (page) => bloc.add(ShellEvent.selectPage(page)),
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildBottomNavigation() {
+    return Align(
+      alignment: FractionalOffset.bottomCenter,
+      child: ClipRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(
+            sigmaX: 6.0,
+            sigmaY: 6.0,
+          ),
+          child: Opacity(
+            opacity: 0.75,
+            child: BottomNavigationWidget(
+              pages: bloc.pages,
+              selectedIndex: bloc.selectedItemIndex,
+              onTappedFunction: (page) {
+                bloc.add(ShellEvent.selectPage(page));
+              },
+            ),
+          ),
+        ),
       ),
     );
   }

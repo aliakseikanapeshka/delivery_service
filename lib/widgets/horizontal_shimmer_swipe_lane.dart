@@ -3,22 +3,17 @@ import 'package:delivery_service/theme/radiuses.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-typedef LaneChildBuilder<Model> = Widget Function(
-  BuildContext context,
-  Model model,
-);
+import 'shimmer_content.dart';
 
-class HorizontalSwipeLane<T> extends StatelessWidget {
-  final List<T> items;
-  final LaneChildBuilder<T> childWidgetBuilder;
+class HorizontalShimmerSwipeLane extends StatelessWidget {
+  final int itemCount;
   final double viewportFraction;
   final double height;
   final double elevation;
   final double borderRadius;
 
-  HorizontalSwipeLane({
-    @required this.items,
-    @required this.childWidgetBuilder,
+  HorizontalShimmerSwipeLane({
+    this.itemCount = 3,
     this.viewportFraction = 0.92,
     this.height = 200,
     this.elevation = 0.8,
@@ -32,7 +27,7 @@ class HorizontalSwipeLane<T> extends StatelessWidget {
       child: PageView.builder(
         physics: BouncingScrollPhysics(),
         controller: PageController(viewportFraction: viewportFraction),
-        itemCount: items.length,
+        itemCount: itemCount,
         itemBuilder: (_, i) {
           return Card(
             clipBehavior: Clip.antiAlias,
@@ -41,10 +36,7 @@ class HorizontalSwipeLane<T> extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(borderRadius),
             ),
-            child: childWidgetBuilder(
-              context,
-              items[i],
-            ),
+            child: ShimmerContent(),
           );
         },
       ),

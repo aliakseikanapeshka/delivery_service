@@ -7,7 +7,9 @@ import 'package:delivery_service/pages/base/base_page_state.dart';
 import 'package:delivery_service/theme/branding_colors.dart';
 import 'package:delivery_service/theme/insets.dart';
 import 'package:delivery_service/theme/radiuses.dart';
+import 'package:delivery_service/widgets/horizontal_shimmer_swipe_lane.dart';
 import 'package:delivery_service/widgets/horizontal_swipe_lane.dart';
+import 'package:delivery_service/widgets/shimmer_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,26 +35,38 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
           appBar: AppBar(
             title: Text(translate(LocalizationKeys.Home_Title)),
           ),
-          body: _buildBody(context),
+          body: _buildBody(context, state),
         );
       },
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody(BuildContext context, BaseState state) {
     return SafeArea(
       child: CustomScrollView(
         physics: BouncingScrollPhysics(),
-        slivers: [
-          if (bloc.promosList.isNotEmpty) _buildPromoLane(context),
-          if (bloc.favoritesList.isNotEmpty) _buildFavoritesLane(context),
-          if (bloc.restaurantsList.isNotEmpty) _buildRestaurantsList(context),
-        ],
+        slivers: _getSliverFromState(state),
       ),
     );
   }
 
-  Widget _buildPromoLane(BuildContext context) {
+  List<Widget> _getSliverFromState(BaseState state) {
+    if (state is InitialState) {
+      return [
+        _buildShimmerLaneWithTitle(),
+        _buildShimmerLaneWithTitle(),
+        _buildShimmerList(),
+      ];
+    } else {
+      return [
+        if (bloc.promosList.isNotEmpty) _buildPromoLane(),
+        if (bloc.favoritesList.isNotEmpty) _buildFavoritesLane(),
+        if (bloc.restaurantsList.isNotEmpty) _buildRestaurantsList(),
+      ];
+    }
+  }
+
+  Widget _buildPromoLane() {
     return SliverToBoxAdapter(
       child: Column(
         children: [
@@ -83,7 +97,7 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
     );
   }
 
-  Widget _buildFavoritesLane(BuildContext context) {
+  Widget _buildFavoritesLane() {
     return SliverToBoxAdapter(
       child: Column(
         children: [
@@ -114,7 +128,7 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
     );
   }
 
-  Widget _buildRestaurantsList(BuildContext context) {
+  Widget _buildRestaurantsList() {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (_, index) {
@@ -124,6 +138,7 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
             child: FractionallySizedBox(
               widthFactor: 0.92,
               child: Card(
+                clipBehavior: Clip.antiAlias,
                 shadowColor: BrandingColors.background,
                 elevation: 0.8,
                 shape: RoundedRectangleBorder(
@@ -154,6 +169,45 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
           );
         },
         childCount: bloc.restaurantsList.length,
+      ),
+    );
+  }
+
+  Widget _buildShimmerLaneWithTitle() {
+    return SliverToBoxAdapter(
+      child: Column(
+        children: [
+          Text(
+            "Promos",
+            style: TextStyle(fontSize: 26),
+          ),
+          HorizontalShimmerSwipeLane(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildShimmerList() {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (_, index) {
+          return SizedBox(
+            height: 200,
+            child: FractionallySizedBox(
+              widthFactor: 0.92,
+              child: Card(
+                clipBehavior: Clip.antiAlias,
+                shadowColor: BrandingColors.background,
+                elevation: 0.8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(Radiuses.big_1x),
+                ),
+                child: ShimmerContent(),
+              ),
+            ),
+          );
+        },
+        childCount: 3,
       ),
     );
   }

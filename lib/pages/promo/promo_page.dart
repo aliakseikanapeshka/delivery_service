@@ -2,8 +2,8 @@ import 'package:delivery_service/localization/localization_keys.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
 import 'package:delivery_service/pages/base/base_page_state.dart';
 import 'package:delivery_service/pages/promo/promo_bloc.dart';
+import 'package:delivery_service/services/registry_service.dart';
 import 'package:delivery_service/theme/branding_colors.dart';
-import 'package:delivery_service/widgets/loading_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +25,10 @@ class _PromoPageState extends BasePageState<PromoBloc, PromoPage> {
         return Scaffold(
           backgroundColor: BrandingColors.background,
           appBar: AppBar(
-            title: Text(translate(LocalizationKeys.Promo_Title)),
+            title: Text(
+              translate(LocalizationKeys.Promo_Title),
+              style: textTheme.headline4,
+            ),
           ),
           body: SafeArea(
             child: Stack(

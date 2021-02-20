@@ -15,6 +15,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'home_bloc.dart';
 
@@ -36,7 +37,7 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
           appBar: AppBar(
             title: Text(
               translate(LocalizationKeys.Home_Title),
-              style: textTheme.headline1,
+              style: textTheme.headline4,
             ),
           ),
           body: _buildBody(context, state),
@@ -57,79 +58,90 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
   List<Widget> _getSliverFromState(BaseState state) {
     if (state is InitialState) {
       return [
+        _buildShimmerSectionTitle(),
         _buildShimmerLaneWithTitle(),
+        _buildShimmerSectionTitle(),
         _buildShimmerLaneWithTitle(),
+        _buildShimmerSectionTitle(),
         _buildShimmerList(),
         _buildBottomSpacingSliver(),
       ];
     } else {
       return [
+        if (bloc.promosList.isNotEmpty)
+          _buildSectionTitle(translate(LocalizationKeys.Home_Section_Promo)),
         if (bloc.promosList.isNotEmpty) _buildPromoLane(),
+        if (bloc.favoritesList.isNotEmpty)
+          _buildSectionTitle(
+              translate(LocalizationKeys.Home_Section_Favorites)),
         if (bloc.favoritesList.isNotEmpty) _buildFavoritesLane(),
+        if (bloc.restaurantsList.isNotEmpty)
+          _buildSectionTitle(
+              translate(LocalizationKeys.Home_Section_Restaurants)),
         if (bloc.restaurantsList.isNotEmpty) _buildRestaurantsList(),
         _buildBottomSpacingSliver(),
       ];
     }
   }
 
+  Widget _buildSectionTitle(String title) => SliverToBoxAdapter(
+        child: SizedBox(
+          height: Insets.x6,
+          child: FractionallySizedBox(
+            widthFactor: 0.90,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                title,
+                style: textTheme.headline6,
+              ),
+            ),
+          ),
+        ),
+      );
+
   Widget _buildPromoLane() {
     return SliverToBoxAdapter(
-      child: Column(
-        children: [
-          Text(
-            "Promos",
-            style: TextStyle(fontSize: 26),
-          ),
-          HorizontalSwipeLane<PromoModel>(
-            items: bloc.promosList,
-            childWidgetBuilder: (context, model) {
-              return Center(
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    CachedNetworkImage(imageUrl: model.imageUrl),
-                    Positioned(
-                      top: Insets.x2,
-                      left: Insets.x2,
-                      child: Text(model.title),
-                    ),
-                  ],
+      child: HorizontalSwipeLane<PromoModel>(
+        items: bloc.promosList,
+        childWidgetBuilder: (context, model) {
+          return Center(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                CachedNetworkImage(imageUrl: model.imageUrl),
+                Positioned(
+                  top: Insets.x2,
+                  left: Insets.x2,
+                  child: Text(model.title),
                 ),
-              );
-            },
-          ),
-        ],
+              ],
+            ),
+          );
+        },
       ),
     );
   }
 
   Widget _buildFavoritesLane() {
     return SliverToBoxAdapter(
-      child: Column(
-        children: [
-          Text(
-            "Favorites",
-            style: TextStyle(fontSize: 26),
-          ),
-          HorizontalSwipeLane<FavoriteModel>(
-            items: bloc.favoritesList,
-            childWidgetBuilder: (context, model) {
-              return Center(
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    CachedNetworkImage(imageUrl: model.imageUrl),
-                    Positioned(
-                      top: Insets.x2,
-                      left: Insets.x2,
-                      child: Text(model.restaurantName),
-                    ),
-                  ],
+      child: HorizontalSwipeLane<FavoriteModel>(
+        items: bloc.favoritesList,
+        childWidgetBuilder: (context, model) {
+          return Center(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                CachedNetworkImage(imageUrl: model.imageUrl),
+                Positioned(
+                  top: Insets.x2,
+                  left: Insets.x2,
+                  child: Text(model.restaurantName),
                 ),
-              );
-            },
-          ),
-        ],
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -139,39 +151,44 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
       delegate: SliverChildBuilderDelegate(
         (_, index) {
           final model = bloc.restaurantsList[index];
-          return SizedBox(
-            height: 200,
-            child: FractionallySizedBox(
-              widthFactor: 0.92,
-              child: Card(
-                clipBehavior: Clip.antiAlias,
-                shadowColor: BrandingColors.background,
-                elevation: 0.8,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(Radiuses.big_1x),
-                ),
-                child: Center(
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      CachedNetworkImage(imageUrl: model.imageUrl),
-                      Positioned(
-                        top: Insets.x2,
-                        left: Insets.x2,
-                        child: Column(
-                          children: [
-                            Text(model.name),
-                            Text("from ${model.minOrderPrice} rub"),
-                            Text(
-                                "${model.minDeliveryTime} - ${model.maxDeliveryTime} min"),
-                          ],
-                        ),
+          return Column(
+            children: [
+              SizedBox(
+                height: 200,
+                child: FractionallySizedBox(
+                  widthFactor: 0.92,
+                  child: Card(
+                    clipBehavior: Clip.antiAlias,
+                    shadowColor: BrandingColors.background,
+                    elevation: 0.8,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Radiuses.big_1x),
+                    ),
+                    child: Center(
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          CachedNetworkImage(imageUrl: model.imageUrl),
+                          Positioned(
+                            top: Insets.x2,
+                            left: Insets.x2,
+                            child: Column(
+                              children: [
+                                Text(model.name),
+                                Text("from ${model.minOrderPrice} rub"),
+                                Text(
+                                    "${model.minDeliveryTime} - ${model.maxDeliveryTime} min"),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
+              SizedBox(height: Insets.x2),
+            ],
           );
         },
         childCount: bloc.restaurantsList.length,
@@ -179,38 +196,59 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
     );
   }
 
-  Widget _buildShimmerLaneWithTitle() {
-    return SliverToBoxAdapter(
-      child: Column(
-        children: [
-          Text(
-            "Promos",
-            style: TextStyle(fontSize: 26),
+  Widget _buildShimmerSectionTitle() => SliverToBoxAdapter(
+        child: SizedBox(
+          height: Insets.x6,
+          child: FractionallySizedBox(
+            widthFactor: 0.90,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Shimmer.fromColors(
+                baseColor: Colors.grey[400],
+                highlightColor: Colors.grey[300],
+                child: Container(
+                  height: 14,
+                  width: 130,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(Radiuses.small_3x),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
-          HorizontalShimmerSwipeLane(),
-        ],
-      ),
-    );
-  }
+        ),
+      );
+
+  Widget _buildShimmerLaneWithTitle() => SliverToBoxAdapter(
+        child: HorizontalShimmerSwipeLane(),
+      );
 
   Widget _buildShimmerList() {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (_, index) {
-          return SizedBox(
-            height: 200,
-            child: FractionallySizedBox(
-              widthFactor: 0.92,
-              child: Card(
-                clipBehavior: Clip.antiAlias,
-                shadowColor: BrandingColors.background,
-                elevation: 0.8,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(Radiuses.big_1x),
+          return Column(
+            children: [
+              SizedBox(
+                height: 200,
+                child: FractionallySizedBox(
+                  widthFactor: 0.92,
+                  child: Card(
+                    clipBehavior: Clip.antiAlias,
+                    shadowColor: BrandingColors.background,
+                    elevation: 0.8,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Radiuses.big_1x),
+                    ),
+                    child: ShimmerContent(),
+                  ),
                 ),
-                child: ShimmerContent(),
               ),
-            ),
+              SizedBox(height: Insets.x2),
+            ],
           );
         },
         childCount: 3,
@@ -220,9 +258,7 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
 
   Widget _buildBottomSpacingSliver() {
     return SliverToBoxAdapter(
-      child: SizedBox(
-        height: kBottomNavigationBarHeight + Insets.x2,
-      ),
+      child: SizedBox(height: kBottomNavigationBarHeight),
     );
   }
 }

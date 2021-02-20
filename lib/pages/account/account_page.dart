@@ -1,6 +1,7 @@
 import 'package:delivery_service/localization/localization_keys.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
 import 'package:delivery_service/pages/base/base_page_state.dart';
+import 'package:delivery_service/services/registry_service.dart';
 import 'package:delivery_service/theme/branding_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,10 @@ class _AccountPageState extends BasePageState<AccountBloc, AccountPage> {
         return Scaffold(
           backgroundColor: BrandingColors.background,
           appBar: AppBar(
-            title: Text(translate(LocalizationKeys.Account_Title)),
+            title: Text(
+              translate(LocalizationKeys.Account_Title),
+              style: textTheme.headline4,
+            ),
           ),
           body: SafeArea(
             child: Stack(

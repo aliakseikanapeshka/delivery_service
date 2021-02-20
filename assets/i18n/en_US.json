@@ -8,7 +8,11 @@
   },
   "home": {
     "title": "Home",
-    "content": "Home page"
+    "section": {
+      "promo": "Promo",
+      "favorites": "Favorites",
+      "restaurants": "Restaurants"
+    }
   },
   "promo": {
     "title": "Promo",

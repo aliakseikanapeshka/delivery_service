@@ -4,6 +4,7 @@ import 'package:delivery_service/data/models/promo_model.dart';
 import 'package:delivery_service/localization/localization_keys.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
 import 'package:delivery_service/pages/base/base_page_state.dart';
+import 'package:delivery_service/services/registry_service.dart';
 import 'package:delivery_service/theme/branding_colors.dart';
 import 'package:delivery_service/theme/insets.dart';
 import 'package:delivery_service/theme/radiuses.dart';
@@ -33,7 +34,10 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
         return Scaffold(
           backgroundColor: BrandingColors.background,
           appBar: AppBar(
-            title: Text(translate(LocalizationKeys.Home_Title)),
+            title: Text(
+              translate(LocalizationKeys.Home_Title),
+              style: textTheme.headline1,
+            ),
           ),
           body: _buildBody(context, state),
         );

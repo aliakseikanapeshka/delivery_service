@@ -36,32 +36,50 @@ class ThemeProvider {
 class _TextStyles {
   static final _baseFont = GoogleFonts.roboto();
 
-  static final button = _baseFont.copyWith(
-    color: BrandingColors.secondary,
-    fontSize: FontSizes.small_1x,
-    fontWeight: FontWeight.w700,
+  static final headline1 = _baseFont.copyWith(
+    color: BrandingColors.primaryText,
+    fontSize: FontSizes.big_5x,
+    fontWeight: FontWeight.w600,
   );
 
-  static final caption = _baseFont.copyWith(
-    color: BrandingColors.secondary,
-    fontSize: FontSizes.small_2x,
-    fontWeight: FontWeight.w400,
+  static final headline2 = _baseFont.copyWith(
+    color: BrandingColors.primaryText,
+    fontSize: FontSizes.big_4x,
+    fontWeight: FontWeight.w600,
   );
 
-  static final overline = _baseFont.copyWith(
-    color: BrandingColors.secondaryText,
-    fontSize: FontSizes.small_3x,
+  static final headline3 = _baseFont.copyWith(
+    color: BrandingColors.primaryText,
+    fontSize: FontSizes.big_3x,
+    fontWeight: FontWeight.w600,
+  );
+
+  static final headline4 = _baseFont.copyWith(
+    color: BrandingColors.primaryText,
+    fontSize: FontSizes.big_2x,
+    fontWeight: FontWeight.w600,
+  );
+
+  static final headline5 = _baseFont.copyWith(
+    color: BrandingColors.primaryText,
+    fontSize: FontSizes.big_2x,
     fontWeight: FontWeight.w500,
+  );
+
+  static final headline6 = _baseFont.copyWith(
+    color: BrandingColors.primaryText,
+    fontSize: FontSizes.big_1x,
+    fontWeight: FontWeight.normal,
   );
 
   static final subtitle1 = _baseFont.copyWith(
     color: BrandingColors.primaryText,
     fontSize: FontSizes.normal,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.normal,
   );
 
   static final subtitle2 = _baseFont.copyWith(
-    color: BrandingColors.primaryText,
+    color: BrandingColors.primaryText.withOpacity(0.7),
     fontSize: FontSizes.normal,
     fontWeight: FontWeight.w300,
   );
@@ -74,43 +92,25 @@ class _TextStyles {
 
   static final bodyText2 = _baseFont.copyWith(
     color: BrandingColors.primaryText,
-    fontSize: FontSizes.normal,
-    fontWeight: FontWeight.w300,
-  );
-
-  static final headline1 = _baseFont.copyWith(
-    color: BrandingColors.secondaryText,
-    fontSize: FontSizes.big_1x,
-    fontWeight: FontWeight.w400,
-  );
-
-  static final headline2 = _baseFont.copyWith(
-    color: BrandingColors.primaryText,
-    fontSize: FontSizes.big_2x,
-    fontWeight: FontWeight.w400,
-  );
-
-  static final headline3 = _baseFont.copyWith(
-    color: BrandingColors.primaryText.withOpacity(0.5),
     fontSize: FontSizes.small_1x,
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.normal,
   );
 
-  static final headline4 = _baseFont.copyWith(
-    color: BrandingColors.primaryText,
-    fontSize: FontSizes.small_2x,
-    fontWeight: FontWeight.w400,
-  );
-
-  static final headline5 = _baseFont.copyWith(
-    color: BrandingColors.primaryText,
+  static final button = _baseFont.copyWith(
+    color: BrandingColors.primaryText.withOpacity(0.9),
     fontSize: FontSizes.big_1x,
     fontWeight: FontWeight.w500,
   );
 
-  static final headline6 = _baseFont.copyWith(
+  static final caption = _baseFont.copyWith(
     color: BrandingColors.primaryText,
-    fontSize: FontSizes.big_4x,
+    fontSize: FontSizes.small_2x,
+    fontWeight: FontWeight.normal,
+  );
+
+  static final overline = _baseFont.copyWith(
+    color: BrandingColors.primaryText.withOpacity(0.6),
+    fontSize: FontSizes.small_2x,
     fontWeight: FontWeight.w500,
   );
 }

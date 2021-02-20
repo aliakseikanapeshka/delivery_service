@@ -3,9 +3,9 @@ import 'package:delivery_service/data/models/promo_model.dart';
 import 'package:delivery_service/data/models/restaurant_model.dart';
 
 abstract class HomeRepository {
-  Future<List<PromoModel>> getPromoList();
+  Future<List<PromoModel>> getPromosList();
 
-  Future<List<FavoriteModel>> getFavoriteList();
+  Future<List<FavoriteModel>> getFavoritesList();
 
-  Future<List<RestaurantModel>> getRestaurantList();
+  Future<List<RestaurantModel>> getRestaurantsList();
 }

@@ -1,26 +1,35 @@
 import 'dart:async';
 
+import 'package:delivery_service/data/models/favorite_model.dart';
+import 'package:delivery_service/data/models/promo_model.dart';
+import 'package:delivery_service/data/models/restaurant_model.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
-
-class HomeEvent extends BaseEvent {
-  const HomeEvent();
-
-  factory HomeEvent.empty() = _EmptyEvent;
-}
-
-class _EmptyEvent extends HomeEvent {}
+import 'package:delivery_service/services/registry_service.dart';
 
 class HomeBloc extends BaseBloc {
-  @override
-  Stream<BaseState> initialize() async* {
-    yield BaseState.success();
-  }
+  List<PromoModel> get promosList => List.from(_promosList);
+
+  List<FavoriteModel> get favoritesList => List.from(_favoritesList);
+
+  List<RestaurantModel> get restaurantsList => List.from(_restaurantsList);
+
+  List<PromoModel> _promosList = [];
+  List<FavoriteModel> _favoritesList = [];
+  List<RestaurantModel> _restaurantsList = [];
 
   @override
-  Stream<BaseState> handleEvent(BaseEvent event) async* {
-    if (event is _EmptyEvent) {
-      yield BaseState.success();
-    }
+  Stream<BaseState> initialize() async* {
+    await Future.wait<void>([
+      homeRepository.getPromosList().then((result) => _promosList = result),
+      homeRepository
+          .getFavoritesList()
+          .then((result) => _favoritesList = result),
+      homeRepository
+          .getRestaurantsList()
+          .then((result) => _restaurantsList = result),
+    ]);
+
+    yield BaseState.success();
   }
 
   @override

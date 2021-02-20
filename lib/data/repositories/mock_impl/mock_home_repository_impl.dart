@@ -5,7 +5,9 @@ import 'package:delivery_service/data/repositories/interfaces/home_repository.da
 
 class MockHomeRepositoryImpl implements HomeRepository {
   @override
-  Future<List<PromoModel>> getPromoList() async {
+  Future<List<PromoModel>> getPromosList() async {
+    await Future.delayed(Duration(seconds: 2));
+
     final promoList = List<PromoModel>();
 
     for (var i = 1; i < 6; i++) {
@@ -20,7 +22,9 @@ class MockHomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-  Future<List<FavoriteModel>> getFavoriteList() async {
+  Future<List<FavoriteModel>> getFavoritesList() async {
+    await Future.delayed(Duration(seconds: 3));
+
     final favoriteList = List<FavoriteModel>();
 
     for (var i = 1; i < 6; i++) {
@@ -35,7 +39,9 @@ class MockHomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-  Future<List<RestaurantModel>> getRestaurantList() async {
+  Future<List<RestaurantModel>> getRestaurantsList() async {
+    await Future.delayed(Duration(seconds: 1));
+
     final restaurantList = List<RestaurantModel>();
 
     for (var i = 1; i < 6; i++) {

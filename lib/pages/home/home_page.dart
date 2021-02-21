@@ -108,11 +108,45 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
           return Stack(
             fit: StackFit.expand,
             children: [
-              CachedNetworkImage(imageUrl: model.imageUrl),
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                color: Colors.grey[300],
+                child: CachedNetworkImage(
+                  fit: BoxFit.cover,
+                  imageUrl: model.imageUrl,
+                  fadeOutDuration: Duration(),
+                  placeholder: (context, url) => Icon(
+                    Icons.image,
+                    color: Colors.grey[100],
+                    size: Insets.x25,
+                  ),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: [0.0, 0.3, 1],
+                    colors: [
+                      Colors.grey[800].withOpacity(0.45),
+                      Colors.grey[800].withOpacity(0.2),
+                      Colors.transparent,
+                    ],
+                  ),
+                ),
+              ),
               Positioned(
-                top: Insets.x2,
-                left: Insets.x2,
-                child: Text(model.title),
+                top: Insets.x4_5,
+                left: Insets.x4_5,
+                child: Text(
+                  model.title,
+                  style: textTheme.headline4.copyWith(
+                    color: BrandingColors.secondary,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
             ],
           );
@@ -129,11 +163,45 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
           return Stack(
             fit: StackFit.expand,
             children: [
-              CachedNetworkImage(imageUrl: model.imageUrl),
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                color: Colors.grey[300],
+                child: CachedNetworkImage(
+                  fit: BoxFit.cover,
+                  imageUrl: model.imageUrl,
+                  fadeOutDuration: Duration(),
+                  placeholder: (context, url) => Icon(
+                    Icons.image,
+                    color: Colors.grey[100],
+                    size: Insets.x25,
+                  ),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: [0.0, 0.3, 1],
+                    colors: [
+                      Colors.grey[800].withOpacity(0.45),
+                      Colors.grey[800].withOpacity(0.2),
+                      Colors.transparent,
+                    ],
+                  ),
+                ),
+              ),
               Positioned(
-                top: Insets.x2,
-                left: Insets.x2,
-                child: Text(model.restaurantName),
+                top: Insets.x4_5,
+                left: Insets.x4_5,
+                child: Text(
+                  model.restaurantName,
+                  style: textTheme.headline4.copyWith(
+                    color: BrandingColors.secondary,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
             ],
           );
@@ -149,35 +217,120 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
           final model = bloc.restaurantsList[index];
           return Column(
             children: [
-              SizedBox(
-                height: 200,
-                child: FractionallySizedBox(
-                  widthFactor: 0.92,
-                  child: Card(
-                    clipBehavior: Clip.antiAlias,
-                    shadowColor: BrandingColors.background,
-                    elevation: 0.8,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(Radiuses.big_1x),
-                    ),
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        CachedNetworkImage(imageUrl: model.imageUrl),
-                        Positioned(
-                          top: Insets.x2,
-                          left: Insets.x2,
+              FractionallySizedBox(
+                widthFactor: 0.92,
+                child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  shadowColor: BrandingColors.background,
+                  elevation: 0.8,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(Radiuses.big_1x),
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 160,
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Container(
+                              height: double.infinity,
+                              width: double.infinity,
+                              color: Colors.grey[300],
+                              child: CachedNetworkImage(
+                                fit: BoxFit.cover,
+                                imageUrl: model.imageUrl,
+                                fadeOutDuration: Duration(),
+                                placeholder: (context, url) => Icon(
+                                  Icons.image,
+                                  color: Colors.grey[100],
+                                  size: Insets.x25,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  stops: [0.0, 0.3, 1],
+                                  colors: [
+                                    Colors.grey[800].withOpacity(0.3),
+                                    Colors.grey[800].withOpacity(0.1),
+                                    Colors.transparent,
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: Insets.x2,
+                              left: Insets.x2,
+                              child: Column(
+                                children: [],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 96,
+                        width: double.infinity,
+                        child: Padding(
+                          padding: EdgeInsets.all(Insets.x4_5),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(model.name),
-                              Text("from ${model.minOrderPrice} rub"),
                               Text(
-                                  "${model.minDeliveryTime} - ${model.maxDeliveryTime} min"),
+                                model.name,
+                                style: textTheme.headline3,
+                              ),
+                              SizedBox(
+                                height: Insets.x1,
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[100],
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(Radiuses.normal),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.all(Insets.x1_5),
+                                      child: Text(
+                                        "${model.minDeliveryTime} - ${model.maxDeliveryTime} min",
+                                        style: textTheme.subtitle2,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: Insets.x2,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[100],
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(Radiuses.normal),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.all(Insets.x1_5),
+                                      child: Text(
+                                        "from ${model.minOrderPrice} rub",
+                                        style: textTheme.subtitle2,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),

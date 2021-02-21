@@ -8,7 +8,7 @@ class HorizontalShimmerSwipeLane extends StatelessWidget {
   final double height;
 
   HorizontalShimmerSwipeLane({
-    this.itemCount = 3,
+    this.itemCount = 2,
     this.viewportFraction = 0.92,
     this.height = 200,
   });

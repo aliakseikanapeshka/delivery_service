@@ -40,57 +40,70 @@ class _FavoritesPageState extends BasePageState<FavoritesBloc, FavoritesPage> {
     );
   }
 
-  Widget _buildBody(BaseState state) =>
-      SafeArea(child: _getContentFromState(state));
+  Widget _buildBody(BaseState state) => SafeArea(
+        child: CustomScrollView(
+          physics: BouncingScrollPhysics(),
+          slivers: _getSliverFromState(state),
+        ),
+      );
 
-  Widget _getContentFromState(BaseState state) {
+  List<Widget> _getSliverFromState(BaseState state) {
     if (state is InitialState) {
-      return _getShimmerContent();
+      return _getShimmerSlivers();
     } else {
-      return _getContent();
+      return _getContentSlivers();
     }
   }
 
-  Widget _getContent() {
-    return ListView.separated(
-      physics: BouncingScrollPhysics(),
-      itemCount: bloc.favoritesList.length + 1,
-      separatorBuilder: (context, index) => SizedBox(height: Insets.x2),
-      itemBuilder: (context, index) {
-        if (index != bloc.favoritesList.length) {
-          return FractionallySizedBox(
-            widthFactor: 0.92,
-            child: RestaurantInfoCard(
-              model: bloc.favoritesList[index],
-            ),
-          );
-        } else {
-          return _buildBottomSpacing();
-        }
-      },
-    );
-  }
+  List<Widget> _getShimmerSlivers() => [
+        _buildShimmerList(),
+        _buildBottomSpacingSliver(),
+      ];
 
-  Widget _getShimmerContent() {
-    return ListView.separated(
-      physics: BouncingScrollPhysics(),
-      itemCount: 6,
-      separatorBuilder: (context, index) => SizedBox(height: Insets.x2),
-      itemBuilder: (context, index) {
-        if (index != 5) {
-          return SizedBox(
-            height: 256,
-            child: FractionallySizedBox(
-              widthFactor: 0.92,
-              child: ShimmerCard(),
-            ),
-          );
-        } else {
-          return _buildBottomSpacing();
-        }
-      },
-    );
-  }
+  List<Widget> _getContentSlivers() => [
+        CupertinoSliverRefreshControl(
+          refreshTriggerPullDistance: 170,
+          onRefresh: () async => bloc.add(BaseEvent.refresh()),
+        ),
+        if (bloc.favoritesList.isNotEmpty) _buildFavoritesList(),
+        _buildBottomSpacingSliver(),
+      ];
 
-  Widget _buildBottomSpacing() => SizedBox(height: kBottomNavigationBarHeight);
+  Widget _buildFavoritesList() => SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (_, index) => Column(
+            children: [
+              FractionallySizedBox(
+                widthFactor: 0.92,
+                child: RestaurantInfoCard(
+                  model: bloc.favoritesList[index],
+                ),
+              ),
+              SizedBox(height: Insets.x2),
+            ],
+          ),
+          childCount: bloc.favoritesList.length,
+        ),
+      );
+
+  Widget _buildShimmerList() => SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (_, index) => Column(
+            children: [
+              SizedBox(
+                height: 256,
+                child: FractionallySizedBox(
+                  widthFactor: 0.92,
+                  child: ShimmerCard(),
+                ),
+              ),
+              SizedBox(height: Insets.x2),
+            ],
+          ),
+          childCount: 4,
+        ),
+      );
+
+  Widget _buildBottomSpacingSliver() =>
+      SliverToBoxAdapter(child: SizedBox(height: kBottomNavigationBarHeight));
 }

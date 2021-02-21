@@ -39,60 +39,73 @@ class _PromoPageState extends BasePageState<PromoBloc, PromoPage> {
     );
   }
 
-  Widget _buildBody(BaseState state) =>
-      SafeArea(child: _getContentFromState(state));
+  Widget _buildBody(BaseState state) => SafeArea(
+        child: CustomScrollView(
+          physics: BouncingScrollPhysics(),
+          slivers: _getSliverFromState(state),
+        ),
+      );
 
-  Widget _getContentFromState(BaseState state) {
+  List<Widget> _getSliverFromState(BaseState state) {
     if (state is InitialState) {
-      return _getShimmerContent();
+      return _getShimmerSlivers();
     } else {
-      return _getContent();
+      return _getContentSlivers();
     }
   }
 
-  Widget _getContent() {
-    return ListView.separated(
-      physics: BouncingScrollPhysics(),
-      itemCount: bloc.promosList.length + 1,
-      separatorBuilder: (context, index) => SizedBox(height: Insets.x2),
-      itemBuilder: (context, index) {
-        if (index != bloc.promosList.length) {
-          return SizedBox(
-            height: 200,
-            child: FractionallySizedBox(
-              widthFactor: 0.92,
-              child: PromoInfoCard(
-                model: bloc.promosList[index],
+  List<Widget> _getShimmerSlivers() => [
+        _buildShimmerList(),
+        _buildBottomSpacingSliver(),
+      ];
+
+  List<Widget> _getContentSlivers() => [
+        CupertinoSliverRefreshControl(
+          refreshTriggerPullDistance: 170,
+          onRefresh: () async => bloc.add(BaseEvent.refresh()),
+        ),
+        if (bloc.promosList.isNotEmpty) _buildPromoList(),
+        _buildBottomSpacingSliver(),
+      ];
+
+  Widget _buildPromoList() => SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (_, index) => Column(
+            children: [
+              FractionallySizedBox(
+                widthFactor: 0.92,
+                child: SizedBox(
+                  height: 200,
+                  child: PromoInfoCard(
+                    model: bloc.promosList[index],
+                  ),
+                ),
               ),
-            ),
-          );
-        } else {
-          return _buildBottomSpacing();
-        }
-      },
-    );
-  }
+              SizedBox(height: Insets.x2),
+            ],
+          ),
+          childCount: bloc.promosList.length,
+        ),
+      );
 
-  Widget _getShimmerContent() {
-    return ListView.separated(
-      physics: BouncingScrollPhysics(),
-      itemCount: 6,
-      separatorBuilder: (context, index) => SizedBox(height: Insets.x2),
-      itemBuilder: (context, index) {
-        if (index != 5) {
-          return SizedBox(
-            height: 200,
-            child: FractionallySizedBox(
-              widthFactor: 0.92,
-              child: ShimmerCard(),
-            ),
-          );
-        } else {
-          return _buildBottomSpacing();
-        }
-      },
-    );
-  }
+  Widget _buildShimmerList() => SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (_, index) => Column(
+            children: [
+              SizedBox(
+                height: 200,
+                child: FractionallySizedBox(
+                  widthFactor: 0.92,
+                  child: ShimmerCard(),
+                ),
+              ),
+              SizedBox(height: Insets.x2),
+            ],
+          ),
+          childCount: 5,
+        ),
+      );
 
-  Widget _buildBottomSpacing() => SizedBox(height: kBottomNavigationBarHeight);
+  Widget _buildBottomSpacingSliver() =>
+      SliverToBoxAdapter(child: SizedBox(height: kBottomNavigationBarHeight));
 }

@@ -74,6 +74,10 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
       ];
 
   List<Widget> _getContentSlivers() => [
+        CupertinoSliverRefreshControl(
+          refreshTriggerPullDistance: 170,
+          onRefresh: () async => bloc.add(BaseEvent.refresh()),
+        ),
         if (bloc.promosList.isNotEmpty)
           _buildSectionTitle(
             title: translate(LocalizationKeys.Home_Section_Promo),
@@ -172,7 +176,7 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
               SizedBox(height: Insets.x2),
             ],
           ),
-          childCount: 3,
+          childCount: 2,
         ),
       );
 
@@ -210,7 +214,6 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
         ),
       );
 
-  Widget _buildBottomSpacingSliver() => SliverToBoxAdapter(
-        child: SizedBox(height: kBottomNavigationBarHeight),
-      );
+  Widget _buildBottomSpacingSliver() =>
+      SliverToBoxAdapter(child: SizedBox(height: kBottomNavigationBarHeight));
 }

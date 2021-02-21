@@ -43,7 +43,10 @@ class BaseBloc extends Bloc<BaseEvent, BaseState> {
 
   @override
   Stream<BaseState> mapEventToState(BaseEvent event) async* {
-    if (event is _InitEvent || event is _RefreshEvent) {
+    if (event is _InitEvent) {
+      yield* initialize();
+    } else if (event is _RefreshEvent) {
+      yield BaseState.initial();
       yield* initialize();
     } else {
       yield* handleEvent(event);

@@ -1,26 +1,21 @@
 import 'dart:async';
 
+import 'package:delivery_service/data/models/promo_model.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
-
-class PromoEvent extends BaseEvent {
-  const PromoEvent();
-
-  factory PromoEvent.empty() = _EmptyEvent;
-}
-
-class _EmptyEvent extends PromoEvent {}
+import 'package:delivery_service/services/registry_service.dart';
 
 class PromoBloc extends BaseBloc {
-  @override
-  Stream<BaseState> initialize() async* {
-    yield BaseState.success();
-  }
+  List<PromoModel> get promosList => List.from(_promosList);
+
+  List<PromoModel> _promosList = [];
 
   @override
-  Stream<BaseState> handleEvent(BaseEvent event) async* {
-    if (event is _EmptyEvent) {
-      yield BaseState.success();
-    }
+  Stream<BaseState> initialize() async* {
+    await Future.wait<void>([
+      promoRepository.getPromosList().then((result) => _promosList = result),
+    ]);
+
+    yield BaseState.success();
   }
 
   @override

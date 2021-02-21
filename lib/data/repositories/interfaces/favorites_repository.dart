@@ -1,3 +1,5 @@
+import 'package:delivery_service/data/models/restaurant_model.dart';
+
 abstract class FavoritesRepository {
-  Future<void> fetchSomeData();
+  Future<List<RestaurantModel>> getFavoritesList();
 }

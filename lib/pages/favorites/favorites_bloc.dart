@@ -1,26 +1,23 @@
 import 'dart:async';
 
+import 'package:delivery_service/data/models/restaurant_model.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
-
-class FavoritesEvent extends BaseEvent {
-  const FavoritesEvent();
-
-  factory FavoritesEvent.empty() = _EmptyEvent;
-}
-
-class _EmptyEvent extends FavoritesEvent {}
+import 'package:delivery_service/services/registry_service.dart';
 
 class FavoritesBloc extends BaseBloc {
-  @override
-  Stream<BaseState> initialize() async* {
-    yield BaseState.success();
-  }
+  List<RestaurantModel> get favoritesList => List.from(_favoritesList);
+
+  List<RestaurantModel> _favoritesList = [];
 
   @override
-  Stream<BaseState> handleEvent(BaseEvent event) async* {
-    if (event is _EmptyEvent) {
-      yield BaseState.success();
-    }
+  Stream<BaseState> initialize() async* {
+    await Future.wait<void>([
+      favoritesRepository
+          .getFavoritesList()
+          .then((result) => _favoritesList = result),
+    ]);
+
+    yield BaseState.success();
   }
 
   @override

@@ -34,7 +34,7 @@ class ThemeProvider {
 }
 
 class _TextStyles {
-  static final _baseFont = GoogleFonts.roboto();
+  static final _baseFont = GoogleFonts.openSans();
 
   static final headline1 = _baseFont.copyWith(
     color: BrandingColors.primaryText,

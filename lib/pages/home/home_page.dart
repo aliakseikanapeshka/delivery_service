@@ -60,43 +60,54 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
       return [
         _buildShimmerSectionTitle(),
         _buildShimmerLaneWithTitle(),
-        _buildShimmerSectionTitle(),
+        _buildShimmerSectionTitle(isNeedTopSpacing: true),
         _buildShimmerLaneWithTitle(),
-        _buildShimmerSectionTitle(),
+        _buildShimmerSectionTitle(isNeedTopSpacing: true),
         _buildShimmerList(),
         _buildBottomSpacingSliver(),
       ];
     } else {
       return [
         if (bloc.promosList.isNotEmpty)
-          _buildSectionTitle(translate(LocalizationKeys.Home_Section_Promo)),
+          _buildSectionTitle(
+              title: translate(LocalizationKeys.Home_Section_Promo)),
         if (bloc.promosList.isNotEmpty) _buildPromoLane(),
         if (bloc.favoritesList.isNotEmpty)
           _buildSectionTitle(
-              translate(LocalizationKeys.Home_Section_Favorites)),
+            title: translate(LocalizationKeys.Home_Section_Favorites),
+            isNeedTopSpacing: true,
+          ),
         if (bloc.favoritesList.isNotEmpty) _buildFavoritesLane(),
         if (bloc.restaurantsList.isNotEmpty)
           _buildSectionTitle(
-              translate(LocalizationKeys.Home_Section_Restaurants)),
+            title: translate(LocalizationKeys.Home_Section_Restaurants),
+            isNeedTopSpacing: true,
+          ),
         if (bloc.restaurantsList.isNotEmpty) _buildRestaurantsList(),
         _buildBottomSpacingSliver(),
       ];
     }
   }
 
-  Widget _buildSectionTitle(String title) => SliverToBoxAdapter(
-        child: SizedBox(
-          height: Insets.x6,
-          child: FractionallySizedBox(
-            widthFactor: 0.90,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                title,
-                style: textTheme.headline6,
+  Widget _buildSectionTitle({String title, bool isNeedTopSpacing = false}) =>
+      SliverToBoxAdapter(
+        child: Column(
+          children: [
+            if (isNeedTopSpacing) SizedBox(height: Insets.x5),
+            SizedBox(
+              height: Insets.x5,
+              child: FractionallySizedBox(
+                widthFactor: 0.90,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    title,
+                    style: textTheme.headline6,
+                  ),
+                ),
               ),
             ),
-          ),
+          ],
         ),
       );
 
@@ -142,7 +153,7 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
                 left: Insets.x4_5,
                 child: Text(
                   model.title,
-                  style: textTheme.headline4.copyWith(
+                  style: textTheme.headline3.copyWith(
                     color: BrandingColors.secondary,
                     fontWeight: FontWeight.w500,
                   ),
@@ -197,7 +208,7 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
                 left: Insets.x4_5,
                 child: Text(
                   model.restaurantName,
-                  style: textTheme.headline4.copyWith(
+                  style: textTheme.headline3.copyWith(
                     color: BrandingColors.secondary,
                     fontWeight: FontWeight.w500,
                   ),
@@ -300,7 +311,7 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
                                       padding:
                                           const EdgeInsets.all(Insets.x1_5),
                                       child: Text(
-                                        "${model.minDeliveryTime} - ${model.maxDeliveryTime} min",
+                                        "${model.minDeliveryTime}-${model.maxDeliveryTime} min",
                                         style: textTheme.subtitle2,
                                       ),
                                     ),
@@ -319,7 +330,7 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
                                       padding:
                                           const EdgeInsets.all(Insets.x1_5),
                                       child: Text(
-                                        "from ${model.minOrderPrice} rub",
+                                        "From ${model.minOrderPrice.value} ${model.minOrderPrice.currency}",
                                         style: textTheme.subtitle2,
                                       ),
                                     ),
@@ -343,29 +354,35 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
     );
   }
 
-  Widget _buildShimmerSectionTitle() => SliverToBoxAdapter(
-        child: SizedBox(
-          height: Insets.x6,
-          child: FractionallySizedBox(
-            widthFactor: 0.90,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Shimmer.fromColors(
-                baseColor: Colors.grey[400],
-                highlightColor: Colors.grey[300],
-                child: Container(
-                  height: 14,
-                  width: 130,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(Radiuses.small_3x),
+  Widget _buildShimmerSectionTitle({bool isNeedTopSpacing = false}) =>
+      SliverToBoxAdapter(
+        child: Column(
+          children: [
+            if (isNeedTopSpacing) SizedBox(height: Insets.x5),
+            SizedBox(
+              height: Insets.x6,
+              child: FractionallySizedBox(
+                widthFactor: 0.90,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Shimmer.fromColors(
+                    baseColor: Colors.grey[400],
+                    highlightColor: Colors.grey[300],
+                    child: Container(
+                      height: 14,
+                      width: 130,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(Radiuses.small_3x),
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
       );
 
@@ -380,7 +397,7 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
           return Column(
             children: [
               SizedBox(
-                height: 200,
+                height: 256,
                 child: FractionallySizedBox(
                   widthFactor: 0.92,
                   child: Card(

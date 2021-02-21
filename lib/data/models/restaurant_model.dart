@@ -1,7 +1,9 @@
+import 'package:delivery_service/data/models/price_model.dart';
+
 class RestaurantModel {
   final String imageUrl;
   final String name;
-  final double minOrderPrice;
+  final Price minOrderPrice;
   final int minDeliveryTime;
   final int maxDeliveryTime;
 

@@ -40,24 +40,28 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
               style: textTheme.headline4,
             ),
           ),
-          body: _buildBody(context, state),
+          body: _buildBody(state),
         );
       },
     );
   }
 
-  Widget _buildBody(BuildContext context, BaseState state) {
-    return SafeArea(
-      child: CustomScrollView(
-        physics: BouncingScrollPhysics(),
-        slivers: _getSliverFromState(state),
-      ),
-    );
-  }
+  Widget _buildBody(BaseState state) => SafeArea(
+        child: CustomScrollView(
+          physics: BouncingScrollPhysics(),
+          slivers: _getSliverFromState(state),
+        ),
+      );
 
   List<Widget> _getSliverFromState(BaseState state) {
     if (state is InitialState) {
-      return [
+      return _getShimmerSlivers();
+    } else {
+      return _getContentSlivers();
+    }
+  }
+
+  List<Widget> _getShimmerSlivers() => [
         _buildShimmerSectionTitle(),
         _buildShimmerLaneWithTitle(),
         _buildShimmerSectionTitle(isNeedTopSpacing: true),
@@ -66,11 +70,12 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
         _buildShimmerList(),
         _buildBottomSpacingSliver(),
       ];
-    } else {
-      return [
+
+  List<Widget> _getContentSlivers() => [
         if (bloc.promosList.isNotEmpty)
           _buildSectionTitle(
-              title: translate(LocalizationKeys.Home_Section_Promo)),
+            title: translate(LocalizationKeys.Home_Section_Promo),
+          ),
         if (bloc.promosList.isNotEmpty) _buildPromoLane(),
         if (bloc.favoritesList.isNotEmpty)
           _buildSectionTitle(
@@ -86,10 +91,11 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
         if (bloc.restaurantsList.isNotEmpty) _buildRestaurantsList(),
         _buildBottomSpacingSliver(),
       ];
-    }
-  }
 
-  Widget _buildSectionTitle({String title, bool isNeedTopSpacing = false}) =>
+  Widget _buildSectionTitle({
+    String title,
+    bool isNeedTopSpacing = false,
+  }) =>
       SliverToBoxAdapter(
         child: Column(
           children: [
@@ -111,250 +117,245 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
         ),
       );
 
-  Widget _buildPromoLane() {
-    return SliverToBoxAdapter(
-      child: HorizontalSwipeLane<PromoModel>(
-        items: bloc.promosList,
-        childWidgetBuilder: (context, model) {
-          return Stack(
-            fit: StackFit.expand,
-            children: [
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                color: Colors.grey[300],
-                child: CachedNetworkImage(
-                  fit: BoxFit.cover,
-                  imageUrl: model.imageUrl,
-                  fadeOutDuration: Duration(),
-                  placeholder: (context, url) => Icon(
-                    Icons.image,
-                    color: Colors.grey[100],
-                    size: Insets.x25,
+  Widget _buildPromoLane() => SliverToBoxAdapter(
+        child: HorizontalSwipeLane<PromoModel>(
+          items: bloc.promosList,
+          childWidgetBuilder: (context, model) {
+            return Stack(
+              fit: StackFit.expand,
+              children: [
+                Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  color: Colors.grey[300],
+                  child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    imageUrl: model.imageUrl,
+                    fadeOutDuration: Duration(),
+                    placeholder: (context, url) => Icon(
+                      Icons.image,
+                      color: Colors.grey[100],
+                      size: Insets.x25,
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: [0.0, 0.3, 1],
-                    colors: [
-                      Colors.grey[800].withOpacity(0.45),
-                      Colors.grey[800].withOpacity(0.2),
-                      Colors.transparent,
-                    ],
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      stops: [0.0, 0.3, 1],
+                      colors: [
+                        Colors.grey[800].withOpacity(0.45),
+                        Colors.grey[800].withOpacity(0.2),
+                        Colors.transparent,
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Positioned(
-                top: Insets.x4_5,
-                left: Insets.x4_5,
-                child: Text(
-                  model.title,
-                  style: textTheme.headline3.copyWith(
-                    color: BrandingColors.secondary,
-                    fontWeight: FontWeight.w500,
+                Positioned(
+                  top: Insets.x4_5,
+                  left: Insets.x4_5,
+                  child: Text(
+                    model.title,
+                    style: textTheme.headline3.copyWith(
+                      color: BrandingColors.secondary,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
+              ],
+            );
+          },
+        ),
+      );
 
-  Widget _buildFavoritesLane() {
-    return SliverToBoxAdapter(
-      child: HorizontalSwipeLane<FavoriteModel>(
-        items: bloc.favoritesList,
-        childWidgetBuilder: (context, model) {
-          return Stack(
-            fit: StackFit.expand,
-            children: [
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                color: Colors.grey[300],
-                child: CachedNetworkImage(
-                  fit: BoxFit.cover,
-                  imageUrl: model.imageUrl,
-                  fadeOutDuration: Duration(),
-                  placeholder: (context, url) => Icon(
-                    Icons.image,
-                    color: Colors.grey[100],
-                    size: Insets.x25,
+  Widget _buildFavoritesLane() => SliverToBoxAdapter(
+        child: HorizontalSwipeLane<FavoriteModel>(
+          items: bloc.favoritesList,
+          childWidgetBuilder: (context, model) {
+            return Stack(
+              fit: StackFit.expand,
+              children: [
+                Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  color: Colors.grey[300],
+                  child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    imageUrl: model.imageUrl,
+                    fadeOutDuration: Duration(),
+                    placeholder: (context, url) => Icon(
+                      Icons.image,
+                      color: Colors.grey[100],
+                      size: Insets.x25,
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: [0.0, 0.3, 1],
-                    colors: [
-                      Colors.grey[800].withOpacity(0.45),
-                      Colors.grey[800].withOpacity(0.2),
-                      Colors.transparent,
-                    ],
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      stops: [0.0, 0.3, 1],
+                      colors: [
+                        Colors.grey[800].withOpacity(0.45),
+                        Colors.grey[800].withOpacity(0.2),
+                        Colors.transparent,
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Positioned(
-                top: Insets.x4_5,
-                left: Insets.x4_5,
-                child: Text(
-                  model.restaurantName,
-                  style: textTheme.headline3.copyWith(
-                    color: BrandingColors.secondary,
-                    fontWeight: FontWeight.w500,
+                Positioned(
+                  top: Insets.x4_5,
+                  left: Insets.x4_5,
+                  child: Text(
+                    model.restaurantName,
+                    style: textTheme.headline3.copyWith(
+                      color: BrandingColors.secondary,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
+              ],
+            );
+          },
+        ),
+      );
 
-  Widget _buildRestaurantsList() {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (_, index) {
-          final model = bloc.restaurantsList[index];
-          return Column(
-            children: [
-              FractionallySizedBox(
-                widthFactor: 0.92,
-                child: Card(
-                  clipBehavior: Clip.antiAlias,
-                  shadowColor: BrandingColors.background,
-                  elevation: 0.8,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(Radiuses.big_1x),
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 160,
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            Container(
-                              height: double.infinity,
-                              width: double.infinity,
-                              color: Colors.grey[300],
-                              child: CachedNetworkImage(
-                                fit: BoxFit.cover,
-                                imageUrl: model.imageUrl,
-                                fadeOutDuration: Duration(),
-                                placeholder: (context, url) => Icon(
-                                  Icons.image,
-                                  color: Colors.grey[100],
-                                  size: Insets.x25,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  stops: [0.0, 0.3, 1],
-                                  colors: [
-                                    Colors.grey[800].withOpacity(0.3),
-                                    Colors.grey[800].withOpacity(0.1),
-                                    Colors.transparent,
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: Insets.x2,
-                              left: Insets.x2,
-                              child: Column(
-                                children: [],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 96,
-                        width: double.infinity,
-                        child: Padding(
-                          padding: EdgeInsets.all(Insets.x4_5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildRestaurantsList() => SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (_, index) {
+            final model = bloc.restaurantsList[index];
+            return Column(
+              children: [
+                FractionallySizedBox(
+                  widthFactor: 0.92,
+                  child: Card(
+                    clipBehavior: Clip.antiAlias,
+                    shadowColor: BrandingColors.background,
+                    elevation: 0.8,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Radiuses.big_1x),
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 160,
+                          child: Stack(
+                            fit: StackFit.expand,
                             children: [
-                              Text(
-                                model.name,
-                                style: textTheme.headline3,
+                              Container(
+                                height: double.infinity,
+                                width: double.infinity,
+                                color: Colors.grey[300],
+                                child: CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  imageUrl: model.imageUrl,
+                                  fadeOutDuration: Duration(),
+                                  placeholder: (context, url) => Icon(
+                                    Icons.image,
+                                    color: Colors.grey[100],
+                                    size: Insets.x25,
+                                  ),
+                                ),
                               ),
-                              SizedBox(
-                                height: Insets.x1,
+                              Container(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    stops: [0.0, 0.3, 1],
+                                    colors: [
+                                      Colors.grey[800].withOpacity(0.3),
+                                      Colors.grey[800].withOpacity(0.1),
+                                      Colors.transparent,
+                                    ],
+                                  ),
+                                ),
                               ),
-                              Row(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[100],
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(Radiuses.normal),
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.all(Insets.x1_5),
-                                      child: Text(
-                                        "${model.minDeliveryTime}-${model.maxDeliveryTime} min",
-                                        style: textTheme.subtitle2,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: Insets.x2,
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[100],
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(Radiuses.normal),
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.all(Insets.x1_5),
-                                      child: Text(
-                                        "From ${model.minOrderPrice.value} ${model.minOrderPrice.currency}",
-                                        style: textTheme.subtitle2,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                              Positioned(
+                                top: Insets.x2,
+                                left: Insets.x2,
+                                child: Column(
+                                  children: [],
+                                ),
                               ),
                             ],
                           ),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          width: double.infinity,
+                          child: Padding(
+                            padding: EdgeInsets.all(Insets.x4_5),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  model.name,
+                                  style: textTheme.headline3,
+                                ),
+                                SizedBox(
+                                  height: Insets.x1,
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[100],
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(Radiuses.normal),
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.all(Insets.x1_5),
+                                        child: Text(
+                                          "${model.minDeliveryTime}-${model.maxDeliveryTime} min",
+                                          style: textTheme.subtitle2,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: Insets.x2,
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[100],
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(Radiuses.normal),
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.all(Insets.x1_5),
+                                        child: Text(
+                                          "From ${model.minOrderPrice.value} ${model.minOrderPrice.currency}",
+                                          style: textTheme.subtitle2,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: Insets.x2),
-            ],
-          );
-        },
-        childCount: bloc.restaurantsList.length,
-      ),
-    );
-  }
+                SizedBox(height: Insets.x2),
+              ],
+            );
+          },
+          childCount: bloc.restaurantsList.length,
+        ),
+      );
 
-  Widget _buildShimmerSectionTitle({bool isNeedTopSpacing = false}) =>
+  Widget _buildShimmerSectionTitle({
+    bool isNeedTopSpacing = false,
+  }) =>
       SliverToBoxAdapter(
         child: Column(
           children: [
@@ -390,39 +391,35 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
         child: HorizontalShimmerSwipeLane(),
       );
 
-  Widget _buildShimmerList() {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (_, index) {
-          return Column(
-            children: [
-              SizedBox(
-                height: 256,
-                child: FractionallySizedBox(
-                  widthFactor: 0.92,
-                  child: Card(
-                    clipBehavior: Clip.antiAlias,
-                    shadowColor: BrandingColors.background,
-                    elevation: 0.8,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(Radiuses.big_1x),
+  Widget _buildShimmerList() => SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (_, index) {
+            return Column(
+              children: [
+                SizedBox(
+                  height: 256,
+                  child: FractionallySizedBox(
+                    widthFactor: 0.92,
+                    child: Card(
+                      clipBehavior: Clip.antiAlias,
+                      shadowColor: BrandingColors.background,
+                      elevation: 0.8,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(Radiuses.big_1x),
+                      ),
+                      child: ShimmerContent(),
                     ),
-                    child: ShimmerContent(),
                   ),
                 ),
-              ),
-              SizedBox(height: Insets.x2),
-            ],
-          );
-        },
-        childCount: 3,
-      ),
-    );
-  }
+                SizedBox(height: Insets.x2),
+              ],
+            );
+          },
+          childCount: 3,
+        ),
+      );
 
-  Widget _buildBottomSpacingSliver() {
-    return SliverToBoxAdapter(
-      child: SizedBox(height: kBottomNavigationBarHeight),
-    );
-  }
+  Widget _buildBottomSpacingSliver() => SliverToBoxAdapter(
+        child: SizedBox(height: kBottomNavigationBarHeight),
+      );
 }

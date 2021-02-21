@@ -1,3 +1,4 @@
+import 'package:delivery_service/theme/branding_colors.dart';
 import 'package:delivery_service/theme/insets.dart';
 import 'package:delivery_service/theme/radiuses.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,13 +12,13 @@ class ShimmerContent extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         Shimmer.fromColors(
-          baseColor: Colors.grey[300],
-          highlightColor: Colors.grey[200],
+          baseColor: BrandingColors.shimmerBackground,
+          highlightColor: BrandingColors.shimmerBackgroundHighlight,
           child: Container(color: Colors.white),
         ),
         Shimmer.fromColors(
-          baseColor: Colors.grey[400],
-          highlightColor: Colors.grey[300],
+          baseColor: BrandingColors.shimmerContent,
+          highlightColor: BrandingColors.shimmerContentHighlight,
           child: Padding(
             padding: EdgeInsets.all(Insets.x4),
             child: Column(
@@ -50,7 +51,7 @@ class ShimmerContent extends StatelessWidget {
   }
 
   Decoration _buildShimmerLineDecoration() => BoxDecoration(
-        color: Colors.white,
+        color: BrandingColors.shimmerContent,
         borderRadius: BorderRadius.all(
           Radius.circular(Radiuses.small_3x),
         ),

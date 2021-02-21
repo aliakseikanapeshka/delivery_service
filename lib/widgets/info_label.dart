@@ -1,4 +1,5 @@
 import 'package:delivery_service/services/registry_service.dart';
+import 'package:delivery_service/theme/branding_colors.dart';
 import 'package:delivery_service/theme/insets.dart';
 import 'package:delivery_service/theme/radiuses.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,7 +13,7 @@ class InfoLabel extends StatelessWidget {
   InfoLabel({
     this.text,
     this.borderRadius = Radiuses.big_2x,
-    this.color = const Color(0xFFF5F5F5), //grey[100]
+    this.color = BrandingColors.infoLabelDefault,
   });
 
   @override

@@ -38,14 +38,14 @@ class FavoriteInfoCard extends StatelessWidget {
         Container(
           height: double.infinity,
           width: double.infinity,
-          color: Colors.grey[300],
+          color: BrandingColors.cardBackground,
           child: CachedNetworkImage(
             fit: BoxFit.cover,
             imageUrl: model.imageUrl,
             fadeOutDuration: Duration(),
             placeholder: (context, url) => Icon(
               Icons.image,
-              color: Colors.grey[100],
+              color: BrandingColors.placeholderIcon,
               size: Insets.x25,
             ),
           ),
@@ -57,8 +57,8 @@ class FavoriteInfoCard extends StatelessWidget {
               end: Alignment.bottomCenter,
               stops: [0.0, 0.3, 1],
               colors: [
-                Colors.grey[800].withOpacity(0.45),
-                Colors.grey[800].withOpacity(0.2),
+                BrandingColors.cardImageGradient.withOpacity(0.45),
+                BrandingColors.cardImageGradient.withOpacity(0.2),
                 Colors.transparent,
               ],
             ),
@@ -70,7 +70,7 @@ class FavoriteInfoCard extends StatelessWidget {
           child: Text(
             model.restaurantName,
             style: textTheme.headline3.copyWith(
-              color: BrandingColors.secondary,
+              color: BrandingColors.secondaryText,
               fontWeight: FontWeight.w500,
             ),
           ),

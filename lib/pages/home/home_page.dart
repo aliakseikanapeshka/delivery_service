@@ -190,8 +190,8 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Shimmer.fromColors(
-                    baseColor: Colors.grey[400],
-                    highlightColor: Colors.grey[300],
+                    baseColor: BrandingColors.shimmerContent,
+                    highlightColor: BrandingColors.shimmerContentHighlight,
                     child: Container(
                       height: 14,
                       width: 130,

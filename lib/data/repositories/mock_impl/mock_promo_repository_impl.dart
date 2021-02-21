@@ -32,10 +32,6 @@ class MockPromoRepositoryImpl implements PromoRepository {
         imageUrl: "https://api.afimall.ru/upload/iblock/033/orig_1.jpg",
       ),
       PromoModel(
-        title: "Gift when ordering from 20 BYN",
-        imageUrl: "https://api.afimall.ru/upload/iblock/033/orig_1.jpg",
-      ),
-      PromoModel(
         title: "1 + 1 = 3",
         imageUrl:
             "https://static.1000.menu/img/content/22983/lapsha-vok-so-svininoi-i-ovoshchami_1508064640_1_max.jpg",

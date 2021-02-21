@@ -51,14 +51,14 @@ class RestaurantInfoCard extends StatelessWidget {
           Container(
             height: double.infinity,
             width: double.infinity,
-            color: Colors.grey[300],
+            color: BrandingColors.cardBackground,
             child: CachedNetworkImage(
               fit: BoxFit.cover,
               imageUrl: model.imageUrl,
               fadeOutDuration: Duration(),
               placeholder: (context, url) => Icon(
                 Icons.image,
-                color: Colors.grey[100],
+                color: BrandingColors.placeholderIcon,
                 size: Insets.x25,
               ),
             ),
@@ -70,8 +70,8 @@ class RestaurantInfoCard extends StatelessWidget {
                 end: Alignment.bottomCenter,
                 stops: [0.0, 0.3, 1],
                 colors: [
-                  Colors.grey[800].withOpacity(0.3),
-                  Colors.grey[800].withOpacity(0.1),
+                  BrandingColors.cardImageGradient.withOpacity(0.3),
+                  BrandingColors.cardImageGradient.withOpacity(0.1),
                   Colors.transparent,
                 ],
               ),

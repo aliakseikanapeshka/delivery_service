@@ -9,6 +9,7 @@ class ThemeProvider {
       primaryColor: BrandingColors.primary,
       backgroundColor: BrandingColors.background,
       cursorColor: BrandingColors.primary,
+      shadowColor: BrandingColors.background,
       appBarTheme: const AppBarTheme(
         color: BrandingColors.background,
         elevation: 0,

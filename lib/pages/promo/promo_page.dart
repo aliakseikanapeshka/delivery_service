@@ -70,19 +70,14 @@ class _PromoPageState extends BasePageState<PromoBloc, PromoPage> {
 
   Widget _buildPromoList() => SliverList(
         delegate: SliverChildBuilderDelegate(
-          (_, index) => Column(
-            children: [
-              FractionallySizedBox(
-                widthFactor: 0.92,
-                child: SizedBox(
-                  height: 200,
-                  child: PromoInfoCard(
-                    model: bloc.promosList[index],
-                  ),
-                ),
+          (_, index) => Padding(
+            padding: const EdgeInsets.all(Insets.x2),
+            child: SizedBox(
+              height: 200,
+              child: PromoInfoCard(
+                model: bloc.promosList[index],
               ),
-              SizedBox(height: Insets.x2),
-            ],
+            ),
           ),
           childCount: bloc.promosList.length,
         ),
@@ -90,17 +85,12 @@ class _PromoPageState extends BasePageState<PromoBloc, PromoPage> {
 
   Widget _buildShimmerList() => SliverList(
         delegate: SliverChildBuilderDelegate(
-          (_, index) => Column(
-            children: [
-              SizedBox(
-                height: 200,
-                child: FractionallySizedBox(
-                  widthFactor: 0.92,
-                  child: ShimmerCard(),
-                ),
-              ),
-              SizedBox(height: Insets.x2),
-            ],
+          (_, index) => Padding(
+            padding: const EdgeInsets.all(Insets.x2),
+            child: SizedBox(
+              height: 200,
+              child: ShimmerCard(),
+            ),
           ),
           childCount: 5,
         ),

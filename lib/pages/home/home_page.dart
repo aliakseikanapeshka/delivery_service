@@ -1,4 +1,3 @@
-import 'package:delivery_service/data/models/favorite_model.dart';
 import 'package:delivery_service/data/models/promo_model.dart';
 import 'package:delivery_service/localization/localization_keys.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
@@ -7,9 +6,9 @@ import 'package:delivery_service/services/registry_service.dart';
 import 'package:delivery_service/theme/branding_colors.dart';
 import 'package:delivery_service/theme/insets.dart';
 import 'package:delivery_service/theme/radiuses.dart';
-import 'package:delivery_service/widgets/favorite_info_card.dart';
-import 'package:delivery_service/widgets/horizontal_shimmer_swipe_lane.dart';
-import 'package:delivery_service/widgets/horizontal_swipe_lane.dart';
+import 'package:delivery_service/widgets/horizontal_carousel.dart';
+import 'package:delivery_service/widgets/horizontal_shimmer_carousel.dart';
+import 'package:delivery_service/widgets/popular_info_card.dart';
 import 'package:delivery_service/widgets/promo_info_card.dart';
 import 'package:delivery_service/widgets/restaurant_info_card.dart';
 import 'package:delivery_service/widgets/shimmer_card.dart';
@@ -65,9 +64,9 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
 
   List<Widget> _getShimmerSlivers() => [
         _buildShimmerSectionTitle(),
-        _buildShimmerHorizontalLane(),
+        _buildShimmerCarousel(),
         _buildShimmerSectionTitle(isNeedTopSpacing: true),
-        _buildShimmerHorizontalLane(),
+        _buildShimmerLane(),
         _buildShimmerSectionTitle(isNeedTopSpacing: true),
         _buildShimmerList(),
         _buildBottomSpacingSliver(),
@@ -82,13 +81,13 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
           _buildSectionTitle(
             title: translate(LocalizationKeys.Home_Section_Promo),
           ),
-        if (bloc.promosList.isNotEmpty) _buildPromoLane(),
-        if (bloc.favoritesList.isNotEmpty)
+        if (bloc.promosList.isNotEmpty) _buildPromoCarousel(),
+        if (bloc.popularList.isNotEmpty)
           _buildSectionTitle(
-            title: translate(LocalizationKeys.Home_Section_Favorites),
+            title: translate(LocalizationKeys.Home_Section_Popular),
             isNeedTopSpacing: true,
           ),
-        if (bloc.favoritesList.isNotEmpty) _buildFavoritesLane(),
+        if (bloc.popularList.isNotEmpty) _buildPopularLane(),
         if (bloc.restaurantsList.isNotEmpty)
           _buildSectionTitle(
             title: translate(LocalizationKeys.Home_Section_Restaurants),
@@ -98,36 +97,49 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
         _buildBottomSpacingSliver(),
       ];
 
-  Widget _buildPromoLane() => SliverToBoxAdapter(
-        child: HorizontalSwipeLane<PromoModel>(
-          items: bloc.promosList,
-          childWidgetBuilder: (context, model) => PromoInfoCard(
-            model: model,
+  Widget _buildPromoCarousel() => SliverToBoxAdapter(
+        child: Padding(
+          padding: const EdgeInsets.only(top: Insets.x2),
+          child: HorizontalCarousel<PromoModel>(
+            items: bloc.promosList,
+            childWidgetBuilder: (context, model) => PromoInfoCard(
+              model: model,
+            ),
           ),
         ),
       );
 
-  Widget _buildFavoritesLane() => SliverToBoxAdapter(
-        child: HorizontalSwipeLane<FavoriteModel>(
-          items: bloc.favoritesList,
-          childWidgetBuilder: (context, model) => FavoriteInfoCard(
-            model: model,
+  Widget _buildPopularLane() => SliverToBoxAdapter(
+        child: Padding(
+          padding: const EdgeInsets.only(top: Insets.x2),
+          child: SizedBox(
+            height: 140,
+            child: ListView.separated(
+              padding: EdgeInsets.symmetric(horizontal: Insets.x2),
+              scrollDirection: Axis.horizontal,
+              physics: BouncingScrollPhysics(),
+              itemCount: bloc.popularList.length,
+              separatorBuilder: (context, index) => SizedBox(width: Insets.x2),
+              itemBuilder: (context, index) {
+                return SizedBox(
+                  width: 140,
+                  child: PopularInfoCard(
+                    model: bloc.popularList[index],
+                  ),
+                );
+              },
+            ),
           ),
         ),
       );
 
   Widget _buildRestaurantsList() => SliverList(
         delegate: SliverChildBuilderDelegate(
-          (_, index) => Column(
-            children: [
-              FractionallySizedBox(
-                widthFactor: 0.92,
-                child: RestaurantInfoCard(
-                  model: bloc.restaurantsList[index],
-                ),
-              ),
-              SizedBox(height: Insets.x2),
-            ],
+          (_, index) => Padding(
+            padding: const EdgeInsets.all(Insets.x2),
+            child: RestaurantInfoCard(
+              model: bloc.restaurantsList[index],
+            ),
           ),
           childCount: bloc.restaurantsList.length,
         ),
@@ -158,8 +170,33 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
         ),
       );
 
-  Widget _buildShimmerHorizontalLane() => SliverToBoxAdapter(
-        child: HorizontalShimmerSwipeLane(),
+  Widget _buildShimmerCarousel() => SliverToBoxAdapter(
+        child: Padding(
+          padding: const EdgeInsets.only(top: Insets.x2),
+          child: HorizontalShimmerCarousel(),
+        ),
+      );
+
+  Widget _buildShimmerLane() => SliverToBoxAdapter(
+        child: Padding(
+          padding: const EdgeInsets.only(top: Insets.x2),
+          child: SizedBox(
+            height: 140,
+            child: ListView.separated(
+              padding: EdgeInsets.symmetric(horizontal: Insets.x2),
+              scrollDirection: Axis.horizontal,
+              physics: BouncingScrollPhysics(),
+              itemCount: 5,
+              separatorBuilder: (context, index) => SizedBox(width: Insets.x2),
+              itemBuilder: (context, index) {
+                return SizedBox(
+                  width: 140,
+                  child: ShimmerCard(),
+                );
+              },
+            ),
+          ),
+        ),
       );
 
   Widget _buildShimmerList() => SliverList(
@@ -168,12 +205,11 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
             children: [
               SizedBox(
                 height: 256,
-                child: FractionallySizedBox(
-                  widthFactor: 0.92,
+                child: Padding(
+                  padding: const EdgeInsets.all(Insets.x2),
                   child: ShimmerCard(),
                 ),
               ),
-              SizedBox(height: Insets.x2),
             ],
           ),
           childCount: 2,

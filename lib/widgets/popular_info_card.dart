@@ -8,12 +8,12 @@ import 'package:delivery_service/widgets/scale_tap.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class FavoriteInfoCard extends StatelessWidget {
-  final FavoriteModel model;
+class PopularInfoCard extends StatelessWidget {
+  final PopularModel model;
   final double elevation;
   final double borderRadius;
 
-  FavoriteInfoCard({
+  PopularInfoCard({
     @required this.model,
     this.elevation = 0.8,
     this.borderRadius = Radiuses.big_1x,
@@ -67,14 +67,15 @@ class FavoriteInfoCard extends StatelessWidget {
             ),
           ),
         ),
-        Positioned(
-          top: Insets.x4_5,
-          left: Insets.x4_5,
+        Positioned.fill(
+          top: Insets.x3,
+          left: Insets.x3,
+          right: Insets.x3,
           child: Text(
             model.restaurantName,
-            style: textTheme.headline3.copyWith(
+            style: textTheme.headline5.copyWith(
               color: BrandingColors.secondaryText,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),

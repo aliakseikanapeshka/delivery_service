@@ -67,14 +67,15 @@ class PromoInfoCard extends StatelessWidget {
             ),
           ),
         ),
-        Positioned(
+        Positioned.fill(
           top: Insets.x4_5,
           left: Insets.x4_5,
+          right: Insets.x4_5,
           child: Text(
             model.title,
-            style: textTheme.headline3.copyWith(
+            style: textTheme.headline5.copyWith(
               color: BrandingColors.secondaryText,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),

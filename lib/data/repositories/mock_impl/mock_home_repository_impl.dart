@@ -46,21 +46,21 @@ class MockHomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-  Future<List<FavoriteModel>> getFavoritesList() async {
+  Future<List<PopularModel>> getPopularList() async {
     await Future.delayed(Duration(seconds: 5));
 
-    final favoriteList = <FavoriteModel>[
-      FavoriteModel(
+    final favoriteList = <PopularModel>[
+      PopularModel(
         restaurantName: "McDonald’s",
         imageUrl:
             "https://geekville.ru/wp-content/uploads/2020/08/McDonalds.jpg",
       ),
-      FavoriteModel(
+      PopularModel(
         restaurantName: "KFC",
         imageUrl:
             "https://new-retail.ru/upload/iblock/708/7089284ef3fd9ba91200526e510a0189.jpg",
       ),
-      FavoriteModel(
+      PopularModel(
         restaurantName: "PizzaHut",
         imageUrl:
             "http://retail-loyalty.org/upload/iblock/7aa/65f80645f09a7ee13e53ee1e0ad297c4.jpg",

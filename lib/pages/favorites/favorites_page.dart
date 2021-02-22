@@ -71,16 +71,11 @@ class _FavoritesPageState extends BasePageState<FavoritesBloc, FavoritesPage> {
 
   Widget _buildFavoritesList() => SliverList(
         delegate: SliverChildBuilderDelegate(
-          (_, index) => Column(
-            children: [
-              FractionallySizedBox(
-                widthFactor: 0.92,
-                child: RestaurantInfoCard(
-                  model: bloc.favoritesList[index],
-                ),
-              ),
-              SizedBox(height: Insets.x2),
-            ],
+          (_, index) => Padding(
+            padding: const EdgeInsets.all(Insets.x2),
+            child: RestaurantInfoCard(
+              model: bloc.favoritesList[index],
+            ),
           ),
           childCount: bloc.favoritesList.length,
         ),
@@ -88,17 +83,12 @@ class _FavoritesPageState extends BasePageState<FavoritesBloc, FavoritesPage> {
 
   Widget _buildShimmerList() => SliverList(
         delegate: SliverChildBuilderDelegate(
-          (_, index) => Column(
-            children: [
-              SizedBox(
-                height: 256,
-                child: FractionallySizedBox(
-                  widthFactor: 0.92,
-                  child: ShimmerCard(),
-                ),
-              ),
-              SizedBox(height: Insets.x2),
-            ],
+          (_, index) => Padding(
+            padding: const EdgeInsets.all(Insets.x2),
+            child: SizedBox(
+              height: 256,
+              child: ShimmerCard(),
+            ),
           ),
           childCount: 4,
         ),

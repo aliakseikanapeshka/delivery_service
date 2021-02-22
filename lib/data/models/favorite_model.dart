@@ -1,8 +1,8 @@
-class FavoriteModel {
+class PopularModel {
   final String imageUrl;
   final String restaurantName;
 
-  FavoriteModel({
+  PopularModel({
     this.imageUrl,
     this.restaurantName,
   });

@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:delivery_service/data/models/favorite_model.dart';
+import 'package:delivery_service/data/models/restaurant_model.dart';
 import 'package:delivery_service/services/registry_service.dart';
 import 'package:delivery_service/theme/branding_colors.dart';
 import 'package:delivery_service/theme/insets.dart';
@@ -9,19 +9,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PopularInfoCard extends StatelessWidget {
-  final PopularModel model;
+  final RestaurantModel model;
   final double elevation;
   final double borderRadius;
+  final Function() onTap;
 
   PopularInfoCard({
     @required this.model,
     this.elevation = 0.8,
     this.borderRadius = Radiuses.big_1x,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return ScaleTap(
+      onTap: onTap,
       child: Card(
         clipBehavior: Clip.antiAlias,
         shadowColor: BrandingColors.background,
@@ -60,9 +63,9 @@ class PopularInfoCard extends StatelessWidget {
               end: Alignment.bottomCenter,
               stops: [0.0, 0.3, 1],
               colors: [
-                BrandingColors.cardImageGradient.withOpacity(0.45),
+                BrandingColors.cardImageGradient.withOpacity(0.4),
                 BrandingColors.cardImageGradient.withOpacity(0.2),
-                Colors.transparent,
+                BrandingColors.cardImageGradient.withOpacity(0),
               ],
             ),
           ),
@@ -72,7 +75,7 @@ class PopularInfoCard extends StatelessWidget {
           left: Insets.x3,
           right: Insets.x3,
           child: Text(
-            model.restaurantName,
+            model.name,
             style: textTheme.headline5.copyWith(
               color: BrandingColors.secondaryText,
               fontWeight: FontWeight.w600,

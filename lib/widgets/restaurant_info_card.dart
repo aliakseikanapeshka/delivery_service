@@ -8,22 +8,25 @@ import 'package:delivery_service/widgets/scale_tap.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'info_label.dart';
+import 'label_metadata.dart';
 
 class RestaurantInfoCard extends StatelessWidget {
   final RestaurantModel model;
   final double elevation;
   final double borderRadius;
+  final Function() onTap;
 
   RestaurantInfoCard({
     @required this.model,
-    this.elevation = 0.8,
+    this.elevation = 0.9,
     this.borderRadius = Radiuses.big_1x,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return ScaleTap(
+      onTap: onTap,
       child: Card(
         elevation: elevation,
         shadowColor: BrandingColors.background,
@@ -48,39 +51,20 @@ class RestaurantInfoCard extends StatelessWidget {
   Widget _buildImage() {
     return SizedBox(
       height: 160,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: BrandingColors.cardBackground,
-            child: CachedNetworkImage(
-              fit: BoxFit.cover,
-              imageUrl: model.imageUrl,
-              fadeOutDuration: Duration(),
-              placeholder: (context, url) => Icon(
-                Icons.image,
-                color: BrandingColors.placeholderIcon,
-                size: Insets.x25,
-              ),
-            ),
+      child: Container(
+        height: double.infinity,
+        width: double.infinity,
+        color: BrandingColors.cardBackground,
+        child: CachedNetworkImage(
+          fit: BoxFit.cover,
+          imageUrl: model.imageUrl,
+          fadeOutDuration: Duration(),
+          placeholder: (context, url) => Icon(
+            Icons.image,
+            color: BrandingColors.placeholderIcon,
+            size: Insets.x25,
           ),
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: [0.0, 0.3, 1],
-                colors: [
-                  BrandingColors.cardImageGradient.withOpacity(0.3),
-                  BrandingColors.cardImageGradient.withOpacity(0.1),
-                  Colors.transparent,
-                ],
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -100,18 +84,10 @@ class RestaurantInfoCard extends StatelessWidget {
             SizedBox(
               height: Insets.x1,
             ),
-            Row(
-              children: [
-                InfoLabel(
-                  text: "${model.minDeliveryTime}-${model.maxDeliveryTime} min",
-                ),
-                SizedBox(
-                  width: Insets.x2,
-                ),
-                InfoLabel(
-                  text:
-                      "From ${model.minOrderPrice.value} ${model.minOrderPrice.currency}",
-                ),
+            LabelMetadata(
+              labels: [
+                model.deliveryTime,
+                model.minOrderPrice,
               ],
             ),
           ],

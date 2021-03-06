@@ -121,10 +121,14 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
               itemCount: bloc.popularList.length,
               separatorBuilder: (context, index) => SizedBox(width: Insets.x2),
               itemBuilder: (context, index) {
+                final model = bloc.popularList[index];
                 return SizedBox(
                   width: 140,
                   child: PopularInfoCard(
-                    model: bloc.popularList[index],
+                    model: model,
+                    onTap: () {
+                      bloc.add(HomeEvent.navigateToRestaurantDetail(model));
+                    },
                   ),
                 );
               },
@@ -135,12 +139,18 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
 
   Widget _buildRestaurantsList() => SliverList(
         delegate: SliverChildBuilderDelegate(
-          (_, index) => Padding(
-            padding: const EdgeInsets.all(Insets.x2),
-            child: RestaurantInfoCard(
-              model: bloc.restaurantsList[index],
-            ),
-          ),
+          (_, index) {
+            final model = bloc.restaurantsList[index];
+            return Padding(
+              padding: const EdgeInsets.all(Insets.x2),
+              child: RestaurantInfoCard(
+                model: model,
+                onTap: () {
+                  bloc.add(HomeEvent.navigateToRestaurantDetail(model));
+                },
+              ),
+            );
+          },
           childCount: bloc.restaurantsList.length,
         ),
       );

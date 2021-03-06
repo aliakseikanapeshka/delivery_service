@@ -60,9 +60,9 @@ class PromoInfoCard extends StatelessWidget {
               end: Alignment.bottomCenter,
               stops: [0.0, 0.3, 1],
               colors: [
-                BrandingColors.cardImageGradient.withOpacity(0.45),
+                BrandingColors.cardImageGradient.withOpacity(0.4),
                 BrandingColors.cardImageGradient.withOpacity(0.2),
-                Colors.transparent,
+                BrandingColors.cardImageGradient.withOpacity(0),
               ],
             ),
           ),

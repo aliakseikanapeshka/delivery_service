@@ -26,10 +26,10 @@ class InfoLabel extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(Insets.x1_5),
+        padding: const EdgeInsets.all(Insets.x2),
         child: Text(
           text,
-          style: textTheme.subtitle2,
+          style: textTheme.subtitle1,
         ),
       ),
     );

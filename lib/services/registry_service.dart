@@ -3,6 +3,7 @@ import 'package:delivery_service/data/repositories/interfaces/cart_repository.da
 import 'package:delivery_service/data/repositories/interfaces/favorites_repository.dart';
 import 'package:delivery_service/data/repositories/interfaces/home_repository.dart';
 import 'package:delivery_service/data/repositories/interfaces/promo_repository.dart';
+import 'package:delivery_service/data/repositories/interfaces/restaurant_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -12,6 +13,7 @@ import 'navigation_service.dart';
 TextTheme get textTheme => Theme.of(Get.context).textTheme;
 
 NavigationService _navigationService;
+RestaurantRepository _restaurantRepository;
 HomeRepository _homeRepository;
 PromoRepository _promoRepository;
 CartRepository _cartRepository;
@@ -20,6 +22,9 @@ AccountRepository _accountRepository;
 
 NavigationService get navigationService =>
     _navigationService ??= GetIt.I.get<NavigationService>();
+
+RestaurantRepository get restaurantRepository =>
+    _restaurantRepository ??= GetIt.I.get<RestaurantRepository>();
 
 HomeRepository get homeRepository =>
     _homeRepository ??= GetIt.I.get<HomeRepository>();

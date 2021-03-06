@@ -10,12 +10,12 @@ class BrandingColors {
   static const Color background = Color(0xFFFAFAFA);
   static const Color pageBackground = Color(0xFFFAFAFA);
   static const Color backgroundIcon = Color(0xFFDBDEE2);
-  static const Color cardBackground = Color(0xFFE0E0E0);
-  static const Color placeholderIcon = Color(0xFFF5F5F5);
+  static const Color cardBackground = Color(0xFFE8E8E8);
+  static const Color placeholderIcon = Color(0xFFECECEC);
   static const Color cardImageGradient = Color(0xFF424242);
   static const Color infoLabelDefault = Color(0xFFF5F5F5);
-  static const Color shimmerBackground = Color(0xFFE0E0E0);
-  static const Color shimmerBackgroundHighlight = Color(0xFFEEEEEE);
-  static const Color shimmerContent = Color(0xFFBDBDBD);
-  static const Color shimmerContentHighlight = Color(0xFFE0E0E0);
+  static const Color shimmerBackground = Color(0xFFE8E8E8);
+  static const Color shimmerBackgroundHighlight = Color(0xFFF6F6F6);
+  static const Color shimmerContent = Color(0xFFC6C6C6);
+  static const Color shimmerContentHighlight = Color(0xFFE8E8E8);
 }

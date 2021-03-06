@@ -3,17 +3,20 @@ import 'package:delivery_service/data/repositories/interfaces/cart_repository.da
 import 'package:delivery_service/data/repositories/interfaces/favorites_repository.dart';
 import 'package:delivery_service/data/repositories/interfaces/home_repository.dart';
 import 'package:delivery_service/data/repositories/interfaces/promo_repository.dart';
+import 'package:delivery_service/data/repositories/interfaces/restaurant_repository.dart';
 import 'package:delivery_service/data/repositories/mock_impl/mock_account_repository_impl.dart';
 import 'package:delivery_service/data/repositories/mock_impl/mock_cart_repository_impl.dart';
 import 'package:delivery_service/data/repositories/mock_impl/mock_favorites_repository_impl.dart';
 import 'package:delivery_service/data/repositories/mock_impl/mock_home_repository_impl.dart';
 import 'package:delivery_service/data/repositories/mock_impl/mock_promo_repository_impl.dart';
+import 'package:delivery_service/data/repositories/mock_impl/mock_restaurant_repository_impl.dart';
 import 'package:delivery_service/localization/localization_keys.dart';
 import 'package:delivery_service/pages/account/account_bloc.dart';
 import 'package:delivery_service/pages/cart/cart_bloc.dart';
 import 'package:delivery_service/pages/favorites/favorites_bloc.dart';
 import 'package:delivery_service/pages/home/home_bloc.dart';
 import 'package:delivery_service/pages/promo/promo_bloc.dart';
+import 'package:delivery_service/pages/restaurant_detail/restaurant_detail_bloc.dart';
 import 'package:delivery_service/pages/shell/shell_bloc.dart';
 import 'package:delivery_service/services/navigation_service.dart';
 import 'package:flutter/widgets.dart';
@@ -43,6 +46,8 @@ void _registerServices(GetIt getIt) {
 }
 
 void _registerRepositories(GetIt getIt) {
+  getIt.registerLazySingleton<RestaurantRepository>(
+      () => MockRestaurantRepositoryImpl());
   getIt.registerLazySingleton<HomeRepository>(() => MockHomeRepositoryImpl());
   getIt.registerLazySingleton<PromoRepository>(() => MockPromoRepositoryImpl());
   getIt.registerLazySingleton<CartRepository>(() => MockCartRepositoryImpl());
@@ -59,4 +64,5 @@ void _registerBlocs(GetIt getIt) {
   getIt.registerFactory(() => CartBloc());
   getIt.registerFactory(() => FavoritesBloc());
   getIt.registerFactory(() => AccountBloc());
+  getIt.registerFactory(() => RestaurantDetailBloc());
 }

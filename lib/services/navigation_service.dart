@@ -1,3 +1,5 @@
+import 'package:delivery_service/data/models/restaurant_model.dart';
+import 'package:delivery_service/pages/restaurant_detail/restaurant_detail_page.dart';
 import 'package:delivery_service/pages/shell/shell_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,19 +13,28 @@ enum Pages {
   cart,
   favorite,
   account,
+  restaurantDetail,
 }
 
 class NavigationService {
   final GlobalKey<NavigatorState> navigatorKey = Get.key;
 
-  Future<dynamic> navigateTo(Pages page, {Object arguments}) {
-    final route = _generateRoute(page, arguments);
-    return navigatorKey.currentState.push(route);
+  navigateTo(Pages page, {Object arguments}) {
+    try {
+      final route = _generateRoute(page, arguments);
+      navigatorKey.currentState.push(route);
+    } catch (e) {
+      print(e);
+    }
   }
 
-  Future<dynamic> navigateWithReplacementTo(Pages page, {Object arguments}) {
-    final route = _generateRoute(page, arguments);
-    return navigatorKey.currentState.pushReplacement(route);
+  navigateWithReplacementTo(Pages page, {Object arguments}) {
+    try {
+      final route = _generateRoute(page, arguments);
+      navigatorKey.currentState.pushReplacement(route);
+    } catch (e) {
+      print(e);
+    }
   }
 
   void goBack<T extends Object>({T result}) {
@@ -34,6 +45,15 @@ class NavigationService {
     Widget resultPage;
 
     switch (page) {
+      case Pages.restaurantDetail:
+        if (arguments is RestaurantModel) {
+          resultPage = RestaurantDetailPage(restaurantModel: arguments);
+        } else {
+          throw Exception(
+            "cant open RestaurantDetailPage without arguments of type RestaurantModel",
+          );
+        }
+        break;
       default:
         resultPage = const ShellPage();
         break;

@@ -27,7 +27,7 @@ class ShimmerContent extends StatelessWidget {
               children: [
                 Container(
                   height: 12,
-                  width: 150,
+                  width: 130,
                   decoration: _buildShimmerLineDecoration(),
                 ),
                 SizedBox(height: Insets.x1_5),

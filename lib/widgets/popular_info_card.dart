@@ -44,7 +44,7 @@ class PopularInfoCard extends StatelessWidget {
         Container(
           height: double.infinity,
           width: double.infinity,
-          color: BrandingColors.cardBackground,
+          color: BrandingColors.cardBackgroundDark,
           child: CachedNetworkImage(
             fit: BoxFit.cover,
             imageUrl: model.imageUrl,

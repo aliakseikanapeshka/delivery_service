@@ -40,28 +40,32 @@ class DishInfoCard extends StatelessWidget {
   Widget _buildCardContent() {
     return Column(
       children: [
-        Expanded(flex: 4, child: _buildImage()),
+        Expanded(flex: 5, child: _buildImage()),
         Expanded(flex: 3, child: _buildInfo()),
       ],
     );
   }
 
   Widget _buildImage() {
-    return CachedNetworkImage(
-      fit: BoxFit.cover,
-      imageUrl: model.imageUrl,
-      fadeOutDuration: Duration(),
-      placeholder: (context, url) => Icon(
-        Icons.image,
-        color: BrandingColors.placeholderIcon,
-        size: Insets.x25,
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      child: CachedNetworkImage(
+        fit: BoxFit.cover,
+        imageUrl: model.imageUrl,
+        fadeOutDuration: Duration(),
+        placeholder: (context, url) => Icon(
+          Icons.image,
+          color: BrandingColors.placeholderIcon,
+          size: Insets.x25,
+        ),
       ),
     );
   }
 
   Widget _buildInfo() {
     return Padding(
-      padding: EdgeInsets.all(Insets.x2_5),
+      padding: EdgeInsets.all(Insets.x2),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

@@ -6,12 +6,14 @@ import 'package:delivery_service/pages/restaurant_detail/restaurant_detail_bloc.
 import 'package:delivery_service/services/registry_service.dart';
 import 'package:delivery_service/theme/branding_colors.dart';
 import 'package:delivery_service/theme/insets.dart';
+import 'package:delivery_service/widgets/dish_detail_info.dart';
 import 'package:delivery_service/widgets/dish_info_card.dart';
 import 'package:delivery_service/widgets/label_metadata.dart';
 import 'package:delivery_service/widgets/shimmer_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class RestaurantDetailPage extends StatefulWidget {
   final RestaurantModel restaurantModel;
@@ -33,8 +35,7 @@ class _RestaurantDetailPageState
     return BlocBuilder<RestaurantDetailBloc, BaseState>(
       cubit: bloc,
       builder: (_, state) {
-        return Scaffold(
-          backgroundColor: BrandingColors.background,
+        return CupertinoScaffold(
           body: _buildBody(state),
         );
       },
@@ -46,13 +47,18 @@ class _RestaurantDetailPageState
   }
 
   Widget _buildBody(BaseState state) {
-    return CustomScrollView(
-      physics: BouncingScrollPhysics(),
-      slivers: [
-        _buildAppBar(),
-        _buildRestaurantInfo(),
-        _buildItemsGrid(state),
-      ],
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      color: BrandingColors.background,
+      child: CustomScrollView(
+        physics: BouncingScrollPhysics(),
+        slivers: [
+          _buildAppBar(),
+          _buildRestaurantInfo(),
+          _buildItemsGrid(state),
+        ],
+      ),
     );
   }
 
@@ -157,9 +163,21 @@ class _RestaurantDetailPageState
           mainAxisSpacing: Insets.x2,
         ),
         delegate: SliverChildBuilderDelegate(
-          (_, index) {
+          (context, index) {
+            final model = bloc.dishList[index];
             return DishInfoCard(
-              model: bloc.dishList[index],
+              model: model,
+              onTap: () {
+                CupertinoScaffold.showCupertinoModalBottomSheet(
+                  context: context,
+                  backgroundColor: BrandingColors.cardBackground,
+                  builder: (_) {
+                    return DishDetailInfo(
+                      model: model,
+                    );
+                  },
+                );
+              },
             );
           },
           childCount: bloc.dishList.length,

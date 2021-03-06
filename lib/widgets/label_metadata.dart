@@ -11,6 +11,7 @@ class LabelMetadata extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
+      runSpacing: Insets.x2,
       spacing: Insets.x2,
       children: labels.map<Widget>(
         (labelText) => InfoLabel(

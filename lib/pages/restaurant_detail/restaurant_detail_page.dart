@@ -29,7 +29,7 @@ class _RestaurantDetailPageState
     extends BasePageState<RestaurantDetailBloc, RestaurantDetailPage> {
   @override
   Widget build(BuildContext context) {
-    bloc.add(RestaurantEvent.setInitialData(widget.restaurantModel));
+    _setInitialDataToBloc();
     return BlocBuilder<RestaurantDetailBloc, BaseState>(
       cubit: bloc,
       builder: (_, state) {
@@ -41,127 +41,148 @@ class _RestaurantDetailPageState
     );
   }
 
+  _setInitialDataToBloc() {
+    bloc.add(RestaurantEvent.setInitialData(widget.restaurantModel));
+  }
+
   Widget _buildBody(BaseState state) {
-    final RestaurantModel model = widget.restaurantModel;
     return CustomScrollView(
       physics: BouncingScrollPhysics(),
       slivers: [
-        SliverAppBar(
-          elevation: 0,
-          backgroundColor: BrandingColors.background.withOpacity(0.8),
-          expandedHeight: 240,
-          shadowColor: Colors.transparent,
-          pinned: true,
-          stretch: true,
-          flexibleSpace: FlexibleSpaceBar(
-            collapseMode: CollapseMode.pin,
-            stretchModes: <StretchMode>[
-              StretchMode.zoomBackground,
-            ],
-            background: Stack(
-              fit: StackFit.expand,
-              children: [
-                Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  child: CachedNetworkImage(
-                    fit: BoxFit.cover,
-                    imageUrl: model.imageUrl,
-                    fadeOutDuration: Duration(),
-                    placeholder: (context, url) => Icon(
-                      Icons.image,
-                      color: BrandingColors.placeholderIcon,
-                      size: Insets.x25,
-                    ),
-                  ),
+        _buildAppBar(),
+        _buildRestaurantInfo(),
+        _buildItemsGrid(state),
+      ],
+    );
+  }
+
+  Widget _buildAppBar() {
+    return SliverAppBar(
+      expandedHeight: 240,
+      backgroundColor: BrandingColors.background.withOpacity(0.8),
+      shadowColor: Colors.transparent,
+      elevation: 0,
+      pinned: true,
+      stretch: true,
+      flexibleSpace: FlexibleSpaceBar(
+        collapseMode: CollapseMode.pin,
+        stretchModes: <StretchMode>[
+          StretchMode.zoomBackground,
+        ],
+        background: Stack(
+          fit: StackFit.expand,
+          children: [
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl: widget.restaurantModel.imageUrl,
+                fadeOutDuration: Duration(),
+                placeholder: (context, url) => Icon(
+                  Icons.image,
+                  color: BrandingColors.placeholderIcon,
+                  size: Insets.x25,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      stops: [
-                        0.0,
-                        0.2,
-                        0.5,
-                      ],
-                      colors: [
-                        BrandingColors.background,
-                        BrandingColors.background.withOpacity(0.35),
-                        BrandingColors.background.withOpacity(0),
-                      ],
-                    ),
-                  ),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  stops: [0.0, 0.2, 0.5],
+                  colors: [
+                    BrandingColors.background,
+                    BrandingColors.background.withOpacity(0.35),
+                    BrandingColors.background.withOpacity(0),
+                  ],
                 ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRestaurantInfo() {
+    final RestaurantModel model = widget.restaurantModel;
+
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: EdgeInsets.all(Insets.x4_5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              model.name,
+              style: textTheme.headline1,
+            ),
+            SizedBox(
+              height: Insets.x4_5,
+            ),
+            LabelMetadata(
+              labels: [
+                model.deliveryTime,
+                model.minOrderPrice,
+                model.deliveryPrice,
+                model.workTime,
               ],
             ),
-          ),
+          ],
         ),
-        SliverToBoxAdapter(
-          child: SizedBox(
-            width: double.infinity,
-            child: Padding(
-              padding: EdgeInsets.all(Insets.x4_5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    model.name,
-                    style: textTheme.headline1,
-                  ),
-                  SizedBox(
-                    height: Insets.x4_5,
-                  ),
-                  LabelMetadata(
-                    labels: [
-                      model.deliveryTime,
-                      model.minOrderPrice,
-                      model.deliveryPrice,
-                      model.workTime,
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+      ),
+    );
+  }
+
+  Widget _buildItemsGrid(BaseState state) {
+    if (state is ProgressState) {
+      return _buildShimmerGrid();
+    } else if (state is SuccessState) {
+      return _buildDishGrid();
+    } else {
+      return SliverToBoxAdapter();
+    }
+  }
+
+  Widget _buildDishGrid() {
+    return SliverPadding(
+      padding: const EdgeInsets.all(Insets.x2),
+      sliver: SliverGrid(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 0.75,
+          crossAxisSpacing: Insets.x2,
+          mainAxisSpacing: Insets.x2,
         ),
-        if (state is ProgressState)
-          SliverPadding(
-            padding: const EdgeInsets.all(Insets.x2),
-            sliver: SliverGrid(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.85,
-                crossAxisSpacing: Insets.x2,
-                mainAxisSpacing: Insets.x2,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (_, index) => ShimmerCard(),
-                childCount: 6,
-              ),
-            ),
-          ),
-        if (state is SuccessState)
-          SliverPadding(
-            padding: const EdgeInsets.all(Insets.x2),
-            sliver: SliverGrid(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.85,
-                crossAxisSpacing: Insets.x2,
-                mainAxisSpacing: Insets.x2,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (_, index) {
-                  return DishInfoCard(
-                    model: bloc.dishList[index],
-                  );
-                },
-                childCount: bloc.dishList.length,
-              ),
-            ),
-          ),
-      ],
+        delegate: SliverChildBuilderDelegate(
+          (_, index) {
+            return DishInfoCard(
+              model: bloc.dishList[index],
+            );
+          },
+          childCount: bloc.dishList.length,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildShimmerGrid() {
+    return SliverPadding(
+      padding: const EdgeInsets.all(Insets.x2),
+      sliver: SliverGrid(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 0.75,
+          crossAxisSpacing: Insets.x2,
+          mainAxisSpacing: Insets.x2,
+        ),
+        delegate: SliverChildBuilderDelegate(
+          (_, index) => ShimmerCard(),
+          childCount: 6,
+        ),
+      ),
     );
   }
 }

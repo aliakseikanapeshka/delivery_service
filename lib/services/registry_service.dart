@@ -8,17 +8,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 
+import 'cart_service.dart';
 import 'navigation_service.dart';
 
 TextTheme get textTheme => Theme.of(Get.context).textTheme;
 
 NavigationService _navigationService;
+CartService _cartService;
 RestaurantRepository _restaurantRepository;
 HomeRepository _homeRepository;
 PromoRepository _promoRepository;
 CartRepository _cartRepository;
 FavoritesRepository _favoritesRepository;
 AccountRepository _accountRepository;
+
+CartService get cartService => _cartService ??= GetIt.I.get<CartService>();
 
 NavigationService get navigationService =>
     _navigationService ??= GetIt.I.get<NavigationService>();

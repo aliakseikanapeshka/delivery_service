@@ -80,7 +80,7 @@ class DishInfoCard extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           Text(
-            model.price,
+            "${model.price.value.toStringAsFixed(2)} ${model.price.currency}",
             style: textTheme.subtitle1,
             maxLines: 1,
           ),

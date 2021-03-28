@@ -4,7 +4,7 @@ class DishModel {
   final String id;
   final String imageUrl;
   final String name;
-  final String price;
+  final Price price;
   final String description;
   final int weight;
 

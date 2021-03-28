@@ -1,18 +1,23 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:delivery_service/data/models/dish_model.dart';
 import 'package:delivery_service/data/models/restaurant_model.dart';
+import 'package:delivery_service/localization/localization_keys.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
 import 'package:delivery_service/pages/base/base_page_state.dart';
+import 'package:delivery_service/pages/dish_detail/dish_detail_page.dart';
 import 'package:delivery_service/pages/restaurant_detail/restaurant_detail_bloc.dart';
 import 'package:delivery_service/services/registry_service.dart';
 import 'package:delivery_service/theme/branding_colors.dart';
 import 'package:delivery_service/theme/insets.dart';
-import 'package:delivery_service/widgets/dish_detail_info.dart';
+import 'package:delivery_service/theme/radiuses.dart';
 import 'package:delivery_service/widgets/dish_info_card.dart';
 import 'package:delivery_service/widgets/label_metadata.dart';
 import 'package:delivery_service/widgets/shimmer_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_translate/global.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class RestaurantDetailPage extends StatefulWidget {
@@ -32,13 +37,12 @@ class _RestaurantDetailPageState
   @override
   Widget build(BuildContext context) {
     _setInitialDataToBloc();
-    return BlocBuilder<RestaurantDetailBloc, BaseState>(
+    return BlocConsumer<RestaurantDetailBloc, BaseState>(
       cubit: bloc,
-      builder: (_, state) {
-        return CupertinoScaffold(
-          body: _buildBody(state),
-        );
-      },
+      buildWhen: _buildWhen,
+      listenWhen: _listenWhen,
+      builder: (_, state) => _buildBody(state),
+      listener: (context, state) => _handleState(context, state),
     );
   }
 
@@ -46,18 +50,119 @@ class _RestaurantDetailPageState
     bloc.add(RestaurantEvent.setInitialData(widget.restaurantModel));
   }
 
+  BlocBuilderCondition<BaseState> _buildWhen = (previous, current) {
+    return current is InitialState ||
+        current is ProgressState ||
+        current is SuccessState ||
+        current is ErrorState;
+  };
+
+  BlocListenerCondition<BaseState> _listenWhen = (previous, current) {
+    return current is ShowClearCartDialogState ||
+        current is ShowDishAddedDialogState;
+  };
+
+  _handleState(BuildContext context, BaseState state) {
+    if (state is ShowClearCartDialogState) {
+      _showClearCartDialog(context, state);
+    } else if (state is ShowDishAddedDialogState) {
+      _showDishAddedDialog(context);
+    }
+  }
+
+  _showClearCartDialog(BuildContext context, ShowClearCartDialogState state) {
+    AwesomeDialog(
+      context: context,
+      width: 300,
+      headerAnimationLoop: false,
+      showCloseIcon: false,
+      buttonsBorderRadius: BorderRadius.all(Radius.circular(Radiuses.big_1x)),
+      padding: EdgeInsets.all(Insets.x2),
+      animType: AnimType.SCALE,
+      dialogType: DialogType.QUESTION,
+      title: translate(LocalizationKeys.Dialog_Header_Type_1),
+      desc: translate(LocalizationKeys.Dialog_Body_Type_1),
+      btnCancel: CupertinoButton(
+        padding: EdgeInsets.symmetric(horizontal: Insets.x3_5),
+        color: BrandingColors.minorButtonBackground,
+        child: Text(
+          translate(LocalizationKeys.Dialog_Cancel),
+          style: textTheme.bodyText1.copyWith(
+            fontWeight: FontWeight.bold,
+            color: BrandingColors.minorButtonContent,
+          ),
+        ),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      ),
+      btnOk: CupertinoButton(
+        padding: EdgeInsets.symmetric(horizontal: Insets.x3_5),
+        color: BrandingColors.mainButtonBackground,
+        child: Text(
+          translate(LocalizationKeys.Dialog_Ok),
+          style: textTheme.bodyText1.copyWith(
+            fontWeight: FontWeight.bold,
+            color: BrandingColors.mainButtonContent,
+          ),
+        ),
+        onPressed: () {
+          Navigator.of(context).pop();
+          bloc.add(RestaurantEvent.forceAddDishToCart(
+            state.dishModel,
+            state.count,
+          ));
+        },
+      ),
+      btnCancelOnPress: () {},
+      btnOkOnPress: () {},
+    )..show();
+  }
+
+  _showDishAddedDialog(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      width: 300,
+      buttonsBorderRadius: BorderRadius.all(Radius.circular(Radiuses.big_1x)),
+      padding: EdgeInsets.all(Insets.x2),
+      headerAnimationLoop: false,
+      showCloseIcon: false,
+      animType: AnimType.SCALE,
+      dialogType: DialogType.SUCCES,
+      title: translate(LocalizationKeys.Dialog_Header_Type_2),
+      desc: translate(LocalizationKeys.Dialog_Body_Type_2),
+      btnOk: CupertinoButton(
+        padding: EdgeInsets.symmetric(horizontal: Insets.x3_5),
+        color: BrandingColors.mainButtonBackground,
+        child: Text(
+          translate(LocalizationKeys.Dialog_Ok),
+          style: textTheme.bodyText1.copyWith(
+            fontWeight: FontWeight.bold,
+            color: BrandingColors.mainButtonContent,
+          ),
+        ),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      ),
+      btnOkOnPress: () {},
+    )..show();
+  }
+
   Widget _buildBody(BaseState state) {
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      color: BrandingColors.background,
-      child: CustomScrollView(
-        physics: BouncingScrollPhysics(),
-        slivers: [
-          _buildAppBar(),
-          _buildRestaurantInfo(),
-          _buildItemsGrid(state),
-        ],
+    return CupertinoScaffold(
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        color: BrandingColors.background,
+        child: CustomScrollView(
+          physics: BouncingScrollPhysics(),
+          slivers: [
+            _buildAppBar(),
+            _buildRestaurantInfo(),
+            _buildItemsGrid(state),
+          ],
+        ),
       ),
     );
   }
@@ -168,21 +273,32 @@ class _RestaurantDetailPageState
             return DishInfoCard(
               model: model,
               onTap: () {
-                CupertinoScaffold.showCupertinoModalBottomSheet(
-                  context: context,
-                  backgroundColor: BrandingColors.cardBackground,
-                  builder: (_) {
-                    return DishDetailInfo(
-                      model: model,
-                    );
-                  },
-                );
+                _showDishDetailBottomSheet(context, model);
               },
             );
           },
           childCount: bloc.dishList.length,
         ),
       ),
+    );
+  }
+
+  _showDishDetailBottomSheet(BuildContext context, DishModel model) {
+    CupertinoScaffold.showCupertinoModalBottomSheet(
+      context: context,
+      backgroundColor: BrandingColors.cardBackground,
+      builder: (_) {
+        return DishDetailPage(
+          model: model,
+          onPressedAdd: (model, count) {
+            Navigator.of(context).pop();
+            bloc.add(RestaurantEvent.tryAddDishToCart(
+              model,
+              count,
+            ));
+          },
+        );
+      },
     );
   }
 

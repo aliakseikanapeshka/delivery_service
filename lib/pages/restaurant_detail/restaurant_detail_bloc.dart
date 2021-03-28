@@ -10,12 +10,59 @@ class RestaurantEvent extends BaseEvent {
 
   factory RestaurantEvent.setInitialData(RestaurantModel model) =
       _SetInitialDataEvent;
+
+  factory RestaurantEvent.tryAddDishToCart(DishModel dishModel, int count) =
+      _TryAddDishToCartEvent;
+
+  factory RestaurantEvent.forceAddDishToCart(DishModel dishModel, int count) =
+      _ForceAddDishToCartEvent;
 }
 
 class _SetInitialDataEvent extends RestaurantEvent {
   final RestaurantModel model;
 
   _SetInitialDataEvent(this.model);
+}
+
+class _TryAddDishToCartEvent extends RestaurantEvent {
+  final DishModel dishModel;
+  final int count;
+
+  _TryAddDishToCartEvent(
+    this.dishModel,
+    this.count,
+  );
+}
+
+class _ForceAddDishToCartEvent extends RestaurantEvent {
+  final DishModel dishModel;
+  final int count;
+
+  _ForceAddDishToCartEvent(
+    this.dishModel,
+    this.count,
+  );
+}
+
+class RestaurantState extends BaseState {
+  const RestaurantState();
+
+  factory RestaurantState.showDishAddedDialog() = ShowDishAddedDialogState;
+
+  factory RestaurantState.showClearCartDialog(DishModel dishModel, int count) =
+      ShowClearCartDialogState;
+}
+
+class ShowDishAddedDialogState extends RestaurantState {}
+
+class ShowClearCartDialogState extends RestaurantState {
+  final DishModel dishModel;
+  final int count;
+
+  ShowClearCartDialogState(
+    this.dishModel,
+    this.count,
+  );
 }
 
 class RestaurantDetailBloc extends BaseBloc {
@@ -32,6 +79,32 @@ class RestaurantDetailBloc extends BaseBloc {
       yield BaseState.progress();
       _dishList = await restaurantRepository.getDishList(_restaurantModel.id);
       yield BaseState.success();
+    } else if (event is _TryAddDishToCartEvent) {
+      if (cartService.restaurantModel == null ||
+          cartService.restaurantModel == _restaurantModel) {
+        if (cartService.restaurantModel == null) {
+          cartService.restaurantModel = _restaurantModel;
+        }
+
+        cartService.addDish(
+          event.dishModel,
+          event.count,
+        );
+
+        yield RestaurantState.showDishAddedDialog();
+      } else {
+        yield RestaurantState.showClearCartDialog(
+          event.dishModel,
+          event.count,
+        );
+      }
+    } else if (event is _ForceAddDishToCartEvent) {
+      cartService.restaurantModel = _restaurantModel;
+      cartService.addDish(
+        event.dishModel,
+        event.count,
+      );
+      yield RestaurantState.showDishAddedDialog();
     }
   }
 

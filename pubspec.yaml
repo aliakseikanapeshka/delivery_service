@@ -39,6 +39,7 @@ dependencies:
   shimmer: ^1.1.2
   carousel_slider: ^3.0.0
   modal_bottom_sheet: ^1.0.0+1
+  awesome_dialog: ^1.3.2
 
 dev_dependencies:
   flutter_test:

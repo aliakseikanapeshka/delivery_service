@@ -3,14 +3,19 @@ import 'package:delivery_service/data/models/dish_model.dart';
 import 'package:delivery_service/services/registry_service.dart';
 import 'package:delivery_service/theme/branding_colors.dart';
 import 'package:delivery_service/theme/insets.dart';
+import 'package:delivery_service/widgets/dish_price_and_count_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class DishDetailInfo extends StatelessWidget {
-  final DishModel model;
+typedef AddCallback = void Function(DishModel model, int count);
 
-  DishDetailInfo({
+class DishDetailPage extends StatelessWidget {
+  final DishModel model;
+  final AddCallback onPressedAdd;
+
+  DishDetailPage({
     @required this.model,
+    this.onPressedAdd,
   });
 
   @override
@@ -94,12 +99,10 @@ class DishDetailInfo extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(Insets.x6),
         child: Align(
-          alignment: Alignment.bottomRight,
-          child: Text(
-            model.price,
-            style: textTheme.headline1,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
+          alignment: Alignment.bottomCenter,
+          child: DishPriceAndCountPicker(
+            price: model.price,
+            onPressed: (count) => onPressedAdd.call(model, count),
           ),
         ),
       ),

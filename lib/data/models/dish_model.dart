@@ -1,19 +1,17 @@
-import 'package:delivery_service/data/models/price_model.dart';
+import 'dart:convert';
 
-class DishModel {
-  final String id;
-  final String imageUrl;
-  final String name;
-  final Price price;
-  final String description;
-  final int weight;
+import 'package:auto_data/auto_data.dart';
+import 'package:delivery_service/data/models/price.dart';
+import 'package:meta/meta.dart';
 
-  DishModel({
-    this.id,
-    this.imageUrl,
-    this.name,
-    this.price,
-    this.description,
-    this.weight,
-  });
+part 'dish_model.g.dart';
+
+@data
+class $DishModel {
+  String id;
+  String imageUrl;
+  String name;
+  Price price;
+  String description;
+  int weight;
 }

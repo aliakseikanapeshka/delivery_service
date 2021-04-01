@@ -11,13 +11,23 @@ class FavoritesBloc extends BaseBloc {
 
   @override
   Stream<BaseState> initialize() async* {
+    await _loadData();
+    yield BaseState.success();
+  }
+
+  @override
+  Stream<BaseState> refresh() async* {
+    yield BaseState.initial();
+    await _loadData();
+    yield BaseState.success();
+  }
+
+  _loadData() async {
     await Future.wait<void>([
       favoritesRepository
           .getFavoritesList()
           .then((result) => _favoritesList = result),
     ]);
-
-    yield BaseState.success();
   }
 
   @override

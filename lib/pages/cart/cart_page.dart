@@ -3,6 +3,8 @@ import 'package:delivery_service/pages/base/base_bloc.dart';
 import 'package:delivery_service/pages/base/base_page_state.dart';
 import 'package:delivery_service/services/registry_service.dart';
 import 'package:delivery_service/theme/branding_colors.dart';
+import 'package:delivery_service/theme/insets.dart';
+import 'package:delivery_service/widgets/cart_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,15 +33,40 @@ class _CartPageState extends BasePageState<CartBloc, CartPage> {
               style: textTheme.headline4,
             ),
           ),
-          body: SafeArea(
-            child: Stack(
-              children: [
-                Center(child: Text(translate(LocalizationKeys.Cart_Content))),
-              ],
-            ),
-          ),
+          body: _buildBody(),
         );
       },
     );
   }
+
+  Widget _buildBody() {
+    return SafeArea(
+      child: CustomScrollView(
+        physics: BouncingScrollPhysics(),
+        slivers: _getContentSlivers(),
+      ),
+    );
+  }
+
+  List<Widget> _getContentSlivers() => [
+        _buildDishList(),
+        _buildBottomSpacingSliver(),
+      ];
+
+  Widget _buildDishList() => SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (_, index) {
+            return Padding(
+              padding: const EdgeInsets.all(Insets.x2),
+              child: CartItem(
+                cartModel: bloc.cartItems[index],
+              ),
+            );
+          },
+          childCount: cartService.dishAndCountMap.length,
+        ),
+      );
+
+  Widget _buildBottomSpacingSliver() =>
+      SliverToBoxAdapter(child: SizedBox(height: kBottomNavigationBarHeight));
 }

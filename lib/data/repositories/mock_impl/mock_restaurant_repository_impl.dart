@@ -1,5 +1,5 @@
 import 'package:delivery_service/data/models/dish_model.dart';
-import 'package:delivery_service/data/models/price_model.dart';
+import 'package:delivery_service/data/models/price.dart';
 import 'package:delivery_service/data/repositories/interfaces/restaurant_repository.dart';
 
 class MockRestaurantRepositoryImpl implements RestaurantRepository {
@@ -9,6 +9,7 @@ class MockRestaurantRepositoryImpl implements RestaurantRepository {
 
     final dishList = <DishModel>[
       DishModel(
+        id: "qwerqewr32",
         imageUrl:
             "https://www.menu.by/resources/default/img/restaurant_products/small/1558429267-5906.jpeg",
         name: "Chefburger De Lux spicy",
@@ -21,6 +22,7 @@ class MockRestaurantRepositoryImpl implements RestaurantRepository {
         weight: 182,
       ),
       DishModel(
+        id: "qr3q3rewvrvq",
         imageUrl:
             "https://www.menu.by/resources/default/img/restaurant_products/small/1524033421-3837.jpeg",
         name: "Cheeseburger De Lux",
@@ -33,6 +35,7 @@ class MockRestaurantRepositoryImpl implements RestaurantRepository {
         weight: 234,
       ),
       DishModel(
+        id: "6rtwwwqw33qeq",
         imageUrl:
             "https://www.menu.by/resources/default/img/restaurant_products/small/1524032604-7004.jpeg",
         name: "Twister Original",
@@ -45,6 +48,7 @@ class MockRestaurantRepositoryImpl implements RestaurantRepository {
         weight: 192,
       ),
       DishModel(
+        id: "32342133rqwerqe",
         imageUrl:
             "https://www.menu.by/resources/default/img/restaurant_products/small/1558429355-3087.jpeg",
         name: "Twister De Lux original",
@@ -57,6 +61,7 @@ class MockRestaurantRepositoryImpl implements RestaurantRepository {
         weight: 200,
       ),
       DishModel(
+        id: "qw3qwrqwq3wqqaaa",
         imageUrl:
             "https://www.menu.by/resources/default/img/restaurant_products/small/1558420387-3271.jpeg",
         name: "Boxmaster Original",
@@ -69,6 +74,7 @@ class MockRestaurantRepositoryImpl implements RestaurantRepository {
         weight: 250,
       ),
       DishModel(
+        id: "fwf43wt43q4tjhjs",
         imageUrl:
             "https://www.menu.by/resources/default/img/restaurant_products/small/1584020836-4097.jpeg",
         name: "Longer cheese",
@@ -81,6 +87,7 @@ class MockRestaurantRepositoryImpl implements RestaurantRepository {
         weight: 105,
       ),
       DishModel(
+        id: "afw43qwwqeqwe",
         imageUrl:
             "https://www.menu.by/resources/default/img/restaurant_products/small/1524033403-0542.jpeg",
         name: "Cheeseburger",
@@ -93,6 +100,7 @@ class MockRestaurantRepositoryImpl implements RestaurantRepository {
         weight: 177,
       ),
       DishModel(
+        id: "5wreq5q5q",
         imageUrl:
             "https://www.menu.by/resources/default/img/restaurant_products/small/1548066094-4404.jpeg",
         name: "Twister Junior",
@@ -105,6 +113,7 @@ class MockRestaurantRepositoryImpl implements RestaurantRepository {
         weight: 170,
       ),
       DishModel(
+        id: "22q2q111taeta",
         imageUrl:
             "https://www.menu.by/resources/default/img/restaurant_products/small/1524034287-0491.jpeg",
         name: "9 wings spicy",
@@ -116,6 +125,7 @@ class MockRestaurantRepositoryImpl implements RestaurantRepository {
         weight: 30,
       ),
       DishModel(
+        id: "vsfga4ae424q2",
         imageUrl:
             "https://www.menu.by/resources/default/img/restaurant_products/small/1524034609-7531.jpeg",
         name: "9 strips",
@@ -127,6 +137,7 @@ class MockRestaurantRepositoryImpl implements RestaurantRepository {
         weight: 25,
       ),
       DishModel(
+        id: "hwrrqef3223",
         imageUrl:
             "https://www.menu.by/resources/default/img/restaurant_products/small/1524911805-8524.jpeg",
         name: "4 legs",
@@ -138,6 +149,7 @@ class MockRestaurantRepositoryImpl implements RestaurantRepository {
         weight: 57,
       ),
       DishModel(
+        id: "ffff32222211d",
         imageUrl:
             "https://www.menu.by/resources/default/img/restaurant_products/small/1567752356-1837.jpeg",
         name: "French fries standart",
@@ -148,6 +160,7 @@ class MockRestaurantRepositoryImpl implements RestaurantRepository {
         weight: 100,
       ),
       DishModel(
+        id: "kgjeti47827",
         imageUrl:
             "https://www.menu.by/resources/default/img/restaurant_products/small/1558450170-9471.jpeg",
         name: "Basket M",
@@ -158,6 +171,7 @@ class MockRestaurantRepositoryImpl implements RestaurantRepository {
         weight: 120,
       ),
       DishModel(
+        id: "w362872rywufi2f",
         imageUrl:
             "https://www.menu.by/resources/default/img/restaurant_products/small/1558420483-7047.jpeg",
         name: "Bites middle",
@@ -169,6 +183,7 @@ class MockRestaurantRepositoryImpl implements RestaurantRepository {
         weight: 400,
       ),
       DishModel(
+        id: "76248r27ryyugf",
         imageUrl:
             "https://www.menu.by/resources/default/img/restaurant_products/small/1607351946-9532.jpeg",
         name: "Coca Cola",
@@ -179,6 +194,7 @@ class MockRestaurantRepositoryImpl implements RestaurantRepository {
         description: "400ml",
       ),
       DishModel(
+        id: "nvnabdfbwf328233",
         imageUrl:
             "https://www.menu.by/resources/default/img/restaurant_products/small/1573555431-0558.jpeg",
         name: "Coffee Latte",
@@ -189,6 +205,7 @@ class MockRestaurantRepositoryImpl implements RestaurantRepository {
         description: "275ml",
       ),
       DishModel(
+        id: "7928uf9j",
         imageUrl:
             "https://www.menu.by/resources/default/img/restaurant_products/small/1611843002-0903.jpeg",
         name: "Pie Strawberry cream cheese",

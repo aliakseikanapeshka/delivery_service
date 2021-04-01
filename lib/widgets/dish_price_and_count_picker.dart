@@ -1,4 +1,4 @@
-import 'package:delivery_service/data/models/price_model.dart';
+import 'package:delivery_service/data/models/price.dart';
 import 'package:delivery_service/localization/localization_keys.dart';
 import 'package:delivery_service/services/registry_service.dart';
 import 'package:delivery_service/theme/branding_colors.dart';

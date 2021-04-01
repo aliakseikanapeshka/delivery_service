@@ -28,6 +28,7 @@ dependencies:
   flutter_bloc: ^6.1.2
   get_it: ^5.0.6
   get: ^3.25.4
+  auto_data: ^0.0.3
   json_annotation: ^3.1.1
   flutter_translate: ^1.6.0
   flutter_translate_annotations: ^1.0.1
@@ -48,6 +49,7 @@ dev_dependencies:
   json_serializable: ^3.5.1
   build_runner: ^1.11.1
   flutter_translate_gen: ^1.2.4
+  auto_data_generator: ^0.0.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

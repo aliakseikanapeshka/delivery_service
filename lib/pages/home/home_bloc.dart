@@ -32,6 +32,18 @@ class HomeBloc extends BaseBloc {
 
   @override
   Stream<BaseState> initialize() async* {
+    await _loadData();
+    yield BaseState.success();
+  }
+
+  @override
+  Stream<BaseState> refresh() async* {
+    yield BaseState.initial();
+    await _loadData();
+    yield BaseState.success();
+  }
+
+  _loadData() async {
     await Future.wait<void>([
       homeRepository.getPromosList().then((result) => _promosList = result),
       homeRepository.getPopularList().then((result) => _popularList = result),
@@ -39,8 +51,6 @@ class HomeBloc extends BaseBloc {
           .getRestaurantsList()
           .then((result) => _restaurantsList = result),
     ]);
-
-    yield BaseState.success();
   }
 
   @override

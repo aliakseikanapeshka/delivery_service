@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:delivery_service/data/models/dish_model.dart';
 import 'package:delivery_service/data/models/restaurant_model.dart';
 
@@ -5,7 +7,10 @@ class CartService {
   RestaurantModel _restaurantModel;
   Map<DishModel, int> _dishAndCountMap = {};
 
-  int get dishCount => _dishAndCountMap.length;
+  // ignore: close_sinks
+  final _controller = StreamController<int>();
+
+  Stream<int> get dishCountStream => _controller.stream;
 
   double get cartPrice {
     double totalPrice = 0;
@@ -24,6 +29,7 @@ class CartService {
   set restaurantModel(RestaurantModel model) {
     _restaurantModel = model;
     _dishAndCountMap.clear();
+    _notify();
   }
 
   addDish(DishModel dishModel, int count) {
@@ -37,6 +43,7 @@ class CartService {
     } else {
       _dishAndCountMap[dishModel] = count;
     }
+    _notify();
   }
 
   incrementDishCount(DishModel dishModel) {
@@ -44,6 +51,7 @@ class CartService {
       var currentCount = _dishAndCountMap[dishModel];
       _dishAndCountMap[dishModel] = currentCount + 1;
     }
+    _notify();
   }
 
   decrementDishCount(DishModel dishModel) {
@@ -56,14 +64,21 @@ class CartService {
         removeDish(dishModel);
       }
     }
+    _notify();
   }
 
   removeDish(DishModel dishModel) {
     _dishAndCountMap.remove(dishModel);
+    _notify();
   }
 
   clear() {
     _restaurantModel = null;
     _dishAndCountMap.clear();
+    _notify();
+  }
+
+  _notify() {
+    _controller.sink.add(_dishAndCountMap.length);
   }
 }

@@ -1,21 +1,17 @@
-import 'package:delivery_service/data/models/price_model.dart';
+import 'dart:convert';
 
-class RestaurantModel {
-  final String id;
-  final String imageUrl;
-  final String name;
-  final String minOrderPrice;
-  final String deliveryPrice;
-  final String deliveryTime;
-  final String workTime;
+import 'package:auto_data/auto_data.dart';
+import 'package:meta/meta.dart';
 
-  RestaurantModel({
-    this.id,
-    this.imageUrl,
-    this.name,
-    this.minOrderPrice,
-    this.deliveryPrice,
-    this.deliveryTime,
-    this.workTime,
-  });
+part 'restaurant_model.g.dart';
+
+@data
+class $RestaurantModel {
+  String id;
+  String imageUrl;
+  String name;
+  String minOrderPrice;
+  String deliveryPrice;
+  String deliveryTime;
+  String workTime;
 }

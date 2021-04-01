@@ -1,11 +1,13 @@
-class PopularModel {
-  final String id;
-  final String imageUrl;
-  final String restaurantName;
+import 'dart:convert';
 
-  PopularModel({
-    this.id,
-    this.imageUrl,
-    this.restaurantName,
-  });
+import 'package:auto_data/auto_data.dart';
+import 'package:meta/meta.dart';
+
+part 'popular_model.g.dart';
+
+@data
+class $PopularModel {
+  String id;
+  String imageUrl;
+  String restaurantName;
 }

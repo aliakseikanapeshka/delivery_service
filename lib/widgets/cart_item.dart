@@ -13,12 +13,12 @@ typedef UpdateCountCallback = void Function(int count);
 typedef RemoveCallback = void Function();
 
 class CartItem extends StatelessWidget {
-  final CartItemModel cartItemModel;
+  final CartModel cartModel;
   final UpdateCountCallback updateCountCallback;
   final RemoveCallback removeCallback;
 
   CartItem({
-    @required this.cartItemModel,
+    @required this.cartModel,
     this.updateCountCallback,
     this.removeCallback,
   });
@@ -26,7 +26,7 @@ class CartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key(cartItemModel.toString()),
+      key: Key(cartModel.toString()),
       direction: DismissDirection.endToStart,
       onDismissed: (direction) {
         if (removeCallback != null) {
@@ -81,7 +81,7 @@ class CartItem extends StatelessWidget {
           height: Insets.x25,
           width: Insets.x25,
           fit: BoxFit.cover,
-          imageUrl: cartItemModel.dishModel.imageUrl,
+          imageUrl: cartModel.dishModel.imageUrl,
           fadeOutDuration: Duration(),
           placeholder: (context, url) => Icon(
             Icons.image,
@@ -113,7 +113,7 @@ class CartItem extends StatelessWidget {
           top: Insets.x1_5,
         ),
         child: Text(
-          cartItemModel.dishModel.name,
+          cartModel.dishModel.name,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: textTheme.bodyText1.copyWith(
@@ -125,9 +125,9 @@ class CartItem extends StatelessWidget {
   }
 
   Widget _buildPriceAndCount() {
-    final price = cartItemModel.dishModel.price.value * cartItemModel.count;
+    final price = cartModel.dishModel.price.value * cartModel.count;
     final priceString =
-        price.toStringAsFixed(2) + " " + cartItemModel.dishModel.price.currency;
+        price.toStringAsFixed(2) + " " + cartModel.dishModel.price.currency;
 
     return IntrinsicHeight(
       child: Row(
@@ -137,7 +137,7 @@ class CartItem extends StatelessWidget {
             scale: 0.7,
             alignment: Alignment.centerLeft,
             child: CountPicker(
-              countValue: cartItemModel.count,
+              countValue: cartModel.count,
               minValue: 1,
               maxValue: 99,
               countPickerCallback: updateCountCallback,

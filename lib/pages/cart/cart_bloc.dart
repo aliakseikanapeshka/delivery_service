@@ -36,9 +36,9 @@ class CartBloc extends BaseBloc {
 
   RestaurantModel get restaurantModel => cartService.restaurantModel;
 
-  List<CartItemModel> get cartItems => List.from(_cartItems);
+  List<CartModel> get cartItems => List.from(_cartItems);
 
-  List<CartItemModel> _cartItems = [];
+  List<CartModel> _cartItems = [];
 
   @override
   Stream<BaseState> initialize() async* {
@@ -61,7 +61,7 @@ class CartBloc extends BaseBloc {
 
     cartService.dishAndCountMap.forEach((key, value) {
       _cartItems.add(
-        CartItemModel(
+        CartModel(
           dishModel: key,
           count: value,
         ),

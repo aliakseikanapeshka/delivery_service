@@ -3,6 +3,7 @@ import 'package:delivery_service/localization/localization_keys.dart';
 import 'package:delivery_service/services/registry_service.dart';
 import 'package:delivery_service/theme/branding_colors.dart';
 import 'package:delivery_service/theme/insets.dart';
+import 'package:delivery_service/widgets/count_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/global.dart';
@@ -33,42 +34,14 @@ class DishPriceAndCountPickerState extends State<DishPriceAndCountPicker> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CupertinoButton(
-          padding: EdgeInsets.symmetric(horizontal: Insets.x2_5),
-          color: BrandingColors.minorButtonBackground,
-          child: Icon(
-            Icons.remove,
-            color: BrandingColors.minorButtonContent,
-          ),
-          onPressed: () {
-            if (_count > _minValue) {
-              setState(() {
-                _count--;
-              });
-            }
-          },
-        ),
-        SizedBox(
-          width: Insets.x10,
-          child: Text(
-            _count.toString(),
-            textAlign: TextAlign.center,
-            style: textTheme.headline6,
-          ),
-        ),
-        CupertinoButton(
-          padding: EdgeInsets.symmetric(horizontal: Insets.x2_5),
-          color: BrandingColors.minorButtonBackground,
-          child: Icon(
-            Icons.add,
-            color: BrandingColors.minorButtonContent,
-          ),
-          onPressed: () {
-            if (_count < _maxValue) {
-              setState(() {
-                _count++;
-              });
-            }
+        CountPicker(
+          countValue: _count,
+          minValue: _minValue,
+          maxValue: _maxValue,
+          countPickerCallback: (count) {
+            setState(() {
+              _count = count;
+            });
           },
         ),
         SizedBox(

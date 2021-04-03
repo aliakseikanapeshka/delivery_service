@@ -3,7 +3,6 @@ import 'package:delivery_service/pages/base/base_bloc.dart';
 import 'package:delivery_service/pages/base/base_page_state.dart';
 import 'package:delivery_service/services/registry_service.dart';
 import 'package:delivery_service/theme/branding_colors.dart';
-import 'package:delivery_service/theme/insets.dart';
 import 'package:delivery_service/widgets/cart_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -56,11 +55,15 @@ class _CartPageState extends BasePageState<CartBloc, CartPage> {
   Widget _buildDishList() => SliverList(
         delegate: SliverChildBuilderDelegate(
           (_, index) {
-            return Padding(
-              padding: const EdgeInsets.all(Insets.x2),
-              child: CartItem(
-                cartModel: bloc.cartItems[index],
-              ),
+            final model = bloc.cartItems[index];
+            return CartItem(
+              cartItemModel: model,
+              updateCountCallback: (count) {
+                bloc.add(CartEvent.updateDishCount(model.dishModel, count));
+              },
+              removeCallback: () {
+                bloc.add(CartEvent.removeDish(model.dishModel));
+              },
             );
           },
           childCount: cartService.dishAndCountMap.length,

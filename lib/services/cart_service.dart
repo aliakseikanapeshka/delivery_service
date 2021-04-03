@@ -64,11 +64,29 @@ class CartService {
         removeDish(dishModel);
       }
     }
+
+    if (_dishAndCountMap.isEmpty) {
+      _restaurantModel = null;
+    }
+
+    _notify();
+  }
+
+  updateDishCount(DishModel dishModel, int count) {
+    if (_dishAndCountMap.containsKey(dishModel)) {
+      _dishAndCountMap[dishModel] = count;
+    }
+
     _notify();
   }
 
   removeDish(DishModel dishModel) {
     _dishAndCountMap.remove(dishModel);
+
+    if (_dishAndCountMap.isEmpty) {
+      _restaurantModel = null;
+    }
+
     _notify();
   }
 

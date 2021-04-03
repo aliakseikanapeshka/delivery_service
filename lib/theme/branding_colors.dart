@@ -12,6 +12,7 @@ class BrandingColors {
   static const Color backgroundIcon = Color(0xFFDBDEE2);
   static const Color cardBackground = Color(0xFFFFFFFF);
   static const Color cardBackgroundDark = Color(0xFFE8E8E8);
+  static const Color negativeBackground = Color(0xFFFA4646);
   static const Color mainButtonBackground = Color(0xFFFFC532);
   static const Color mainButtonContent = Color(0xFFF5F5F5);
   static const Color minorButtonBackground = Color(0xFFEBEBEB);

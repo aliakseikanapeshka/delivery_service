@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:delivery_service/data/models/cart_model.dart';
+import 'package:delivery_service/data/models/dish_model.dart';
 import 'package:delivery_service/data/models/restaurant_model.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
 import 'package:delivery_service/services/registry_service.dart';
@@ -8,19 +9,36 @@ import 'package:delivery_service/services/registry_service.dart';
 class CartEvent extends BaseEvent {
   const CartEvent();
 
-  factory CartEvent.empty() = _EmptyEvent;
+  factory CartEvent.removeDish(DishModel dishModel) = _RemoveDishEvent;
+
+  factory CartEvent.updateDishCount(DishModel dishModel, int count) =
+      _UpdateDishCountEvent;
 }
 
-class _EmptyEvent extends CartEvent {}
+class _RemoveDishEvent extends CartEvent {
+  final DishModel dishModel;
+
+  _RemoveDishEvent(this.dishModel);
+}
+
+class _UpdateDishCountEvent extends CartEvent {
+  final DishModel dishModel;
+  final int count;
+
+  _UpdateDishCountEvent(
+    this.dishModel,
+    this.count,
+  );
+}
 
 class CartBloc extends BaseBloc {
   StreamSubscription dishCountSubscription;
 
   RestaurantModel get restaurantModel => cartService.restaurantModel;
 
-  List<CartModel> get cartItems => List.from(_cartItems);
+  List<CartItemModel> get cartItems => List.from(_cartItems);
 
-  List<CartModel> _cartItems = [];
+  List<CartItemModel> _cartItems = [];
 
   @override
   Stream<BaseState> initialize() async* {
@@ -43,7 +61,7 @@ class CartBloc extends BaseBloc {
 
     cartService.dishAndCountMap.forEach((key, value) {
       _cartItems.add(
-        CartModel(
+        CartItemModel(
           dishModel: key,
           count: value,
         ),
@@ -53,7 +71,13 @@ class CartBloc extends BaseBloc {
 
   @override
   Stream<BaseState> handleEvent(BaseEvent event) async* {
-    if (event is _EmptyEvent) {
+    if (event is _RemoveDishEvent) {
+      cartService.removeDish(event.dishModel);
+      _updateData();
+      yield BaseState.success();
+    } else if (event is _UpdateDishCountEvent) {
+      cartService.updateDishCount(event.dishModel, event.count);
+      _updateData();
       yield BaseState.success();
     }
   }

@@ -4,26 +4,6 @@ import 'package:delivery_service/data/models/dish_model.dart';
 import 'package:delivery_service/data/models/restaurant_model.dart';
 
 class CartService {
-  RestaurantModel _restaurantModel;
-  Map<DishModel, int> _dishAndCountMap = {};
-
-  // ignore: close_sinks
-  final _controller = StreamController<int>();
-
-  Stream<int> get dishCountStream => _controller.stream;
-
-  double get cartPrice {
-    double totalPrice = 0;
-
-    _dishAndCountMap.forEach((key, value) {
-      totalPrice += key.price.value * value;
-    });
-
-    return totalPrice;
-  }
-
-  Map<DishModel, int> get dishAndCountMap => Map.from(_dishAndCountMap);
-
   RestaurantModel get restaurantModel => _restaurantModel;
 
   set restaurantModel(RestaurantModel model) {
@@ -31,6 +11,15 @@ class CartService {
     _dishAndCountMap.clear();
     _notify();
   }
+
+  Map<DishModel, int> get dishAndCountMap => Map.from(_dishAndCountMap);
+
+  Stream<int> get dishCountStream => _dishCountController.stream;
+
+  // ignore: close_sinks
+  final _dishCountController = StreamController<int>();
+  RestaurantModel _restaurantModel;
+  final Map<DishModel, int> _dishAndCountMap = {};
 
   addDish(DishModel dishModel, int count) {
     if (_restaurantModel == null) {
@@ -42,31 +31,6 @@ class CartService {
       _dishAndCountMap[dishModel] = currentCount + count;
     } else {
       _dishAndCountMap[dishModel] = count;
-    }
-    _notify();
-  }
-
-  incrementDishCount(DishModel dishModel) {
-    if (_dishAndCountMap.containsKey(dishModel)) {
-      var currentCount = _dishAndCountMap[dishModel];
-      _dishAndCountMap[dishModel] = currentCount + 1;
-    }
-    _notify();
-  }
-
-  decrementDishCount(DishModel dishModel) {
-    if (_dishAndCountMap.containsKey(dishModel)) {
-      var currentCount = _dishAndCountMap[dishModel];
-
-      if (currentCount > 1) {
-        _dishAndCountMap[dishModel] = currentCount - 1;
-      } else {
-        removeDish(dishModel);
-      }
-    }
-
-    if (_dishAndCountMap.isEmpty) {
-      _restaurantModel = null;
     }
 
     _notify();
@@ -93,10 +57,11 @@ class CartService {
   clear() {
     _restaurantModel = null;
     _dishAndCountMap.clear();
+
     _notify();
   }
 
   _notify() {
-    _controller.sink.add(_dishAndCountMap.length);
+    _dishCountController.sink.add(_dishAndCountMap.length);
   }
 }

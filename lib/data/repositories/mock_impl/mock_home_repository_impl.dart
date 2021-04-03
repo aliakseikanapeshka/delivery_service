@@ -5,7 +5,7 @@ import 'package:delivery_service/data/repositories/interfaces/home_repository.da
 class MockHomeRepositoryImpl implements HomeRepository {
   @override
   Future<List<PromoModel>> getPromosList() async {
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 1));
 
     final promoList = <PromoModel>[
       PromoModel(
@@ -45,7 +45,7 @@ class MockHomeRepositoryImpl implements HomeRepository {
 
   @override
   Future<List<RestaurantModel>> getPopularList() async {
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 1));
 
     final popularList = <RestaurantModel>[
       RestaurantModel(
@@ -95,7 +95,7 @@ class MockHomeRepositoryImpl implements HomeRepository {
 
   @override
   Future<List<RestaurantModel>> getRestaurantsList() async {
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 1));
 
     final restaurantList = <RestaurantModel>[
       RestaurantModel(

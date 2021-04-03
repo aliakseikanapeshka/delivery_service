@@ -5,7 +5,7 @@ import 'package:delivery_service/data/repositories/interfaces/restaurant_reposit
 class MockRestaurantRepositoryImpl implements RestaurantRepository {
   @override
   Future<List<DishModel>> getDishList(String restaurantId) async {
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 1));
 
     final dishList = <DishModel>[
       DishModel(

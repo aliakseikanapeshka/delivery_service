@@ -4,7 +4,7 @@ import 'package:delivery_service/data/repositories/interfaces/favorites_reposito
 class MockFavoritesRepositoryImpl implements FavoritesRepository {
   @override
   Future<List<RestaurantModel>> getFavoritesList() async {
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 1));
 
     final restaurantList = <RestaurantModel>[
       RestaurantModel(

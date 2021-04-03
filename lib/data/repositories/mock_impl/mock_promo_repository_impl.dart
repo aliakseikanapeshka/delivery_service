@@ -4,7 +4,7 @@ import 'package:delivery_service/data/repositories/interfaces/promo_repository.d
 class MockPromoRepositoryImpl implements PromoRepository {
   @override
   Future<List<PromoModel>> getPromosList() async {
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 1));
 
     final promoList = <PromoModel>[
       PromoModel(

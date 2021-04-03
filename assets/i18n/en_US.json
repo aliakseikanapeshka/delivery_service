@@ -22,7 +22,7 @@
     "title": "Cart",
     "content": "Cart page",
     "empty_title": "Your cart is empty",
-    "empty_body": "Looks like you haven't added\\nanything to your cart yet"
+    "empty_body": "Looks like you haven't added\nanything to your cart yet"
   },
   "favorites": {
     "title": "Favorites",

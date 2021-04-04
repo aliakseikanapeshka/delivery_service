@@ -10,6 +10,8 @@ flutter pub run build_runner build
 
 flutter pub run flutter_launcher_icons:main
 
+flutter pub run flutter_launcher_name:main
+
 https://github.com/bratan/flutter_translate/wiki/3.-Generating-statically-typed-localization-keys
 
 ## Getting Started

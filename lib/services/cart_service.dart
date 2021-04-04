@@ -17,7 +17,7 @@ class CartService {
   Stream<int> get dishCountStream => _dishCountController.stream;
 
   // ignore: close_sinks
-  final _dishCountController = StreamController<int>();
+  final _dishCountController = StreamController<int>.broadcast();
   RestaurantModel _restaurantModel;
   final Map<DishModel, int> _dishAndCountMap = {};
 

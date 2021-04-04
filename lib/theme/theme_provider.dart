@@ -110,8 +110,8 @@ class _TextStyles {
   );
 
   static final overline = _baseFont.copyWith(
-    color: BrandingColors.primaryText.withOpacity(0.6),
-    fontSize: FontSizes.small_2x,
-    fontWeight: FontWeight.w500,
+    color: BrandingColors.secondaryText.withOpacity(0.6),
+    fontSize: FontSizes.small_1x,
+    fontWeight: FontWeight.w600,
   );
 }

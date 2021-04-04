@@ -10,11 +10,13 @@ class BottomNavigationWidget extends StatefulWidget {
   final Iterable<Pages> pages;
   final int selectedIndex;
   final Function(Pages) onTappedFunction;
+  final Map<Pages, int> pageNotificationCounts;
 
   const BottomNavigationWidget({
     @required this.pages,
     @required this.selectedIndex,
     @required this.onTappedFunction,
+    this.pageNotificationCounts = const {},
   });
 
   @override
@@ -39,16 +41,20 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   }
 
   List<BottomNavigationBarItem> _createBottomNavigationBarItems() {
-    return widget.pages
-        .map(
-          (page) => BottomNavigationBarItem(
-            label: bottomNavigationItems[page].title,
-            icon: BottomBarItemIcon(
-              iconData: bottomNavigationItems[page].icon,
-              assetsIconPath: bottomNavigationItems[page].assetsIconPath,
-            ),
+    return widget.pages.map(
+      (page) {
+        final badgeValue = widget.pageNotificationCounts[page];
+
+        return BottomNavigationBarItem(
+          label: bottomNavigationItems[page].title,
+          icon: BottomBarItemIcon(
+            iconData: bottomNavigationItems[page].icon,
+            assetsIconPath: bottomNavigationItems[page].assetsIconPath,
+            badgeValue: badgeValue,
+            hasBadge: badgeValue != null,
           ),
-        )
-        .toList();
+        );
+      },
+    ).toList();
   }
 }

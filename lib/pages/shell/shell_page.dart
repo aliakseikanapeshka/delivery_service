@@ -68,6 +68,7 @@ class _ShellPageState extends BasePageState<ShellBloc, ShellPage> {
             child: BottomNavigationWidget(
               pages: bloc.pages,
               selectedIndex: bloc.selectedItemIndex,
+              pageNotificationCounts: bloc.pageNotificationCounts,
               onTappedFunction: (page) {
                 bloc.add(ShellEvent.selectPage(page));
               },

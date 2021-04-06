@@ -1,4 +1,3 @@
-import 'package:delivery_service/data/models/price.dart';
 import 'package:delivery_service/localization/localization_keys.dart';
 import 'package:delivery_service/services/registry_service.dart';
 import 'package:delivery_service/theme/branding_colors.dart';
@@ -11,7 +10,7 @@ import 'package:flutter_translate/global.dart';
 typedef CountCallback = void Function(int count);
 
 class DishPriceAndCountPicker extends StatefulWidget {
-  final Price price;
+  final double price;
   final CountCallback onPressed;
 
   DishPriceAndCountPicker({
@@ -62,7 +61,7 @@ class DishPriceAndCountPickerState extends State<DishPriceAndCountPicker> {
                   ),
                 ),
                 Text(
-                  "${(widget.price.value * _count).toStringAsFixed(2)} ${widget.price.currency}",
+                  "${(widget.price * _count).toStringAsFixed(2)} ${configService.getCurrency()}",
                   style: textTheme.bodyText1.copyWith(
                     fontWeight: FontWeight.bold,
                     color: BrandingColors.mainButtonContent,

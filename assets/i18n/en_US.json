@@ -32,6 +32,11 @@
     "title": "Account",
     "content": "Account page"
   },
+  "restaurant": {
+    "open_prefix": "Open",
+    "order_from": "Order from",
+    "delivery_price": "delivery_price"
+  },
   "dish_detail": {
     "add": "Add"
   },

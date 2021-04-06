@@ -1,3 +1,4 @@
+import 'package:delivery_service/data/models/restaurant_model.dart';
 import 'package:delivery_service/localization/localization_keys.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
 import 'package:delivery_service/pages/base/base_page_state.dart';
@@ -5,6 +6,7 @@ import 'package:delivery_service/services/registry_service.dart';
 import 'package:delivery_service/theme/branding_colors.dart';
 import 'package:delivery_service/theme/insets.dart';
 import 'package:delivery_service/widgets/cart_item.dart';
+import 'package:delivery_service/widgets/label_metadata.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -82,6 +84,7 @@ class _CartPageState extends BasePageState<CartBloc, CartPage> {
   }
 
   List<Widget> _getContentSlivers() => [
+        _buildRestaurantInfo(),
         _buildDishList(),
         _buildBottomSpacingSliver(),
       ];
@@ -103,6 +106,58 @@ class _CartPageState extends BasePageState<CartBloc, CartPage> {
           childCount: cartService.dishAndCountMap.length,
         ),
       );
+
+  Widget _buildRestaurantInfo() {
+    final RestaurantModel model = bloc.restaurantModel;
+
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: EdgeInsets.all(Insets.x4_5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              model.name,
+              style: textTheme.headline1,
+            ),
+            SizedBox(
+              height: Insets.x4_5,
+            ),
+            LabelMetadata(
+              labels: [
+                model.deliveryTime,
+                "${translate(LocalizationKeys.Restaurant_Order_From)} ${model.minOrderPrice} ${configService.getCurrency()}",
+                "${translate(LocalizationKeys.Restaurant_Delivery_Price)} ${model.deliveryPrice} ${configService.getCurrency()}",
+                model.workTime,
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOrderPriceInfo() {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: EdgeInsets.all(Insets.x4_5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(
+                  bloc.totalCartPrice.toString(),
+                  style: textTheme.subtitle1,
+                  maxLines: 1,
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
 
   Widget _buildBottomSpacingSliver() =>
       SliverToBoxAdapter(child: SizedBox(height: kBottomNavigationBarHeight));

@@ -19,6 +19,8 @@ import 'package:delivery_service/pages/promo/promo_bloc.dart';
 import 'package:delivery_service/pages/restaurant_detail/restaurant_detail_bloc.dart';
 import 'package:delivery_service/pages/shell/shell_bloc.dart';
 import 'package:delivery_service/services/cart_service.dart';
+import 'package:delivery_service/services/config/demo_config_serivce.dart';
+import 'package:delivery_service/services/config/iconfig_serivce.dart';
 import 'package:delivery_service/services/navigation_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_translate/localization_delegate.dart';
@@ -45,6 +47,7 @@ Future<Widget> bootstrapApp() async {
 void _registerServices(GetIt getIt) {
   getIt.registerLazySingleton(() => NavigationService());
   getIt.registerLazySingleton(() => CartService());
+  getIt.registerLazySingleton<IConfigService>(() => DemoConfigService());
 }
 
 void _registerRepositories(GetIt getIt) {

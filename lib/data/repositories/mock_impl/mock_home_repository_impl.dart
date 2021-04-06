@@ -9,21 +9,25 @@ class MockHomeRepositoryImpl implements HomeRepository {
 
     final promoList = <PromoModel>[
       PromoModel(
+        id: "1",
         title: "5 for price of 3",
         imageUrl:
             "https://ak.picdn.net/shutterstock/videos/1008806375/thumb/1.jpg",
       ),
       PromoModel(
+        id: "2",
         title: "Discount 30%",
         imageUrl:
             "https://upload.wikimedia.org/wikipedia/commons/f/f2/%D0%A8%D0%B0%D1%83%D1%80%D0%BC%D0%B0.jpg",
       ),
       PromoModel(
+        id: "3",
         title: "Free delivery",
         imageUrl:
             "https://cdn22.img.ria.ru/images/98976/61/989766135_0:100:2000:1233_600x0_80_0_0_6d6bae20fceb464509076685137302b6.jpg",
       ),
       PromoModel(
+        id: "4",
         title: "Discount 20% for the first order",
         imageUrl:
             "https://hungryboyfriend.ru/wp-content/uploads/2016/06/burgeri_gotovi.jpg",
@@ -53,8 +57,8 @@ class MockHomeRepositoryImpl implements HomeRepository {
         name: "KFC",
         deliveryTime: "30-60 min",
         workTime: "Open 10:00-23:00",
-        minOrderPrice: "Order from 10 BYN",
-        deliveryPrice: "Delivery price 3 BYN",
+        minOrderPrice: 10,
+        deliveryPrice: 3,
         imageUrl:
             "https://new-retail.ru/upload/iblock/708/7089284ef3fd9ba91200526e510a0189.jpg",
       ),
@@ -63,8 +67,8 @@ class MockHomeRepositoryImpl implements HomeRepository {
         name: "McDonald’s",
         deliveryTime: "30-60 min",
         workTime: "Open 10:00-23:00",
-        minOrderPrice: "Order from 14.99 BYN",
-        deliveryPrice: "Delivery price 3 BYN",
+        minOrderPrice: 14.99,
+        deliveryPrice: 3,
         imageUrl:
             "https://geekville.ru/wp-content/uploads/2020/08/McDonalds.jpg",
       ),
@@ -73,8 +77,8 @@ class MockHomeRepositoryImpl implements HomeRepository {
         name: "PizzaHut",
         deliveryTime: "50-80 min",
         workTime: "Open 11:00-23:00",
-        minOrderPrice: "Order from 20 BYN",
-        deliveryPrice: "Delivery price 3 BYN",
+        minOrderPrice: 20,
+        deliveryPrice: 3,
         imageUrl:
             "http://retail-loyalty.org/upload/iblock/7aa/65f80645f09a7ee13e53ee1e0ad297c4.jpg",
       ),
@@ -103,8 +107,8 @@ class MockHomeRepositoryImpl implements HomeRepository {
         name: "Domino’s Pizza",
         deliveryTime: "20-50 min",
         workTime: "Open 10:00-23:00",
-        minOrderPrice: "Order from 25 BYN",
-        deliveryPrice: "Delivery price 3 BYN",
+        minOrderPrice: 25,
+        deliveryPrice: 3,
         imageUrl:
             "https://www.holiday.by/files/houses/thumbnails/houses_gallery_large_preview/dc65b0c7bfe6e6a7238284d2bd5e4944.png",
       ),
@@ -113,8 +117,8 @@ class MockHomeRepositoryImpl implements HomeRepository {
         name: "Subway",
         deliveryTime: "60-80 min",
         workTime: "Open 10:00-23:00",
-        minOrderPrice: "Order from 9.99 BYN",
-        deliveryPrice: "Delivery price 3 BYN",
+        minOrderPrice: 9.99,
+        deliveryPrice: 3,
         imageUrl:
             "https://visitkearney.org/wp-content/uploads/2020/06/subway_kearney_ne_2-1.jpg",
       ),
@@ -123,8 +127,8 @@ class MockHomeRepositoryImpl implements HomeRepository {
         name: "Papa Johns",
         deliveryTime: "40-90 min",
         workTime: "Open 10:00-23:00",
-        minOrderPrice: "Order from 20 BYN",
-        deliveryPrice: "Delivery price 3 BYN",
+        minOrderPrice: 20,
+        deliveryPrice: 3,
         imageUrl:
             "http://retail-loyalty.org/upload/iblock/921/365d2a04ea5a78b404a9445072ae8742.jpg",
       ),
@@ -133,8 +137,8 @@ class MockHomeRepositoryImpl implements HomeRepository {
         name: "Sushi house",
         deliveryTime: "60-90 min",
         workTime: "Open 10:00-23:00",
-        minOrderPrice: "Order from 18 BYN",
-        deliveryPrice: "Delivery price 3 BYN",
+        minOrderPrice: 18,
+        deliveryPrice: 3,
         imageUrl:
             "https://img.championat.com/news/big/w/q/pochemu-sushi-vredny-dlja-figury_1590677088981164064.jpg",
       ),
@@ -143,8 +147,8 @@ class MockHomeRepositoryImpl implements HomeRepository {
         name: "Doner king",
         deliveryTime: "40-60 min",
         workTime: "Open 10:00-23:00",
-        minOrderPrice: "Order from 1 BYN",
-        deliveryPrice: "Delivery price 3 BYN",
+        minOrderPrice: 1,
+        deliveryPrice: 3,
         imageUrl:
             "https://www.gastronom.ru/binfiles/images/20180729/b8db6c6c.jpg",
       ),
@@ -153,8 +157,8 @@ class MockHomeRepositoryImpl implements HomeRepository {
         name: "KFC",
         deliveryTime: "30-60 min",
         workTime: "Open 10:00-23:00",
-        minOrderPrice: "Order from 10 BYN",
-        deliveryPrice: "Delivery price 3 BYN",
+        minOrderPrice: 10,
+        deliveryPrice: 3,
         imageUrl:
             "https://new-retail.ru/upload/iblock/708/7089284ef3fd9ba91200526e510a0189.jpg",
       ),
@@ -163,8 +167,8 @@ class MockHomeRepositoryImpl implements HomeRepository {
         name: "McDonald’s",
         deliveryTime: "30-60 min",
         workTime: "Open 10:00-23:00",
-        minOrderPrice: "Order from 14.99 BYN",
-        deliveryPrice: "Delivery price 3 BYN",
+        minOrderPrice: 14.99,
+        deliveryPrice: 3,
         imageUrl:
             "https://geekville.ru/wp-content/uploads/2020/08/McDonalds.jpg",
       ),

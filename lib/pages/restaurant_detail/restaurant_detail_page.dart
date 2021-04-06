@@ -236,8 +236,8 @@ class _RestaurantDetailPageState
             LabelMetadata(
               labels: [
                 model.deliveryTime,
-                model.minOrderPrice,
-                model.deliveryPrice,
+                "${translate(LocalizationKeys.Restaurant_Order_From)} ${model.minOrderPrice} ${configService.getCurrency()}",
+                "${translate(LocalizationKeys.Restaurant_Delivery_Price)} ${model.deliveryPrice} ${configService.getCurrency()}",
                 model.workTime,
               ],
             ),

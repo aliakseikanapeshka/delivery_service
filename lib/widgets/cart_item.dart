@@ -125,9 +125,9 @@ class CartItem extends StatelessWidget {
   }
 
   Widget _buildPriceAndCount() {
-    final price = cartModel.dishModel.price.value * cartModel.count;
+    final price = cartModel.dishModel.price * cartModel.count;
     final priceString =
-        price.toStringAsFixed(2) + " " + cartModel.dishModel.price.currency;
+        price.toStringAsFixed(2) + " " + configService.getCurrency();
 
     return IntrinsicHeight(
       child: Row(

@@ -52,7 +52,7 @@ class DishDetailPage extends StatelessWidget {
   Widget _buildInfo() {
     final bool hasDescription =
         model.description != null && model.description.isNotEmpty;
-    final bool hasWeight = model.weight != null;
+    final bool hasSizeInfo = model.sizeInfo != null;
 
     return Container(
       width: double.infinity,
@@ -77,13 +77,13 @@ class DishDetailPage extends StatelessWidget {
                 model.description,
                 style: textTheme.subtitle1,
               ),
-            if (hasWeight)
+            if (hasSizeInfo)
               SizedBox(
                 height: Insets.x2,
               ),
-            if (hasWeight)
+            if (hasSizeInfo)
               Text(
-                "${model.weight} g",
+                model.sizeInfo,
                 style: textTheme.subtitle1,
                 maxLines: 1,
               ),

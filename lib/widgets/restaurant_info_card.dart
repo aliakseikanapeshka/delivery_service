@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:delivery_service/data/models/restaurant_model.dart';
+import 'package:delivery_service/localization/localization_keys.dart';
 import 'package:delivery_service/services/registry_service.dart';
 import 'package:delivery_service/theme/branding_colors.dart';
 import 'package:delivery_service/theme/insets.dart';
@@ -7,6 +8,7 @@ import 'package:delivery_service/theme/radiuses.dart';
 import 'package:delivery_service/widgets/scale_tap.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/global.dart';
 
 import 'label_metadata.dart';
 
@@ -87,7 +89,7 @@ class RestaurantInfoCard extends StatelessWidget {
             LabelMetadata(
               labels: [
                 model.deliveryTime,
-                model.minOrderPrice,
+                "${translate(LocalizationKeys.Restaurant_Order_From)} ${model.minOrderPrice} ${configService.getCurrency()}",
               ],
             ),
           ],

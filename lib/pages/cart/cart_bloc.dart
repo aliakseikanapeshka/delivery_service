@@ -40,6 +40,12 @@ class CartBloc extends BaseBloc {
 
   List<CartModel> _cartItems = [];
 
+  double get totalCartPrice => _totalCartPrice;
+
+  double _totalCartPrice = 0;
+
+  bool isMinimumOrderPriceSatisfied = false;
+
   @override
   Stream<BaseState> initialize() async* {
     _updateData();

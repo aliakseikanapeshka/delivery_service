@@ -22,6 +22,8 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends BasePageState<CartBloc, CartPage> {
+  static const _bottomSpacing = 80;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, BaseState>(
@@ -48,12 +50,68 @@ class _CartPageState extends BasePageState<CartBloc, CartPage> {
       );
     } else {
       return SafeArea(
-        child: CustomScrollView(
-          physics: BouncingScrollPhysics(),
-          slivers: _getContentSlivers(),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            CustomScrollView(
+              physics: BouncingScrollPhysics(),
+              slivers: _getContentSlivers(),
+            ),
+            Positioned(
+              bottom: kBottomNavigationBarHeight + Insets.x5,
+              right: Insets.x6,
+              left: Insets.x6,
+              child: _buildOrderButton(),
+            ),
+          ],
         ),
       );
     }
+  }
+
+  Widget _buildOrderButton() {
+    return CupertinoButton(
+      padding: EdgeInsets.symmetric(horizontal: Insets.x6),
+      color: BrandingColors.mainButtonBackground,
+      onPressed: () {},
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.payment,
+                color: BrandingColors.mainButtonContent,
+              ),
+              SizedBox(width: Insets.x2),
+              Text(
+                translate(LocalizationKeys.Cart_Make_Order),
+                style: textTheme.bodyText1.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: BrandingColors.mainButtonContent,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Text(
+                "${(bloc.totalCartPrice + bloc.restaurantModel.deliveryPrice).toStringAsFixed(2)} ${configService.getCurrency()}",
+                style: textTheme.bodyText1.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: BrandingColors.mainButtonContent,
+                ),
+              ),
+              SizedBox(width: Insets.x2),
+              Icon(
+                Icons.arrow_forward,
+                color: BrandingColors.mainButtonContent,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildEmptyCart() {
@@ -86,6 +144,7 @@ class _CartPageState extends BasePageState<CartBloc, CartPage> {
   List<Widget> _getContentSlivers() => [
         _buildRestaurantInfo(),
         _buildDishList(),
+        _buildOrderPriceInfo(),
         _buildBottomSpacingSliver(),
       ];
 
@@ -138,27 +197,48 @@ class _CartPageState extends BasePageState<CartBloc, CartPage> {
   }
 
   Widget _buildOrderPriceInfo() {
+    final orderPriceList = {
+      translate(LocalizationKeys.Cart_Total_Cart_Price):
+          "${bloc.totalCartPrice.toStringAsFixed(2)} ${configService.getCurrency()}",
+      translate(LocalizationKeys.Cart_Delivery_Price):
+          "${bloc.restaurantModel.deliveryPrice.toStringAsFixed(2)} ${configService.getCurrency()}",
+      translate(LocalizationKeys.Cart_Total_Order_Price):
+          "${(bloc.totalCartPrice + bloc.restaurantModel.deliveryPrice).toStringAsFixed(2)} ${configService.getCurrency()}",
+    }
+        .entries
+        .map(
+          (e) => Padding(
+            padding: const EdgeInsets.symmetric(vertical: Insets.x1_5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  e.key,
+                  style: textTheme.bodyText1,
+                  maxLines: 1,
+                ),
+                Text(
+                  e.value,
+                  style: textTheme.subtitle1,
+                  maxLines: 1,
+                ),
+              ],
+            ),
+          ),
+        )
+        .toList();
+
     return SliverToBoxAdapter(
       child: Padding(
         padding: EdgeInsets.all(Insets.x4_5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text(
-                  bloc.totalCartPrice.toString(),
-                  style: textTheme.subtitle1,
-                  maxLines: 1,
-                )
-              ],
-            )
-          ],
+          children: orderPriceList,
         ),
       ),
     );
   }
 
-  Widget _buildBottomSpacingSliver() =>
-      SliverToBoxAdapter(child: SizedBox(height: kBottomNavigationBarHeight));
+  Widget _buildBottomSpacingSliver() => SliverToBoxAdapter(
+      child: SizedBox(height: kBottomNavigationBarHeight + _bottomSpacing));
 }

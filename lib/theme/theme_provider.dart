@@ -80,7 +80,7 @@ class _TextStyles {
   );
 
   static final subtitle2 = _baseFont.copyWith(
-    color: BrandingColors.primaryText.withOpacity(0.7),
+    color: BrandingColors.primaryText.withOpacity(0.8),
     fontSize: FontSizes.normal,
     fontWeight: FontWeight.w300,
   );
@@ -110,7 +110,7 @@ class _TextStyles {
   );
 
   static final overline = _baseFont.copyWith(
-    color: BrandingColors.secondaryText.withOpacity(0.6),
+    color: BrandingColors.secondaryText.withOpacity(0.9),
     fontSize: FontSizes.small_1x,
     fontWeight: FontWeight.w600,
   );

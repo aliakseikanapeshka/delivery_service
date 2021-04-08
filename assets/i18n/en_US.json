@@ -21,8 +21,12 @@
   "cart": {
     "title": "Cart",
     "content": "Cart page",
+    "make_order": "Make order",
     "empty_title": "Your cart is empty",
-    "empty_body": "Looks like you haven't added\nanything to your cart yet"
+    "empty_body": "Looks like you haven't added\nanything to your cart yet",
+    "total_cart_price": "Total cart items price",
+    "delivery_price": "Delivery price",
+    "total_order_price": "Total order price"
   },
   "favorites": {
     "title": "Favorites",
@@ -35,7 +39,7 @@
   "restaurant": {
     "open_prefix": "Open",
     "order_from": "Order from",
-    "delivery_price": "delivery_price"
+    "delivery_price": "Delivery price"
   },
   "dish_detail": {
     "add": "Add"

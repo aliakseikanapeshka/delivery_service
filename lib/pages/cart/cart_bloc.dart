@@ -73,6 +73,14 @@ class CartBloc extends BaseBloc {
         ),
       );
     });
+
+    double sumPrice = 0;
+
+    _cartItems.forEach((element) {
+      sumPrice += element.count * element.dishModel.price;
+    });
+
+    _totalCartPrice = sumPrice;
   }
 
   @override

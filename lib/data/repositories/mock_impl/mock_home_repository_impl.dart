@@ -118,7 +118,7 @@ class MockHomeRepositoryImpl implements HomeRepository {
         deliveryTime: "60-80 min",
         workTime: "Open 10:00-23:00",
         minOrderPrice: 9.99,
-        deliveryPrice: 3,
+        deliveryPrice: 0,
         imageUrl:
             "https://visitkearney.org/wp-content/uploads/2020/06/subway_kearney_ne_2-1.jpg",
       ),
@@ -158,7 +158,7 @@ class MockHomeRepositoryImpl implements HomeRepository {
         deliveryTime: "30-60 min",
         workTime: "Open 10:00-23:00",
         minOrderPrice: 10,
-        deliveryPrice: 3,
+        deliveryPrice: 2,
         imageUrl:
             "https://new-retail.ru/upload/iblock/708/7089284ef3fd9ba91200526e510a0189.jpg",
       ),
@@ -168,7 +168,7 @@ class MockHomeRepositoryImpl implements HomeRepository {
         deliveryTime: "30-60 min",
         workTime: "Open 10:00-23:00",
         minOrderPrice: 14.99,
-        deliveryPrice: 3,
+        deliveryPrice: 4,
         imageUrl:
             "https://geekville.ru/wp-content/uploads/2020/08/McDonalds.jpg",
       ),

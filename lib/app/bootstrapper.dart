@@ -1,3 +1,5 @@
+import 'package:delivery_service/app/app.dart';
+import 'package:delivery_service/app/localization/localization_keys.dart';
 import 'package:delivery_service/data/repositories/interfaces/account_repository.dart';
 import 'package:delivery_service/data/repositories/interfaces/cart_repository.dart';
 import 'package:delivery_service/data/repositories/interfaces/favorites_repository.dart';
@@ -10,7 +12,6 @@ import 'package:delivery_service/data/repositories/mock_impl/mock_favorites_repo
 import 'package:delivery_service/data/repositories/mock_impl/mock_home_repository_impl.dart';
 import 'package:delivery_service/data/repositories/mock_impl/mock_promo_repository_impl.dart';
 import 'package:delivery_service/data/repositories/mock_impl/mock_restaurant_repository_impl.dart';
-import 'package:delivery_service/localization/localization_keys.dart';
 import 'package:delivery_service/pages/account/account_bloc.dart';
 import 'package:delivery_service/pages/cart/cart_bloc.dart';
 import 'package:delivery_service/pages/favorites/favorites_bloc.dart';
@@ -26,8 +27,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_translate/localization_delegate.dart';
 import 'package:flutter_translate/localized_app.dart';
 import 'package:get_it/get_it.dart';
-
-import 'app.dart';
 
 Future<Widget> bootstrapApp() async {
   final localizationDelegate = await LocalizationDelegate.create(

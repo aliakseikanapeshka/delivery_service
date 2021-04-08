@@ -1,6 +1,6 @@
-import 'package:delivery_service/localization/localization_keys.dart';
+import 'package:delivery_service/app/localization/localization_keys.dart';
+import 'package:delivery_service/app/theme/assets.dart';
 import 'package:delivery_service/services/navigation_service.dart';
-import 'package:delivery_service/theme/assets.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
 import 'bottom_navigation_item_model.dart';

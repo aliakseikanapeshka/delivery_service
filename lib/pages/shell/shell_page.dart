@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:delivery_service/app/theme/branding_colors.dart';
 import 'package:delivery_service/pages/account/account_page.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
 import 'package:delivery_service/pages/base/base_page_state.dart';
@@ -8,7 +9,6 @@ import 'package:delivery_service/pages/favorites/favorites_page.dart';
 import 'package:delivery_service/pages/home/home_page.dart';
 import 'package:delivery_service/pages/promo/promo_page.dart';
 import 'package:delivery_service/services/navigation_service.dart';
-import 'package:delivery_service/theme/branding_colors.dart';
 import 'package:delivery_service/widgets/bottom_navigation/bottom_navigation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

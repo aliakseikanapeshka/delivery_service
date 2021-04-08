@@ -1,6 +1,6 @@
 import 'package:badges/badges.dart';
-import 'package:delivery_service/theme/branding_colors.dart';
-import 'package:delivery_service/theme/insets.dart';
+import 'package:delivery_service/app/theme/branding_colors.dart';
+import 'package:delivery_service/app/theme/insets.dart';
 import 'package:flutter/cupertino.dart';
 
 class IconWithBadge extends Badge {

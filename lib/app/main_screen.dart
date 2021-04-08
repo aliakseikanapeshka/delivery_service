@@ -1,5 +1,5 @@
+import 'package:delivery_service/app/theme/theme_provider.dart';
 import 'package:delivery_service/pages/shell/shell_page.dart';
-import 'package:delivery_service/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_translate/flutter_translate.dart';

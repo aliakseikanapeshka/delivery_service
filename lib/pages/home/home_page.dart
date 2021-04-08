@@ -1,11 +1,11 @@
+import 'package:delivery_service/app/localization/localization_keys.dart';
+import 'package:delivery_service/app/theme/branding_colors.dart';
+import 'package:delivery_service/app/theme/insets.dart';
+import 'package:delivery_service/app/theme/radiuses.dart';
 import 'package:delivery_service/data/models/promo_model.dart';
-import 'package:delivery_service/localization/localization_keys.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
 import 'package:delivery_service/pages/base/base_page_state.dart';
 import 'package:delivery_service/services/registry_service.dart';
-import 'package:delivery_service/theme/branding_colors.dart';
-import 'package:delivery_service/theme/insets.dart';
-import 'package:delivery_service/theme/radiuses.dart';
 import 'package:delivery_service/widgets/horizontal_carousel.dart';
 import 'package:delivery_service/widgets/horizontal_shimmer_carousel.dart';
 import 'package:delivery_service/widgets/popular_info_card.dart';

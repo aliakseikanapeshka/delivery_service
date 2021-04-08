@@ -1,5 +1,5 @@
-import 'package:delivery_service/theme/branding_colors.dart';
-import 'package:delivery_service/theme/radiuses.dart';
+import 'package:delivery_service/app/theme/branding_colors.dart';
+import 'package:delivery_service/app/theme/radiuses.dart';
 import 'package:delivery_service/widgets/shimmer_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

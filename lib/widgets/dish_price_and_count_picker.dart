@@ -5,7 +5,7 @@ import 'package:delivery_service/services/registry_service.dart';
 import 'package:delivery_service/widgets/count_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/global.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 typedef CountCallback = void Function(int count);
 

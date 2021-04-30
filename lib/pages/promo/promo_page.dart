@@ -23,7 +23,7 @@ class _PromoPageState extends BasePageState<PromoBloc, PromoPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PromoBloc, BaseState>(
-      cubit: bloc,
+      bloc: bloc,
       builder: (_, state) {
         return Scaffold(
           backgroundColor: BrandingColors.background,

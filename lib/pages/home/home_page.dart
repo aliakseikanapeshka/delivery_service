@@ -31,7 +31,7 @@ class _HomePageState extends BasePageState<HomeBloc, HomePage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, BaseState>(
-      cubit: bloc,
+      bloc: bloc,
       builder: (_, state) {
         return Scaffold(
           backgroundColor: BrandingColors.background,

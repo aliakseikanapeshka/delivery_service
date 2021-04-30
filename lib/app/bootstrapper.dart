@@ -1,17 +1,15 @@
 import 'package:delivery_service/app/app.dart';
 import 'package:delivery_service/app/localization/localization_keys.dart';
+import 'package:delivery_service/data/repositories/impl/home_repository_impl.dart';
+import 'package:delivery_service/data/repositories/impl/promo_repository_impl.dart';
+import 'package:delivery_service/data/repositories/impl/restaurant_repository_impl.dart';
 import 'package:delivery_service/data/repositories/interfaces/account_repository.dart';
-import 'package:delivery_service/data/repositories/interfaces/cart_repository.dart';
 import 'package:delivery_service/data/repositories/interfaces/favorites_repository.dart';
 import 'package:delivery_service/data/repositories/interfaces/home_repository.dart';
 import 'package:delivery_service/data/repositories/interfaces/promo_repository.dart';
 import 'package:delivery_service/data/repositories/interfaces/restaurant_repository.dart';
 import 'package:delivery_service/data/repositories/mock_impl/mock_account_repository_impl.dart';
-import 'package:delivery_service/data/repositories/mock_impl/mock_cart_repository_impl.dart';
 import 'package:delivery_service/data/repositories/mock_impl/mock_favorites_repository_impl.dart';
-import 'package:delivery_service/data/repositories/mock_impl/mock_home_repository_impl.dart';
-import 'package:delivery_service/data/repositories/mock_impl/mock_promo_repository_impl.dart';
-import 'package:delivery_service/data/repositories/mock_impl/mock_restaurant_repository_impl.dart';
 import 'package:delivery_service/pages/account/account_bloc.dart';
 import 'package:delivery_service/pages/cart/cart_bloc.dart';
 import 'package:delivery_service/pages/favorites/favorites_bloc.dart';
@@ -23,9 +21,9 @@ import 'package:delivery_service/services/cart_service.dart';
 import 'package:delivery_service/services/config/demo_config_serivce.dart';
 import 'package:delivery_service/services/config/iconfig_serivce.dart';
 import 'package:delivery_service/services/navigation_service.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_translate/localization_delegate.dart';
-import 'package:flutter_translate/localized_app.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:get_it/get_it.dart';
 
 Future<Widget> bootstrapApp() async {
@@ -34,6 +32,8 @@ Future<Widget> bootstrapApp() async {
     fallbackLocale: 'en_US',
     supportedLocales: ['en_US'],
   );
+
+  await Firebase.initializeApp();
 
   final GetIt getIt = GetIt.instance;
   _registerRepositories(getIt);
@@ -51,10 +51,9 @@ void _registerServices(GetIt getIt) {
 
 void _registerRepositories(GetIt getIt) {
   getIt.registerLazySingleton<RestaurantRepository>(
-      () => MockRestaurantRepositoryImpl());
-  getIt.registerLazySingleton<HomeRepository>(() => MockHomeRepositoryImpl());
-  getIt.registerLazySingleton<PromoRepository>(() => MockPromoRepositoryImpl());
-  getIt.registerLazySingleton<CartRepository>(() => MockCartRepositoryImpl());
+      () => RestaurantRepositoryImpl());
+  getIt.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl());
+  getIt.registerLazySingleton<PromoRepository>(() => PromoRepositoryImpl());
   getIt.registerLazySingleton<FavoritesRepository>(
       () => MockFavoritesRepositoryImpl());
   getIt.registerLazySingleton<AccountRepository>(

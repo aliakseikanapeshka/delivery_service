@@ -27,7 +27,7 @@ class _CartPageState extends BasePageState<CartBloc, CartPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, BaseState>(
-      cubit: bloc,
+      bloc: bloc,
       builder: (_, state) {
         return Scaffold(
           backgroundColor: BrandingColors.background,

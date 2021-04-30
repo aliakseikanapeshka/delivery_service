@@ -8,7 +8,7 @@ import 'package:delivery_service/services/registry_service.dart';
 import 'package:delivery_service/widgets/scale_tap.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/global.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 import 'label_metadata.dart';
 

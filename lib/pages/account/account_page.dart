@@ -21,7 +21,7 @@ class _AccountPageState extends BasePageState<AccountBloc, AccountPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AccountBloc, BaseState>(
-      cubit: bloc,
+      bloc: bloc,
       builder: (_, state) {
         return Scaffold(
           backgroundColor: BrandingColors.background,

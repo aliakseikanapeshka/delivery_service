@@ -24,7 +24,7 @@ class _FavoritesPageState extends BasePageState<FavoritesBloc, FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FavoritesBloc, BaseState>(
-      cubit: bloc,
+      bloc: bloc,
       builder: (_, state) {
         return Scaffold(
           backgroundColor: BrandingColors.background,

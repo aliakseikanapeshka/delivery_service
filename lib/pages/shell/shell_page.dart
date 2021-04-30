@@ -28,7 +28,7 @@ class _ShellPageState extends BasePageState<ShellBloc, ShellPage> {
     return BlocProvider<ShellBloc>(
       create: (context) => bloc,
       child: BlocBuilder<ShellBloc, BaseState>(
-        cubit: bloc,
+        bloc: bloc,
         key: mainGlobalKey,
         builder: (_, state) {
           return Scaffold(

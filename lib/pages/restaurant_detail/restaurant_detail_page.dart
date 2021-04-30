@@ -17,7 +17,7 @@ import 'package:delivery_service/widgets/shimmer_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_translate/global.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class RestaurantDetailPage extends StatefulWidget {
@@ -38,7 +38,7 @@ class _RestaurantDetailPageState
   Widget build(BuildContext context) {
     _setInitialDataToBloc();
     return BlocConsumer<RestaurantDetailBloc, BaseState>(
-      cubit: bloc,
+      bloc: bloc,
       buildWhen: _buildWhen,
       listenWhen: _listenWhen,
       builder: (_, state) => _buildBody(state),

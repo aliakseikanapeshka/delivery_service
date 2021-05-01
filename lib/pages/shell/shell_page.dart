@@ -7,6 +7,7 @@ import 'package:delivery_service/pages/base/base_page_state.dart';
 import 'package:delivery_service/pages/cart/cart_page.dart';
 import 'package:delivery_service/pages/favorites/favorites_page.dart';
 import 'package:delivery_service/pages/home/home_page.dart';
+import 'package:delivery_service/pages/order_status/order_status_page.dart';
 import 'package:delivery_service/pages/promo/promo_page.dart';
 import 'package:delivery_service/services/navigation_service.dart';
 import 'package:delivery_service/widgets/bottom_navigation/bottom_navigation_widget.dart';
@@ -41,7 +42,7 @@ class _ShellPageState extends BasePageState<ShellBloc, ShellPage> {
                     HomePage(),
                     PromoPage(),
                     CartPage(),
-                    FavoritesPage(),
+                    OrderStatusPage(),
                     AccountPage(),
                   ],
                 ),

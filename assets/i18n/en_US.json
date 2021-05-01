@@ -4,7 +4,8 @@
     "promo": "Promo",
     "cart": "Cart",
     "favorites": "Favorites",
-    "account": "Account"
+    "account": "Account",
+    "order_status": "Order"
   },
   "home": {
     "title": "Home",
@@ -35,6 +36,9 @@
   "account": {
     "title": "Account",
     "content": "Account page"
+  },
+  "order_status": {
+    "title": "Order status"
   },
   "restaurant": {
     "open_prefix": "Open",

@@ -14,6 +14,7 @@ import 'package:delivery_service/pages/account/account_bloc.dart';
 import 'package:delivery_service/pages/cart/cart_bloc.dart';
 import 'package:delivery_service/pages/favorites/favorites_bloc.dart';
 import 'package:delivery_service/pages/home/home_bloc.dart';
+import 'package:delivery_service/pages/order_status/order_status_bloc.dart';
 import 'package:delivery_service/pages/promo/promo_bloc.dart';
 import 'package:delivery_service/pages/restaurant_detail/restaurant_detail_bloc.dart';
 import 'package:delivery_service/pages/shell/shell_bloc.dart';
@@ -66,6 +67,7 @@ void _registerBlocs(GetIt getIt) {
   getIt.registerFactory(() => PromoBloc());
   getIt.registerFactory(() => CartBloc());
   getIt.registerFactory(() => FavoritesBloc());
+  getIt.registerFactory(() => OrderStatusBloc());
   getIt.registerFactory(() => AccountBloc());
   getIt.registerFactory(() => RestaurantDetailBloc());
 }

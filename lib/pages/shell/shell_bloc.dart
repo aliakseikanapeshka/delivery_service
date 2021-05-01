@@ -34,7 +34,7 @@ class ShellBloc extends BaseBloc {
     Pages.home,
     Pages.promo,
     Pages.cart,
-    Pages.favorite,
+    Pages.orderStatus,
     Pages.account,
   ];
 

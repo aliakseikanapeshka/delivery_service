@@ -18,9 +18,9 @@ final Map<Pages, BottomNavigationItemModel> bottomNavigationItems = {
     assetsIconPath: Assets.navigation_cart,
     title: translate(LocalizationKeys.Shell_Cart),
   ),
-  Pages.favorite: BottomNavigationItemModel(
-    assetsIconPath: Assets.navigation_favorite,
-    title: translate(LocalizationKeys.Shell_Favorites),
+  Pages.orderStatus: BottomNavigationItemModel(
+    assetsIconPath: Assets.navigation_order_status,
+    title: translate(LocalizationKeys.Shell_Order_Status),
   ),
   Pages.account: BottomNavigationItemModel(
     assetsIconPath: Assets.navigation_account,

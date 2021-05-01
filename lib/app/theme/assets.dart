@@ -4,4 +4,5 @@ class Assets {
   static const String navigation_cart = 'assets/svg/cart.svg';
   static const String navigation_favorite = 'assets/svg/favorite.svg';
   static const String navigation_account = 'assets/svg/account.svg';
+  static const String navigation_order_status = 'assets/svg/order_status.svg';
 }

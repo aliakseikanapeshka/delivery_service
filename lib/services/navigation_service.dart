@@ -12,6 +12,7 @@ enum Pages {
   promo,
   cart,
   favorite,
+  orderStatus,
   account,
   restaurantDetail,
 }

@@ -1,5 +1,6 @@
 import 'package:delivery_service/app/localization/localization_keys.dart';
 import 'package:delivery_service/app/theme/branding_colors.dart';
+import 'package:delivery_service/app/theme/insets.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
 import 'package:delivery_service/pages/base/base_page_state.dart';
 import 'package:delivery_service/pages/order_status/order_status_bloc.dart';
@@ -34,7 +35,37 @@ class _OrderStatusState
           body: SafeArea(
             child: Stack(
               children: [
-                Center(),
+                Center(
+                  child: Column(
+                    children: [
+                      if (bloc.orderStatus != null)
+                        Text(bloc.orderStatus.toString()),
+                      TextFormField(
+                        onChanged: (value) {
+                          bloc.add(OrderStatusEvent.updateOrderId(value));
+                        },
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: 'Enter order id',
+                        ),
+                      ),
+                      CupertinoButton(
+                        padding: EdgeInsets.symmetric(horizontal: Insets.x3_5),
+                        color: BrandingColors.mainButtonBackground,
+                        child: Text(
+                          translate(LocalizationKeys.Dialog_Ok),
+                          style: textTheme.bodyText1.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: BrandingColors.mainButtonContent,
+                          ),
+                        ),
+                        onPressed: () {
+                          bloc.add(OrderStatusEvent.findOrderStatus());
+                        },
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

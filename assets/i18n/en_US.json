@@ -38,7 +38,19 @@
     "content": "Account page"
   },
   "order_status": {
-    "title": "Order status"
+    "title": "Order status",
+    "header_search": "Find your order",
+    "body_search": "You can find status of your order.\nJust enter your order id\nand will see information about status.",
+    "header_processing": "Processing",
+    "body_processing": "Your order is processing.\nNow we are clarifying the details of your order\nand will soon start preparing it.",
+    "header_cooking": "Cooking",
+    "body_cooking": "Now our chefs are preparing your order\nand will try to do it as quickly and tasty as possible.",
+    "header_delivering": "Delivering",
+    "body_delivering": "Our courier is on its way to you.",
+    "header_done": "Done",
+    "body_done": "Your order has been delivered,\nwe wish you bon appetit.",
+    "header_no_result": "No result",
+    "body_no_result": "We did not find an order for the id you entered."
   },
   "restaurant": {
     "open_prefix": "Open",

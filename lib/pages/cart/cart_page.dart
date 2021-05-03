@@ -1,4 +1,5 @@
 import 'package:delivery_service/app/localization/localization_keys.dart';
+import 'package:delivery_service/app/theme/assets.dart';
 import 'package:delivery_service/app/theme/branding_colors.dart';
 import 'package:delivery_service/app/theme/insets.dart';
 import 'package:delivery_service/data/models/restaurant_model.dart';
@@ -120,7 +121,7 @@ class _CartPageState extends BasePageState<CartBloc, CartPage> {
       children: [
         SizedBox(height: Insets.x12_5),
         Image.asset(
-          "assets/gif/empty_cart2.gif",
+          Assets.gif_empty_cart,
           height: 290.0,
           width: 290.0,
         ),

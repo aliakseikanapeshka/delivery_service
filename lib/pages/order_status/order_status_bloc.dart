@@ -1,45 +1,38 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:delivery_service/data/models/OrderStatus.dart';
+import 'package:delivery_service/data/models/order_status.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
 
 class OrderStatusEvent extends BaseEvent {
   const OrderStatusEvent();
 
-  factory OrderStatusEvent.findOrderStatus() = _FindOrderStatusEvent;
-
-  factory OrderStatusEvent.updateOrderId(String orderId) = _UpdateOrderIdEvent;
+  factory OrderStatusEvent.findOrderStatus(String orderId) =
+      _FindOrderStatusEvent;
 }
 
-class _FindOrderStatusEvent extends OrderStatusEvent {}
-
-class _UpdateOrderIdEvent extends OrderStatusEvent {
+class _FindOrderStatusEvent extends OrderStatusEvent {
   final String orderId;
 
-  const _UpdateOrderIdEvent(
+  const _FindOrderStatusEvent(
     this.orderId,
   );
 }
 
 class OrderStatusBloc extends BaseBloc {
-  String _orderId = "";
-
   OrderStatus orderStatus;
 
   StreamSubscription<DocumentSnapshot> _orderSubscription;
 
   @override
   Stream<BaseState> handleEvent(BaseEvent event) async* {
-    if (event is _UpdateOrderIdEvent) {
-      _orderId = event.orderId;
-    } else if (event is _FindOrderStatusEvent) {
+    if (event is _FindOrderStatusEvent) {
       await _orderSubscription?.cancel();
 
       try {
         _orderSubscription = FirebaseFirestore.instance
             .collection("orders")
-            .doc(_orderId)
+            .doc(event.orderId)
             .snapshots()
             .listen(
           (docSnapshot) {

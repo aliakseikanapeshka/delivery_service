@@ -10,8 +10,8 @@ class $RestaurantModel {
   String id;
   String imageUrl;
   String name;
-  double minOrderPrice;
-  double deliveryPrice;
   String deliveryTime;
   String workTime;
+  double minOrderPrice;
+  double deliveryPrice;
 }

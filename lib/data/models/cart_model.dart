@@ -9,6 +9,6 @@ part 'cart_model.g.dart';
 
 @data
 class $CartModel {
-  DishModel dishModel;
+  $DishModel dishModel;
   int count;
 }

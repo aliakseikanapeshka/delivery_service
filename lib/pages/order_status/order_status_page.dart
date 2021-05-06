@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:delivery_service/app/localization/localization_keys.dart';
 import 'package:delivery_service/app/theme/assets.dart';
 import 'package:delivery_service/app/theme/branding_colors.dart';
@@ -23,31 +25,12 @@ class OrderStatusPage extends StatefulWidget {
 class _OrderStatusState
     extends BasePageState<OrderStatusBloc, OrderStatusPage> {
   final TextEditingController _textEditingController = TextEditingController();
-  final ScrollController _listController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-
-    var keyboardVisibilityController = KeyboardVisibilityController();
-
-    keyboardVisibilityController.onChange.listen((bool visible) {
-      if (visible) {
-        _listController.animateTo(
-          _listController.position.maxScrollExtent,
-          duration: Duration(milliseconds: 1000),
-          curve: Curves.ease,
-        );
-      }
-    });
-  }
 
   @override
   void dispose() {
     super.dispose();
 
     _textEditingController.dispose();
-    _listController.dispose();
   }
 
   @override
@@ -64,7 +47,16 @@ class _OrderStatusState
             ),
           ),
           body: SafeArea(
-            child: _buildInfo(state),
+            child: GestureDetector(
+              onTap: () {
+                FocusScopeNode currentFocus = FocusScope.of(context);
+
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.unfocus();
+                }
+              },
+              child: _buildInfo(state),
+            ),
           ),
         );
       },
@@ -72,36 +64,45 @@ class _OrderStatusState
   }
 
   Widget _buildInfo(BaseState state) {
-    return ListView(
-      shrinkWrap: true,
-      controller: _listController,
-      physics: BouncingScrollPhysics(),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        SizedBox(height: Insets.x8),
-        Image.asset(
-          _getStatusAsset(state),
-          height: 290.0,
-          width: 290.0,
+        Expanded(
+          child: _buildStatusInfo(state),
         ),
-        SizedBox(height: Insets.x2),
-        Text(
-          translate(_getHeaderKey(state)),
-          textAlign: TextAlign.center,
-          style: textTheme.headline4,
-        ),
-        SizedBox(height: Insets.x3_5),
-        Text(
-          translate(_getBodyKey(state)),
-          textAlign: TextAlign.center,
-          style: textTheme.subtitle2,
-        ),
-        SizedBox(height: Insets.x12_5),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: Insets.x6),
+          padding:
+              EdgeInsets.symmetric(horizontal: Insets.x6, vertical: Insets.x5),
           child: _buildFindInputAndButton(),
         ),
-        SizedBox(height: kBottomNavigationBarHeight + Insets.x5),
+        SizedBox(height: kBottomNavigationBarHeight),
       ],
+    );
+  }
+
+  Widget _buildStatusInfo(BaseState state) {
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Column(
+        children: [
+          Image.asset(
+            _getStatusAsset(state),
+            height: 200.0,
+            width: 200.0,
+          ),
+          Text(
+            translate(_getHeaderKey(state)),
+            textAlign: TextAlign.center,
+            style: textTheme.headline4,
+          ),
+          SizedBox(height: Insets.x2),
+          Text(
+            translate(_getBodyKey(state)),
+            textAlign: TextAlign.center,
+            style: textTheme.subtitle2,
+          ),
+        ],
+      ),
     );
   }
 
@@ -118,18 +119,18 @@ class _OrderStatusState
             labelText: "Order id",
             labelStyle: TextStyle(color: BrandingColors.primary),
             hintStyle: TextStyle(color: BrandingColors.primary),
-            enabledBorder: UnderlineInputBorder(
+            enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: BrandingColors.primary),
             ),
-            focusedBorder: UnderlineInputBorder(
+            focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: BrandingColors.primary),
             ),
-            border: UnderlineInputBorder(
+            border: OutlineInputBorder(
               borderSide: BorderSide(color: BrandingColors.primary),
             ),
           ),
         ),
-        SizedBox(height: Insets.x3),
+        SizedBox(height: Insets.x2),
         CupertinoButton(
           padding: EdgeInsets.symmetric(horizontal: Insets.x6),
           color: BrandingColors.mainButtonBackground,

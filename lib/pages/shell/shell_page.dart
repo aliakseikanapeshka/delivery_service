@@ -5,7 +5,6 @@ import 'package:delivery_service/pages/account/account_page.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
 import 'package:delivery_service/pages/base/base_page_state.dart';
 import 'package:delivery_service/pages/cart/cart_page.dart';
-import 'package:delivery_service/pages/favorites/favorites_page.dart';
 import 'package:delivery_service/pages/home/home_page.dart';
 import 'package:delivery_service/pages/order_status/order_status_page.dart';
 import 'package:delivery_service/pages/promo/promo_page.dart';
@@ -71,6 +70,7 @@ class _ShellPageState extends BasePageState<ShellBloc, ShellPage> {
               selectedIndex: bloc.selectedItemIndex,
               pageNotificationCounts: bloc.pageNotificationCounts,
               onTappedFunction: (page) {
+                _unfocusPages();
                 bloc.add(ShellEvent.selectPage(page));
               },
             ),
@@ -78,5 +78,13 @@ class _ShellPageState extends BasePageState<ShellBloc, ShellPage> {
         ),
       ),
     );
+  }
+
+  void _unfocusPages() {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
   }
 }

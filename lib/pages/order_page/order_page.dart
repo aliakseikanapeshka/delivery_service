@@ -1,6 +1,8 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:delivery_service/app/localization/localization_keys.dart';
 import 'package:delivery_service/app/theme/branding_colors.dart';
 import 'package:delivery_service/app/theme/insets.dart';
+import 'package:delivery_service/app/theme/radiuses.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
 import 'package:delivery_service/pages/base/base_page_state.dart';
 import 'package:delivery_service/pages/order_page/order_bloc.dart';
@@ -18,6 +20,8 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderState extends BasePageState<OrderBloc, OrderPage> {
+  final _formKey = GlobalKey<FormState>();
+
   String _paymentTypeDropdownValue = 'Cash to the courier';
 
   final TextEditingController _nameController = TextEditingController();
@@ -43,10 +47,87 @@ class _OrderState extends BasePageState<OrderBloc, OrderPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<OrderBloc, BaseState>(
+    return BlocConsumer<OrderBloc, BaseState>(
       bloc: bloc,
+      buildWhen: (previous, current) =>
+          current is InitialState ||
+          current is SuccessState ||
+          current is ProgressState,
+      listenWhen: (previous, current) =>
+          current is ShowOrderDoneDialogState ||
+          current is ShowOrderFailedDialogState,
       builder: (_, state) => _buildBody(state),
+      listener: (context, state) => _handleState(context, state),
     );
+  }
+
+  void _handleState(BuildContext context, BaseState state) {
+    if (state is ShowOrderDoneDialogState) {
+      _showOrderDoneDialog(context);
+    } else if (state is ShowOrderFailedDialogState) {
+      _showOrderFailedDialog(context);
+    }
+  }
+
+  _showOrderDoneDialog(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      width: 300,
+      buttonsBorderRadius: BorderRadius.all(Radius.circular(Radiuses.big_1x)),
+      padding: EdgeInsets.all(Insets.x2),
+      headerAnimationLoop: false,
+      showCloseIcon: false,
+      animType: AnimType.SCALE,
+      dialogType: DialogType.SUCCES,
+      title: translate(LocalizationKeys.Dialog_Header_Type_3),
+      desc: translate(LocalizationKeys.Dialog_Body_Type_3),
+      btnOk: CupertinoButton(
+        padding: EdgeInsets.symmetric(horizontal: Insets.x3_5),
+        color: BrandingColors.mainButtonBackground,
+        child: Text(
+          translate(LocalizationKeys.Dialog_Ok),
+          style: textTheme.bodyText1.copyWith(
+            fontWeight: FontWeight.bold,
+            color: BrandingColors.mainButtonContent,
+          ),
+        ),
+        onPressed: () {
+          Navigator.of(context).pop();
+          bloc.add(OrderEvent.closeOrderPage());
+        },
+      ),
+      btnOkOnPress: () {},
+    )..show();
+  }
+
+  _showOrderFailedDialog(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      width: 300,
+      buttonsBorderRadius: BorderRadius.all(Radius.circular(Radiuses.big_1x)),
+      padding: EdgeInsets.all(Insets.x2),
+      headerAnimationLoop: false,
+      showCloseIcon: false,
+      animType: AnimType.SCALE,
+      dialogType: DialogType.ERROR,
+      title: translate(LocalizationKeys.Dialog_Header_Type_4),
+      desc: translate(LocalizationKeys.Dialog_Body_Type_4),
+      btnOk: CupertinoButton(
+        padding: EdgeInsets.symmetric(horizontal: Insets.x3_5),
+        color: BrandingColors.mainButtonBackground,
+        child: Text(
+          translate(LocalizationKeys.Dialog_Ok),
+          style: textTheme.bodyText1.copyWith(
+            fontWeight: FontWeight.bold,
+            color: BrandingColors.mainButtonContent,
+          ),
+        ),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      ),
+      btnOkOnPress: () {},
+    )..show();
   }
 
   Widget _buildBody(BaseState state) {
@@ -60,56 +141,63 @@ class _OrderState extends BasePageState<OrderBloc, OrderPage> {
           slivers: [
             _buildAppBar(),
             SliverToBoxAdapter(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildTitle(),
-                  SizedBox(height: Insets.x7_5),
-                  _buildInputField(
-                    translate(LocalizationKeys.Order_Name),
-                    TextInputType.text,
-                    _nameController,
-                  ),
-                  _buildInputField(
-                    translate(LocalizationKeys.Order_Email),
-                    TextInputType.emailAddress,
-                    _emailController,
-                  ),
-                  _buildInputField(
-                    translate(LocalizationKeys.Order_Phone),
-                    TextInputType.phone,
-                    _phoneController,
-                  ),
-                  SizedBox(height: Insets.x15),
-                  _buildInputField(
-                    translate(LocalizationKeys.Order_Address),
-                    TextInputType.text,
-                    _addressController,
-                  ),
-                  SizedBox(height: Insets.x15),
-                  _buildInputField(
-                    translate(LocalizationKeys.Order_Promo_Code),
-                    TextInputType.text,
-                    _promoCodeController,
-                  ),
-                  _buildInputField(
-                    translate(LocalizationKeys.Order_Persons),
-                    TextInputType.numberWithOptions(),
-                    _personsController,
-                  ),
-                  _buildInputField(
-                    translate(LocalizationKeys.Order_Comment),
-                    TextInputType.text,
-                    _commentController,
-                  ),
-                  _buildPaymentTypeDropdown(),
-                  SizedBox(height: Insets.x7_5),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: Insets.x6),
-                    child: _buildOrderButton(),
-                  ),
-                  SizedBox(height: Insets.x7_5),
-                ],
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildTitle(),
+                    SizedBox(height: Insets.x7_5),
+                    _buildInputField(
+                      translate(LocalizationKeys.Order_Name),
+                      TextInputType.text,
+                      _nameController,
+                    ),
+                    _buildInputField(
+                      translate(LocalizationKeys.Order_Email),
+                      TextInputType.emailAddress,
+                      _emailController,
+                    ),
+                    _buildInputField(
+                      translate(LocalizationKeys.Order_Phone),
+                      TextInputType.phone,
+                      _phoneController,
+                    ),
+                    SizedBox(height: Insets.x15),
+                    _buildInputField(
+                      translate(LocalizationKeys.Order_Address),
+                      TextInputType.text,
+                      _addressController,
+                    ),
+                    SizedBox(height: Insets.x15),
+                    _buildInputField(
+                      translate(LocalizationKeys.Order_Promo_Code),
+                      TextInputType.text,
+                      _promoCodeController,
+                      withValidation: false,
+                    ),
+                    _buildInputField(
+                      translate(LocalizationKeys.Order_Persons),
+                      TextInputType.numberWithOptions(),
+                      _personsController,
+                      withValidation: false,
+                    ),
+                    _buildInputField(
+                      translate(LocalizationKeys.Order_Comment),
+                      TextInputType.text,
+                      _commentController,
+                      withValidation: false,
+                    ),
+                    _buildPaymentTypeDropdown(),
+                    SizedBox(height: Insets.x7_5),
+                    Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: Insets.x6),
+                      child: _buildOrderButton(state),
+                    ),
+                    SizedBox(height: Insets.x7_5),
+                  ],
+                ),
               ),
             ),
           ],
@@ -189,8 +277,9 @@ class _OrderState extends BasePageState<OrderBloc, OrderPage> {
   Widget _buildInputField(
     String label,
     TextInputType keyboardType,
-    TextEditingController controller,
-  ) {
+    TextEditingController controller, {
+    bool withValidation = true,
+  }) {
     return Container(
       decoration: BoxDecoration(
         color: BrandingColors.white,
@@ -207,6 +296,12 @@ class _OrderState extends BasePageState<OrderBloc, OrderPage> {
           horizontal: Insets.x3,
         ),
         child: TextFormField(
+          validator: (text) {
+            if (withValidation && (text == null || text.isEmpty)) {
+              return 'Field is required';
+            }
+            return null;
+          },
           maxLines: 1,
           keyboardType: keyboardType,
           autofocus: false,
@@ -228,21 +323,23 @@ class _OrderState extends BasePageState<OrderBloc, OrderPage> {
     );
   }
 
-  Widget _buildOrderButton() {
+  Widget _buildOrderButton(BaseState state) {
     return CupertinoButton(
       padding: EdgeInsets.symmetric(horizontal: Insets.x6),
       color: BrandingColors.mainButtonBackground,
-      onPressed: () {
-        bloc.add(OrderEvent.makeOrderEvent(
-          persons: int.tryParse(_personsController.value.text),
-          phone: _phoneController.value.text,
-          paymentType: _paymentTypeDropdownValue,
-          promoCode: _promoCodeController.value.text,
-          name: _nameController.value.text,
-          email: _emailController.value.text,
-          comment: _commentController.value.text,
-          address: _addressController.value.text,
-        ));
+      onPressed: state is ProgressState ? null : () {
+        if (_formKey.currentState.validate()) {
+          bloc.add(OrderEvent.makeOrderEvent(
+            persons: int.tryParse(_personsController.value.text),
+            phone: _phoneController.value.text,
+            paymentType: _paymentTypeDropdownValue,
+            promoCode: _promoCodeController.value.text,
+            name: _nameController.value.text,
+            email: _emailController.value.text,
+            comment: _commentController.value.text,
+            address: _addressController.value.text,
+          ));
+        }
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

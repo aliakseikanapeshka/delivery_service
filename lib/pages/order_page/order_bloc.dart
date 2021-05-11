@@ -18,6 +18,8 @@ class OrderEvent extends BaseEvent {
     String phone,
     String promoCode,
   }) = _MakeOrderEvent;
+
+  factory OrderEvent.closeOrderPage() = _CloseOrderPageEvent;
 }
 
 class _MakeOrderEvent extends OrderEvent {
@@ -42,6 +44,20 @@ class _MakeOrderEvent extends OrderEvent {
   });
 }
 
+class _CloseOrderPageEvent extends OrderEvent {}
+
+class OrderState extends BaseState {
+  const OrderState();
+
+  factory OrderState.showOrderDoneDialog() = ShowOrderDoneDialogState;
+
+  factory OrderState.showOrderFailedDialog() = ShowOrderFailedDialogState;
+}
+
+class ShowOrderDoneDialogState extends OrderState {}
+
+class ShowOrderFailedDialogState extends OrderState {}
+
 class OrderBloc extends BaseBloc {
   double get totalCartPrice => cartService.totalCartPrice;
 
@@ -50,6 +66,8 @@ class OrderBloc extends BaseBloc {
   @override
   Stream<BaseState> handleEvent(BaseEvent event) async* {
     if (event is _MakeOrderEvent) {
+      yield BaseState.progress();
+
       final orderModel = OrderModel(
         address: event.address,
         comment: event.comment,
@@ -64,7 +82,17 @@ class OrderBloc extends BaseBloc {
             .map((key, value) => MapEntry(key.id, value)),
       );
 
-      orderRepository.makeOrder(orderModel);
+      final resultId = await orderRepository.makeOrder(orderModel);
+
+      if (resultId != null && resultId.isNotEmpty) {
+        cartService.clear();
+        yield OrderState.showOrderDoneDialog();
+      } else {
+        yield BaseState.success();
+        yield OrderState.showOrderFailedDialog();
+      }
+    } else if (event is _CloseOrderPageEvent) {
+      navigationService.goBack();
     }
   }
 

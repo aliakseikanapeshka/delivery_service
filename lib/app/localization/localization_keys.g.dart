@@ -125,4 +125,12 @@ class LocalizationKeys {
   static const String Dialog_Header_Type_2 = 'dialog.header_type_2';
 
   static const String Dialog_Body_Type_2 = 'dialog.body_type_2';
+
+  static const String Dialog_Header_Type_3 = 'dialog.header_type_3';
+
+  static const String Dialog_Body_Type_3 = 'dialog.body_type_3';
+
+  static const String Dialog_Header_Type_4 = 'dialog.header_type_4';
+
+  static const String Dialog_Body_Type_4 = 'dialog.body_type_4';
 }

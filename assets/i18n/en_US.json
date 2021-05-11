@@ -77,6 +77,10 @@
     "header_type_1": "Empty cart?",
     "body_type_1": "The cart contains items from another place. Do you want to empty the cart and add the selected item?",
     "header_type_2": "Added",
-    "body_type_2": "Selected item has been successfully added to the cart"
+    "body_type_2": "Selected item has been successfully added to the cart",
+    "header_type_3": "Done",
+    "body_type_3": "Your order has been successfully completed",
+    "header_type_4": "Failed",
+    "body_type_4": "An error occurred while placing your order, please try again"
   }
 }

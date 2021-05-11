@@ -4,16 +4,21 @@ import 'package:delivery_service/data/models/cart_model.dart';
 import 'package:delivery_service/data/models/dish_model.dart';
 import 'package:delivery_service/data/models/restaurant_model.dart';
 import 'package:delivery_service/pages/base/base_bloc.dart';
+import 'package:delivery_service/services/navigation_service.dart';
 import 'package:delivery_service/services/registry_service.dart';
 
 class CartEvent extends BaseEvent {
   const CartEvent();
+
+  factory CartEvent.openOrderPage() = _OpenOrderPageEvent;
 
   factory CartEvent.removeDish(DishModel dishModel) = _RemoveDishEvent;
 
   factory CartEvent.updateDishCount(DishModel dishModel, int count) =
       _UpdateDishCountEvent;
 }
+
+class _OpenOrderPageEvent extends CartEvent {}
 
 class _RemoveDishEvent extends CartEvent {
   final DishModel dishModel;
@@ -40,9 +45,7 @@ class CartBloc extends BaseBloc {
 
   List<CartModel> _cartItems = [];
 
-  double get totalCartPrice => _totalCartPrice;
-
-  double _totalCartPrice = 0;
+  double get totalCartPrice => cartService.totalCartPrice;
 
   bool isMinimumOrderPriceSatisfied = false;
 
@@ -73,14 +76,6 @@ class CartBloc extends BaseBloc {
         ),
       );
     });
-
-    double sumPrice = 0;
-
-    _cartItems.forEach((element) {
-      sumPrice += element.count * element.dishModel.price;
-    });
-
-    _totalCartPrice = sumPrice;
   }
 
   @override
@@ -93,6 +88,8 @@ class CartBloc extends BaseBloc {
       cartService.updateDishCount(event.dishModel, event.count);
       _updateData();
       yield BaseState.success();
+    } else if (event is _OpenOrderPageEvent) {
+      navigationService.navigateTo(Pages.order);
     }
   }
 

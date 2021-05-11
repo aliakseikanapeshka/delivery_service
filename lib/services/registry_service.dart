@@ -1,6 +1,7 @@
 import 'package:delivery_service/data/repositories/interfaces/account_repository.dart';
 import 'package:delivery_service/data/repositories/interfaces/favorites_repository.dart';
 import 'package:delivery_service/data/repositories/interfaces/home_repository.dart';
+import 'package:delivery_service/data/repositories/interfaces/order_repository.dart';
 import 'package:delivery_service/data/repositories/interfaces/promo_repository.dart';
 import 'package:delivery_service/data/repositories/interfaces/restaurant_repository.dart';
 import 'package:delivery_service/services/config/iconfig_serivce.dart';
@@ -19,6 +20,7 @@ IConfigService _configService;
 RestaurantRepository _restaurantRepository;
 HomeRepository _homeRepository;
 PromoRepository _promoRepository;
+OrderRepository _orderRepository;
 FavoritesRepository _favoritesRepository;
 AccountRepository _accountRepository;
 
@@ -36,6 +38,9 @@ HomeRepository get homeRepository =>
 
 PromoRepository get promoRepository =>
     _promoRepository ??= GetIt.I.get<PromoRepository>();
+
+OrderRepository get orderRepository =>
+    _orderRepository ??= GetIt.I.get<OrderRepository>();
 
 FavoritesRepository get favoritesRepository =>
     _favoritesRepository ??= GetIt.I.get<FavoritesRepository>();

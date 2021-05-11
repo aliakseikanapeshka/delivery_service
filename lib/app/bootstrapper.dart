@@ -1,11 +1,13 @@
 import 'package:delivery_service/app/app.dart';
 import 'package:delivery_service/app/localization/localization_keys.dart';
 import 'package:delivery_service/data/repositories/impl/home_repository_impl.dart';
+import 'package:delivery_service/data/repositories/impl/order_repository_impl.dart';
 import 'package:delivery_service/data/repositories/impl/promo_repository_impl.dart';
 import 'package:delivery_service/data/repositories/impl/restaurant_repository_impl.dart';
 import 'package:delivery_service/data/repositories/interfaces/account_repository.dart';
 import 'package:delivery_service/data/repositories/interfaces/favorites_repository.dart';
 import 'package:delivery_service/data/repositories/interfaces/home_repository.dart';
+import 'package:delivery_service/data/repositories/interfaces/order_repository.dart';
 import 'package:delivery_service/data/repositories/interfaces/promo_repository.dart';
 import 'package:delivery_service/data/repositories/interfaces/restaurant_repository.dart';
 import 'package:delivery_service/data/repositories/mock_impl/mock_account_repository_impl.dart';
@@ -56,6 +58,7 @@ void _registerRepositories(GetIt getIt) {
       () => RestaurantRepositoryImpl());
   getIt.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl());
   getIt.registerLazySingleton<PromoRepository>(() => PromoRepositoryImpl());
+  getIt.registerLazySingleton<OrderRepository>(() => OrderRepositoryImpl());
   getIt.registerLazySingleton<FavoritesRepository>(
       () => MockFavoritesRepositoryImpl());
   getIt.registerLazySingleton<AccountRepository>(

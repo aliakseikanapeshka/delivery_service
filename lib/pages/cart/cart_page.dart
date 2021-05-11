@@ -74,7 +74,9 @@ class _CartPageState extends BasePageState<CartBloc, CartPage> {
     return CupertinoButton(
       padding: EdgeInsets.symmetric(horizontal: Insets.x6),
       color: BrandingColors.mainButtonBackground,
-      onPressed: () {},
+      onPressed: () {
+        bloc.add(CartEvent.openOrderPage());
+      },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

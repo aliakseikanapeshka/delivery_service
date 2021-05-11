@@ -16,9 +16,12 @@ class CartService {
 
   Stream<int> get dishCountStream => _dishCountController.stream;
 
+  double get totalCartPrice => _totalCartPrice;
+
   // ignore: close_sinks
   final _dishCountController = StreamController<int>.broadcast();
   RestaurantModel _restaurantModel;
+  double _totalCartPrice = 0;
   final Map<DishModel, int> _dishAndCountMap = {};
 
   addDish(DishModel dishModel, int count) {
@@ -62,6 +65,14 @@ class CartService {
   }
 
   _notify() {
+    double sumPrice = 0;
+
+    dishAndCountMap.forEach((key, value) {
+      sumPrice += value * key.price;
+    });
+
+    _totalCartPrice = sumPrice;
+
     _dishCountController.sink.add(_dishAndCountMap.length);
   }
 }

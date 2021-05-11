@@ -1,4 +1,5 @@
 import 'package:delivery_service/data/models/restaurant_model.dart';
+import 'package:delivery_service/pages/order_page/order_page.dart';
 import 'package:delivery_service/pages/restaurant_detail/restaurant_detail_page.dart';
 import 'package:delivery_service/pages/shell/shell_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,6 +16,7 @@ enum Pages {
   orderStatus,
   account,
   restaurantDetail,
+  order,
 }
 
 class NavigationService {
@@ -54,6 +56,9 @@ class NavigationService {
             "cant open RestaurantDetailPage without arguments of type RestaurantModel",
           );
         }
+        break;
+      case Pages.order:
+        resultPage = const OrderPage();
         break;
       default:
         resultPage = const ShellPage();

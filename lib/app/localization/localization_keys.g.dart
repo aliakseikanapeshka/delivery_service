@@ -35,7 +35,7 @@ class LocalizationKeys {
 
   static const String Cart_Content = 'cart.content';
 
-  static const String Cart_Make_Order = 'cart.make_order';
+  static const String Cart_Next = 'cart.next';
 
   static const String Cart_Empty_Title = 'cart.empty_title';
 
@@ -46,6 +46,24 @@ class LocalizationKeys {
   static const String Cart_Delivery_Price = 'cart.delivery_price';
 
   static const String Cart_Total_Order_Price = 'cart.total_order_price';
+
+  static const String Order_Title = 'order.title';
+
+  static const String Order_Make_Order = 'order.make_order';
+
+  static const String Order_Name = 'order.name';
+
+  static const String Order_Email = 'order.email';
+
+  static const String Order_Phone = 'order.phone';
+
+  static const String Order_Address = 'order.address';
+
+  static const String Order_Promo_Code = 'order.promo_code';
+
+  static const String Order_Persons = 'order.persons';
+
+  static const String Order_Comment = 'order.comment';
 
   static const String Favorites_Title = 'favorites.title';
 

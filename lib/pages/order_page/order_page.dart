@@ -18,10 +18,7 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderState extends BasePageState<OrderBloc, OrderPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  String _paymentTypeDropdownValue = 'Cash to the courier';
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -30,8 +27,6 @@ class _OrderState extends BasePageState<OrderBloc, OrderPage> {
   final TextEditingController _promoCodeController = TextEditingController();
   final TextEditingController _commentController = TextEditingController();
   final TextEditingController _personsController = TextEditingController();
-
-  String _dropdownValue = 'One';
 
   @override
   void dispose() {
@@ -68,80 +63,114 @@ class _OrderState extends BasePageState<OrderBloc, OrderPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  _buildTitle(),
+                  SizedBox(height: Insets.x7_5),
+                  _buildInputField(
+                    translate(LocalizationKeys.Order_Name),
+                    TextInputType.text,
+                    _nameController,
+                  ),
+                  _buildInputField(
+                    translate(LocalizationKeys.Order_Email),
+                    TextInputType.emailAddress,
+                    _emailController,
+                  ),
+                  _buildInputField(
+                    translate(LocalizationKeys.Order_Phone),
+                    TextInputType.phone,
+                    _phoneController,
+                  ),
+                  SizedBox(height: Insets.x15),
+                  _buildInputField(
+                    translate(LocalizationKeys.Order_Address),
+                    TextInputType.text,
+                    _addressController,
+                  ),
+                  SizedBox(height: Insets.x15),
+                  _buildInputField(
+                    translate(LocalizationKeys.Order_Promo_Code),
+                    TextInputType.text,
+                    _promoCodeController,
+                  ),
+                  _buildInputField(
+                    translate(LocalizationKeys.Order_Persons),
+                    TextInputType.numberWithOptions(),
+                    _personsController,
+                  ),
+                  _buildInputField(
+                    translate(LocalizationKeys.Order_Comment),
+                    TextInputType.text,
+                    _commentController,
+                  ),
+                  _buildPaymentTypeDropdown(),
+                  SizedBox(height: Insets.x7_5),
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                    ),
-                    child: Text(
-                      "Confirmation of an order",
-                      style: textTheme.headline1,
-                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: Insets.x6),
+                    child: _buildOrderButton(),
                   ),
-                  SizedBox(height: 30),
-                  _buildInputField('Name', TextInputType.text, _nameController),
-                  _buildInputField(
-                      'Email', TextInputType.emailAddress, _emailController),
-                  _buildInputField(
-                      'Phone', TextInputType.phone, _phoneController),
-                  SizedBox(height: 60),
-                  _buildInputField(
-                      'Address', TextInputType.text, _addressController),
-                  SizedBox(height: 60),
-                  _buildInputField(
-                      'Promo code', TextInputType.text, _promoCodeController),
-                  _buildInputField('Persons', TextInputType.numberWithOptions(),
-                      _personsController),
-                  _buildInputField(
-                      'Comment', TextInputType.text, _commentController),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    height: 60,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: BrandingColors.white,
-                      border: Border(
-                        bottom: BorderSide(
-                          color: BrandingColors.underline,
-                          width: 0.5,
-                        ),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 4,
-                        horizontal: 12,
-                      ),
-                      child: DropdownButton<String>(
-                        value: _dropdownValue,
-                        elevation: 16,
-                        style:
-                            const TextStyle(color: BrandingColors.primaryText),
-                        onChanged: (String newValue) {
-                          setState(() {
-                            _dropdownValue = newValue;
-                          });
-                        },
-                        underline: Container(
-                          height: 0,
-                          color: Colors.transparent,
-                        ),
-                        items: <String>['One', 'Two', 'Free', 'Four']
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 60),
-                  _buildOrderButton(),
-                  SizedBox(height: 60),
+                  SizedBox(height: Insets.x7_5),
                 ],
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTitle() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: Insets.x3,
+      ),
+      child: Text(
+        translate(LocalizationKeys.Order_Title),
+        style: textTheme.headline1,
+      ),
+    );
+  }
+
+  Widget _buildPaymentTypeDropdown() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      height: Insets.x15,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: BrandingColors.white,
+        border: Border(
+          bottom: BorderSide(
+            color: BrandingColors.underline,
+            width: 0.5,
+          ),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: Insets.x1,
+          horizontal: Insets.x3,
+        ),
+        child: DropdownButton<String>(
+          value: _paymentTypeDropdownValue,
+          elevation: 16,
+          style: const TextStyle(color: BrandingColors.primaryText),
+          onChanged: (String newValue) {
+            setState(() {
+              _paymentTypeDropdownValue = newValue;
+            });
+          },
+          underline: Container(
+            height: 0,
+            color: Colors.transparent,
+          ),
+          items: <String>[
+            'Cash to the courier',
+            'By card to the courier',
+          ].map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
         ),
       ),
     );
@@ -174,8 +203,8 @@ class _OrderState extends BasePageState<OrderBloc, OrderPage> {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          vertical: 4,
-          horizontal: 12,
+          vertical: Insets.x1,
+          horizontal: Insets.x3,
         ),
         child: TextFormField(
           maxLines: 1,
@@ -207,7 +236,7 @@ class _OrderState extends BasePageState<OrderBloc, OrderPage> {
         bloc.add(OrderEvent.makeOrderEvent(
           persons: int.tryParse(_personsController.value.text),
           phone: _phoneController.value.text,
-          paymentType: _dropdownValue,
+          paymentType: _paymentTypeDropdownValue,
           promoCode: _promoCodeController.value.text,
           name: _nameController.value.text,
           email: _emailController.value.text,
@@ -226,7 +255,7 @@ class _OrderState extends BasePageState<OrderBloc, OrderPage> {
               ),
               SizedBox(width: Insets.x2),
               Text(
-                translate(LocalizationKeys.Cart_Make_Order),
+                translate(LocalizationKeys.Order_Make_Order),
                 style: textTheme.bodyText1.copyWith(
                   fontWeight: FontWeight.bold,
                   color: BrandingColors.mainButtonContent,
@@ -245,7 +274,7 @@ class _OrderState extends BasePageState<OrderBloc, OrderPage> {
               ),
               SizedBox(width: Insets.x2),
               Icon(
-                Icons.arrow_forward,
+                Icons.check,
                 color: BrandingColors.mainButtonContent,
               ),
             ],

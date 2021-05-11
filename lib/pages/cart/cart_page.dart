@@ -88,7 +88,7 @@ class _CartPageState extends BasePageState<CartBloc, CartPage> {
               ),
               SizedBox(width: Insets.x2),
               Text(
-                translate(LocalizationKeys.Cart_Make_Order),
+                translate(LocalizationKeys.Cart_Next),
                 style: textTheme.bodyText1.copyWith(
                   fontWeight: FontWeight.bold,
                   color: BrandingColors.mainButtonContent,

@@ -22,12 +22,23 @@
   "cart": {
     "title": "Cart",
     "content": "Cart page",
-    "make_order": "Make order",
+    "next": "Next",
     "empty_title": "Your cart is empty",
     "empty_body": "Looks like you haven't added\nanything to your cart yet",
     "total_cart_price": "Total cart items price",
     "delivery_price": "Delivery price",
     "total_order_price": "Total order price"
+  },
+  "order": {
+    "title": "Confirmation of an order",
+    "make_order": "Make order",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "promo_code": "Promo code",
+    "persons": "Persons",
+    "comment": "Comment"
   },
   "favorites": {
     "title": "Favorites",
